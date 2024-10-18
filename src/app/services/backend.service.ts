@@ -9,7 +9,7 @@ import { Incident } from '../models/incident.model';
   providedIn: 'root'
 })
 export class BackendService {
-  private apiUrl = 'http://localhost:3000';  // Your backend API URL
+  private apiUrl = 'http://127.0.0.1:5000/api';  // Your backend API URL
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +19,7 @@ export class BackendService {
   }
 
    // Customer API calls
-  getCustomers(): Observable<Customer[]> {
+   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.apiUrl}/customers`);
   }
 

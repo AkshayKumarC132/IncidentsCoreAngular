@@ -2,7 +2,28 @@
     flex: 1 1 auto;
 }
   
-.dark-theme {
+/* .dark-theme {
     background-color: #303030;
     color: white;
-}
+} */
+
+/* Simplified dark theme styles */
+.dark-theme {
+    background-color: black !important;
+    color: white !important;
+  }
+  
+  .dark-theme .mat-toolbar {
+    background-color: black;
+    color: white;
+  }
+  
+  .dark-theme .mat-button {
+    color: white;
+  }
+  
+  .dark-theme .mat-card {
+    background-color: #333;
+    color: white;
+  }
+  

@@ -29,14 +29,17 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   darkMode = false
+  constructor(private router:Router){
+
+  }
 
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
     document.body.classList.toggle('dark-theme', this.darkMode);
+    console.log('Dark mode toggled:', this.darkMode);  // Add this line
   }
-  constructor(private router:Router){
-
-  }
+  
+  
   goToDashboard(){
     this.router.navigate(['/dashboard']);
   }
