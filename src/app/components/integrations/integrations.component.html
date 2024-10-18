@@ -1,0 +1,15 @@
+<h2>Integrations</h2>
+
+<h3>ConnectWise</h3>
+<mat-form-field>
+  <mat-label>ConnectWise API Key</mat-label>
+  <input matInput [(ngModel)]="connectWiseApiKey">
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="saveIntegration('ConnectWise', connectWiseApiKey)">Save ConnectWise Integration</button>
+
+<h3>HaloPSA</h3>
+<mat-form-field>
+  <mat-label>HaloPSA API Key</mat-label>
+  <input matInput [(ngModel)]="haloPsaApiKey">
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="saveIntegration('HaloPSA', haloPsaApiKey)">Save HaloPSA Integration</button>
