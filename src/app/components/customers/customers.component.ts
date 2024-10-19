@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { Customer } from '../../models/customer.model';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 
 @Component({
@@ -31,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     FormsModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    NavbarComponent,
   ],
   providers: [BackendService]
 })

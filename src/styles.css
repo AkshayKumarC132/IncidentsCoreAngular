@@ -2,3 +2,42 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Default (Light) Mode */
+body {
+    --bg-color: #f4f7fa;
+    --text-color: #333;
+    --card-bg-color: #fff;
+    --card-text-color: #007bff;
+    --toolbar-bg-color: #1976d2; /* Material toolbar color */
+  }
+  
+  /* Dark Theme */
+  body.dark-theme {
+    --bg-color: #121212;
+    --text-color: #f4f4f4;
+    --card-bg-color: #333;
+    --card-text-color: #66b2ff;
+    --toolbar-bg-color: #333;
+  }
+  
+  /* Apply the CSS variables */
+  body, .mat-toolbar {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .mat-toolbar {
+    background-color: var(--toolbar-bg-color) !important;
+  }
+  
+  /* Card Styling */
+  .card {
+    background-color: var(--card-bg-color);
+    color: var(--card-text-color);
+  }
+  
+  /* Button Icon Color (For Dark Mode Toggle) */
+  .mat-icon {
+    color: var(--text-color);
+  }
+  

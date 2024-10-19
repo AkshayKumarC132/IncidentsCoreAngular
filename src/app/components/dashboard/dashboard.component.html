@@ -1,1 +1,55 @@
-<p>dashboard works!</p>
+<!-- <button class="toggle-dark-mode" (click)="toggleDarkMode()">Toggle Dark Mode</button> -->
+<app-navbar></app-navbar>
+<div class="dashboard-container" [ngClass]="{'dark-mode': isDarkMode}">
+    <div class="header">
+      <h1>Dashboard</h1>
+    </div>
+  
+    <div class="dashboard-grid">
+      <!-- Cards for different sections -->
+      <div class="card">
+        <h3>Total Customers</h3>
+        <p>{{ totalCustomers }}</p>
+      </div>
+  
+      <div class="card">
+        <h3>Total Devices</h3>
+        <p>{{ totalDevices }}</p>
+      </div>
+  
+      <div class="card">
+        <h3>Active Incidents</h3>
+        <p>{{ activeIncidents }}</p>
+      </div>
+  
+      <div class="card">
+        <h3>Resolved Incidents</h3>
+        <p>{{ resolvedIncidents }}</p>
+      </div>
+    </div>
+  
+    <!-- Table for Incident Details -->
+    <div class="table-section">
+      <h2>Incident Details</h2>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Incident ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Severity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incident of incidents">
+            <td>{{ incident.id }}</td>
+            <td>{{ incident.title }}</td>
+            <td>{{ incident.description }}</td>
+            <td>{{ incident.resolved ? 'Resolved' : 'Active' }}</td>
+            <td>{{ getSeverityLabel(incident.severity_id) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

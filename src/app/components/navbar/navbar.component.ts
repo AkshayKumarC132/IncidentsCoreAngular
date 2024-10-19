@@ -39,7 +39,6 @@ export class NavbarComponent {
     console.log('Dark mode toggled:', this.darkMode);  // Add this line
   }
   
-  
   goToDashboard(){
     this.router.navigate(['/dashboard']);
   }

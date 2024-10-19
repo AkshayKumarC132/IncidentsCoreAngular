@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   standalone:true,
@@ -28,7 +29,8 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatFormFieldModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NavbarComponent,
   ]
 })
 export class IntegrationsComponent {

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BackendService } from '../../services/backend.service';
 import { Incident } from '../../models/incident.model';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-incidents',
@@ -27,6 +28,7 @@ import { Incident } from '../../models/incident.model';
     FormsModule,
     CommonModule,
     HttpClientModule,
+    NavbarComponent,
   ],
   providers:[BackendService],
   templateUrl: './incidents.component.html',

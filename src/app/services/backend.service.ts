@@ -20,7 +20,7 @@ export class BackendService {
 
    // Customer API calls
    getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${this.apiUrl}/customers`);
+    return this.http.get<Customer[]>(`${this.apiUrl}/customers/`);
   }
 
   addCustomer(customer: Customer): Observable<Customer> {
@@ -37,7 +37,7 @@ export class BackendService {
 
   // Device API calls
   getDevices(): Observable<Device[]> {
-    return this.http.get<Device[]>(`${this.apiUrl}/devices`);
+    return this.http.get<Device[]>(`${this.apiUrl}/devices/`);
   }
 
   addDevice(device: Device): Observable<Device> {
@@ -54,7 +54,7 @@ export class BackendService {
 
   // Incident API calls
   getIncidents(): Observable<Incident[]> {
-    return this.http.get<Incident[]>(`${this.apiUrl}/incidents`);
+    return this.http.get<Incident[]>(`${this.apiUrl}/incidents/`);
   }
 
   addIncident(incident: Incident): Observable<Incident> {
@@ -67,5 +67,10 @@ export class BackendService {
 
   deleteIncident(incidentId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/incidents/${incidentId}`);
+  }
+
+  // Function to get data from API
+  getIncidentData(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/dashboard-summary/`);
   }
 }
