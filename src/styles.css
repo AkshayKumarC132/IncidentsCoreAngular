@@ -1,43 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-/* Default (Light) Mode */
-body {
-    --bg-color: #f4f7fa;
+/* Light Mode Variables */
+:root {
+    --background-color: #f0f0f3;
     --text-color: #333;
-    --card-bg-color: #fff;
-    --card-text-color: #007bff;
-    --toolbar-bg-color: #1976d2; /* Material toolbar color */
+    --icon-color: #007bff;        /* Icon color for light mode */
+    --shadow-color-dark: rgba(163, 177, 198, 0.8);  /* Shadow color */
+    --shadow-color-light: rgba(255, 255, 255, 0.7); /* Highlight color */
+    --icon-shadow-color: rgba(0, 123, 255, 0.5);   /* Custom shadow for icons */
   }
   
-  /* Dark Theme */
-  body.dark-theme {
-    --bg-color: #121212;
+  /* Dark Mode Variables */
+  body.dark-mode {
+    --background-color: #1e1e1e;
     --text-color: #f4f4f4;
-    --card-bg-color: #333;
-    --card-text-color: #66b2ff;
-    --toolbar-bg-color: #333;
+    --icon-color: #66b2ff;        /* Icon color for dark mode */
+    --shadow-color-dark: rgba(50, 50, 50, 0.9);
+    --shadow-color-light: rgba(50, 50, 50, 0.5);
+    --icon-shadow-color: rgba(102, 178, 255, 0.5); /* Custom shadow for icons in dark mode */
   }
   
-  /* Apply the CSS variables */
-  body, .mat-toolbar {
-    background-color: var(--bg-color);
+  /* Global Body Styles */
+  body {
+    background-color: var(--background-color);
     color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
   }
   
-  .mat-toolbar {
-    background-color: var(--toolbar-bg-color) !important;
+  /* Neumorphic Element Styles */
+  .neumorphic {
+    background-color: var(--background-color);
+    box-shadow: 10px 10px 20px var(--shadow-color-dark), -10px -10px 20px var(--shadow-color-light);
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.3s ease;
   }
   
-  /* Card Styling */
-  .card {
-    background-color: var(--card-bg-color);
-    color: var(--card-text-color);
+  .neumorphic:hover {
+    box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
   }
   
-  /* Button Icon Color (For Dark Mode Toggle) */
-  .mat-icon {
-    color: var(--text-color);
+  /* Icon Styles */
+  .icon {
+    color: var(--icon-color);
+    font-size: 24px;
+    transition: all 0.3s ease;
   }
   
+  .icon:hover {
+    text-shadow: 2px 2px 8px var(--icon-shadow-color);
+  }
+  
+  /* Button Styles */
+  button {
+    background: var(--icon-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-shadow: 5px 5px 15px var(--shadow-color-dark), -5px -5px 15px var(--shadow-color-light);
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    box-shadow: 3px 3px 8px var(--shadow-color-dark), -3px -3px 8px var(--shadow-color-light);
+  }
+  
+  /* Example for Icon Inside a Neumorphic Element */
+  .neumorphic .icon {
+    font-size: 36px;
+    margin: 10px 0;
+  }

@@ -33,10 +33,13 @@ export class NavbarComponent {
 
   }
 
+  // toggleDarkMode() {
+  //   this.darkMode = !this.darkMode;
+  //   document.body.classList.toggle('dark-theme', this.darkMode);
+  //   console.log('Dark mode toggled:', this.darkMode);  // Add this line
+  // }
   toggleDarkMode() {
-    this.darkMode = !this.darkMode;
-    document.body.classList.toggle('dark-theme', this.darkMode);
-    console.log('Dark mode toggled:', this.darkMode);  // Add this line
+    document.body.classList.toggle('dark-mode');
   }
   
   goToDashboard(){

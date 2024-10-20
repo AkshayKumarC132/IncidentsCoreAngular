@@ -1,38 +1,42 @@
 <app-navbar></app-navbar>
-<h2>Manage Incidents</h2>
-<mat-form-field>
-  <mat-label>Incident Title</mat-label>
-  <input matInput [(ngModel)]="newIncident.title">
-</mat-form-field>
+<div class="neumorphic">
+<div class="incident-container">
+    <h2>Manage Incidents</h2>
+    <mat-form-field>
+    <mat-label>Incident Title</mat-label>
+    <input matInput [(ngModel)]="newIncident.title">
+    </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Description</mat-label>
-  <textarea matInput [(ngModel)]="newIncident.description"></textarea>
-</mat-form-field>
+    <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="newIncident.description"></textarea>
+    </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Device ID</mat-label>
-  <input matInput type="number" [(ngModel)]="newIncident.deviceId">
-</mat-form-field>
+    <mat-form-field>
+    <mat-label>Device ID</mat-label>
+    <input matInput type="number" [(ngModel)]="newIncident.deviceId">
+    </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Severity</mat-label>
-  <input matInput [(ngModel)]="newIncident.severity">
-</mat-form-field>
+    <mat-form-field>
+    <mat-label>Severity</mat-label>
+    <input matInput [(ngModel)]="newIncident.severity">
+    </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Status</mat-label>
-  <input matInput [(ngModel)]="newIncident.status">
-</mat-form-field>
+    <mat-form-field>
+    <mat-label>Status</mat-label>
+    <input matInput [(ngModel)]="newIncident.status">
+    </mat-form-field>
 
-<button mat-raised-button color="primary" (click)="addIncident()">Add Incident</button>
+    <button mat-raised-button color="primary" (click)="addIncident()">Add Incident</button>
 
-<h3>Incident List</h3>
-<mat-list>
-  <mat-list-item *ngFor="let incident of incidents">
-    {{ incident.title }} - {{ incident.status }}
-    <button mat-icon-button (click)="deleteIncident(incident.id)">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+    <h3>Incident List</h3>
+    <mat-list>
+    <mat-list-item *ngFor="let incident of incidents">
+        {{ incident.title }} - {{ incident.status }}
+        <button mat-icon-button (click)="deleteIncident(incident.id)">
+        <mat-icon>delete</mat-icon>
+        </button>
+    </mat-list-item>
+    </mat-list>
+</div>
+</div>

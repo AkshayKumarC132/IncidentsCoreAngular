@@ -13,17 +13,25 @@
     color: white !important;
   } */
   
-  .dark-theme .mat-toolbar {
-    background-color: black;
-    color: white;
-  }
+.dark-theme .mat-toolbar {
+background-color: black;
+color: white;
+}
+
+.dark-theme .mat-button {
+color: white;
+}
+
+.dark-theme .mat-card {
+background-color: #333;
+color: white;
+}
   
-  .dark-theme .mat-button {
-    color: white;
-  }
-  
-  .dark-theme .mat-card {
-    background-color: #333;
-    color: white;
-  }
-  
+.spaced-button {
+    margin-right: 16px; /* Adjust the value as needed */
+}
+
+/* Remove margin from the last button to prevent excess space */
+.spaced-button:last-child {
+    margin-right: 0;
+}
