@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BackendService } from '../../services/backend.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,7 +30,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   darkMode = false
-  constructor(private router:Router){
+  constructor(private router:Router,private backendService: BackendService,){
 
   }
 
@@ -56,5 +57,25 @@ export class NavbarComponent {
   }
   goToIntegrations(){
     this.router.navigate(['/integrations']);
+  }
+
+  shouldDisplayNavItems(): boolean {
+    const currentRoute = this.router.url;
+    return !currentRoute.includes('/login') && !currentRoute.includes('/register');
+  }
+
+  onLogout() {
+    this.backendService.logout().subscribe(
+      (response) => {
+        console.log('Logout successful', response);
+        // Clear the token from local storage
+        localStorage.removeItem('authToken');
+        // Redirect to the login page
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Logout failed', error);
+      }
+    );
   }
 }

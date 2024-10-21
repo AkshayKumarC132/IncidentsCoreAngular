@@ -5,6 +5,7 @@ import { BackendService } from '../../services/backend.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,12 +26,7 @@ export class DashboardComponent {
   incidents: any[] = [];
   isDarkMode : false | undefined
 
-  // incidents = [
-    // { id: 1, title: 'Server Down', description: 'Main server is down', status: 'Active', severity: 'High' },
-    // { id: 2, title: 'Router Issue', description: 'Router configuration needed', status: 'Resolved', severity: 'Medium' }
-    // // Add more incidents
-  // ];
-  constructor (private backendService:BackendService){
+  constructor (private backendService:BackendService, private route:Router){
   }
 
   ngOnInit(): void {
@@ -59,18 +55,17 @@ export class DashboardComponent {
         this.incidents = response.incident_data;  // This will contain the array of incidents
       },
       (error) => {
-        console.error('Error fetching data from API', error);
+        if (error.status === 401) {
+          // Redirect to the login page if the user is not authenticated
+          this.route.navigate(['/login']); // Adjust the route as necessary
+        } else {
+          console.error('Error fetching data from API', error);
+        }
       }
     );
   }
 
   toggleDarkMode() {
-    // Swal.fire({
-    //   title: 'Dark Mode toggled!',
-    //   text: 'This is just a mock for dark mode toggle.',
-    //   icon: 'info',
-    //   confirmButtonText: 'Ok'
-    // });
     document.body.classList.toggle('dark-mode');
   }
 

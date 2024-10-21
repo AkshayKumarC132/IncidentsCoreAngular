@@ -65,7 +65,7 @@ body {
   
   .styled-table {
     width: 100%;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }

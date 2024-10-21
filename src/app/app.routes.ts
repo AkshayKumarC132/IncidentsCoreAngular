@@ -16,16 +16,7 @@ export const routes: Routes = [
     { path: 'devices', component: DevicesComponent },
     { path: 'incidents', component: IncidentsComponent },
     { path: 'integrations', component: IntegrationsComponent },
-    { path: '',component: NavbarComponent},    
+    { path: '**', redirectTo: '/register', pathMatch: 'full' }, // Catch-all route
+    { path: '', redirectTo: '/register', pathMatch: 'full' }, // Optional: redirect to register page on startup
 
 ];
-
-
-// const routes: Routes = [
-//     { path: '', component: LoginComponent },
-//     { path: 'dashboard', component: DashboardComponent },
-//     { path: 'customers', component: CustomersComponent },
-//     { path: 'devices', component: DevicesComponent },
-//     { path: 'incidents', component: IncidentsComponent },
-//     { path: 'integrations', component: IntegrationsComponent },
-//   ];

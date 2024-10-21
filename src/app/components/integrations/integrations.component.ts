@@ -11,13 +11,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
-
+import { BackendService } from '../../services/backend.service';
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   standalone:true,
   selector: 'app-integrations',
   templateUrl: './integrations.component.html',
   styleUrls: ['./integrations.component.css'],
-
+  providers: [BackendService],
   imports: [
     // BrowserModule,
     // BrowserAnimationsModule,
@@ -31,6 +32,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
     FormsModule,
     CommonModule,
     NavbarComponent,
+    HttpClientModule
   ]
 })
 export class IntegrationsComponent {
