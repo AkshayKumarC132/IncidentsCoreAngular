@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select'; // Import MatSelectModule
 import { HttpClientModule } from '@angular/common/http';
 import { BackendService } from '../../services/backend.service';
 import { Incident } from '../../models/incident.model';
@@ -26,6 +27,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
     MatIconModule,
     MatFormFieldModule,
     FormsModule,
+    MatSelectModule,
     CommonModule,
     HttpClientModule,
     NavbarComponent,
@@ -37,12 +39,22 @@ import { NavbarComponent } from '../navbar/navbar.component';
 export class IncidentsComponent {
   incidents: Incident[] = [];
   newIncident: Incident = { id: 0, title: '', description: '', deviceId: 0, severity: '', status: '' };
+  devices: any[] = []; // Adjust type based on your response
+  severities: any[] = []; // Adjust type based on your response
 
   constructor(private backendService: BackendService) {}
 
   ngOnInit(): void {
     this.backendService.getIncidents().subscribe((incidents) => {
       this.incidents = incidents;
+    });
+    // Fetch devices and severities
+    this.backendService.getDevices().subscribe((devices) => {
+      this.devices = devices;
+    });
+
+    this.backendService.getSeverities().subscribe((severities) => {
+      this.severities = severities;
     });
   }
 

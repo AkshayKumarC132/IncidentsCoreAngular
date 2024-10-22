@@ -67,6 +67,11 @@ export class BackendService {
     return this.http.delete<void>(`${this.apiUrl}/customers/${customerId}/`, { headers });
   }
 
+  getSeverities(): Observable<string[]> { // Adjust the return type as needed
+    const headers = this.getAuthHeaders();
+    return this.http.get<string[]>(`${this.apiUrl}/severities/`,{ headers }); // Change URL as necessary
+  }
+
   // Device API calls
   getDevices(): Observable<Device[]> {
     const headers = this.getAuthHeaders();
@@ -96,7 +101,7 @@ export class BackendService {
 
   addIncident(incident: Incident): Observable<Incident> {
     const headers = this.getAuthHeaders();
-    return this.http.post<Incident>(`${this.apiUrl}/incidents`, incident, { headers });
+    return this.http.post<Incident>(`${this.apiUrl}/incidents/`, incident, { headers });
   }
 
   updateIncident(incident: Incident): Observable<Incident> {
