@@ -1,21 +1,49 @@
 <app-navbar></app-navbar>
 <h2>Manage Customers</h2>
+
+<!-- Display list of customers -->
 <ul>
-  <li *ngFor="let customer of customers">{{ customer.name }} - {{ customer.email }}</li>
+  <li *ngFor="let customer of customers"  style="list-style: none;">
+    <span style="margin-right: 20px;">
+        {{ customer.name }} - {{ customer.email }} - Assigned to: {{ customer.team_member ? customer.team_member.username : 'Unassigned' }}
+    </span>
+    <button mat-button color="warn" (click)="deleteCustomer(customer.id)">Delete</button>
+    <button mat-button color="primary" (click)="editCustomer(customer)">Edit</button>
+    <button mat-button color="accent" (click)="unassignClientFromTeam(customer.id)">Unassign</button>
+  </li>
 </ul>
+
+<!-- Form to add a new customer -->
 <mat-form-field>
-    <mat-label>Customer Name</mat-label>
-    <input matInput [(ngModel)]="newCustomer.name">
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput type="email" [(ngModel)]="newCustomer.email">
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-label>Phone</mat-label>
-    <input matInput [(ngModel)]="newCustomer.phone">
-  </mat-form-field>
-  
-  <button mat-raised-button color="primary" (click)="addCustomer()">Add Customer</button>
+  <mat-label>Customer Name</mat-label>
+  <input matInput [(ngModel)]="newCustomer.name" required>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Email</mat-label>
+  <input matInput type="email" [(ngModel)]="newCustomer.email" required>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Phone</mat-label>
+  <input matInput [(ngModel)]="newCustomer.phone" required>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>MSP Configuration</mat-label>
+    <mat-select [(ngModel)]="selectedMspId" required>
+        <mat-option *ngFor="let msp of msps" [value]="msp.id">{{ msp.type_name }}</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<!-- Dropdown to assign customer to a team member -->
+<mat-form-field>
+  <mat-label>Assign to Team Member</mat-label>
+  <mat-select [(ngModel)]="selectedTeamMemberId">
+    <mat-option *ngFor="let member of teamMembers" [value]="member.id">{{ member.username }} (USER ID:{{ member.id}})</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="addCustomer()">
+  {{ editMode ? 'Update Customer' : 'Add Customer' }}
+</button>

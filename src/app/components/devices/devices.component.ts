@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select'; // Import MatSelectModule
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +26,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
     MatListModule,
     MatIconModule,
     MatFormFieldModule,
+    MatSelectModule,
     FormsModule,
     CommonModule,
     HttpClientModule,
@@ -35,8 +37,10 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrl: './devices.component.css'
 })
 export class DevicesComponent {
-  devices: Device[] = [];
-  newDevice: Device = { id: 0, name: '', type: '', customerId: 0 };
+  newDevice: any = {}; // Object to hold new device data
+  devices: any[] = []; // Array to hold device data
+  customers: any[] = []; // Array to hold customer data
+  selectedCustomerId: any; // Variable to hold the selected customer ID
 
   constructor(private backendService: BackendService) {}
 
@@ -44,21 +48,31 @@ export class DevicesComponent {
     this.backendService.getDevices().subscribe((devices) => {
       this.devices = devices;
     });
-  }
-
-  addDevice(): void {
-    // console.log(this.newDevice);
-    // this.devices.push(this.newDevice);
-    // console.log(this.newDevice);
-    this.backendService.addDevice(this.newDevice).subscribe((device) => {
-      this.devices.push(device);
-      this.newDevice = { id: 0, name: '', type: '', customerId: 0 };  // Reset form
+    this.backendService.getCustomers().subscribe((customers) => {
+      this.customers = customers; // Correct assignment
     });
   }
 
-  deleteDevice(id: number): void {
-    this.backendService.deleteDevice(id).subscribe(() => {
-      this.devices = this.devices.filter(device => device.id !== id);
+  addDevice(): void {
+    if (this.newDevice && this.selectedCustomerId) {
+      const deviceToAdd = { 
+        name: this.newDevice.name, 
+        device_type: this.newDevice.type, 
+        ip_address: this.newDevice.ip_address, 
+        client_id: this.selectedCustomerId 
+      };
+
+      this.backendService.addDevice(deviceToAdd).subscribe(response => {
+        this.devices.push(response); // Add the newly created device to the local list
+        this.newDevice = {}; // Reset new device data
+        this.selectedCustomerId = null; // Reset selected customer ID after adding
+      });
+    }
+  }
+
+  deleteDevice(deviceId: number): void {
+    this.backendService.deleteDevice(deviceId).subscribe(() => {
+      this.devices = this.devices.filter(device => device.id !== deviceId); // Remove the deleted device from the local list
     });
   }
 

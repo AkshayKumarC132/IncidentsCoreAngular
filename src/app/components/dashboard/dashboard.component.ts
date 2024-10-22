@@ -24,6 +24,7 @@ export class DashboardComponent {
   activeIncidents: number = 0;
   resolvedIncidents: number = 0;
   incidents: any[] = [];
+  role: string = '';  // Track the user role
   isDarkMode : false | undefined
 
   constructor (private backendService:BackendService, private route:Router){
@@ -31,6 +32,27 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.getApiData();
+  }
+
+  // Fetch role-based data from the backend
+  getApiData(): void {
+    this.backendService.getIncidentData().subscribe(
+      (response) => {
+        this.totalCustomers = response.total_customers;
+        this.totalDevices = response.total_devices;
+        this.activeIncidents = response.active_incidents;
+        this.resolvedIncidents = response.resolved_incidents;
+        this.incidents = response.incident_data;
+        this.role = response.role;  // Fetch and store the user role
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.route.navigate(['/login']);
+        } else {
+          console.error('Error fetching data from API', error);
+        }
+      }
+    );
   }
 
   getSeverityLabel(severity_id: number): string {
@@ -42,32 +64,8 @@ export class DashboardComponent {
       default: return 'Unknown';
     }
   }
-  
-  // Function to get API data and assign it to a variable
-  getApiData(): void {
-    this.backendService.getIncidentData().subscribe(
-      (response) => {
-        // Assuming your API returns the following structure
-        this.totalCustomers = response.total_customers;
-        this.totalDevices = response.total_devices;
-        this.activeIncidents = response.active_incidents;
-        this.resolvedIncidents = response.resolved_incidents;
-        this.incidents = response.incident_data;  // This will contain the array of incidents
-      },
-      (error) => {
-        if (error.status === 401) {
-          // Redirect to the login page if the user is not authenticated
-          this.route.navigate(['/login']); // Adjust the route as necessary
-        } else {
-          console.error('Error fetching data from API', error);
-        }
-      }
-    );
-  }
 
   toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
   }
-
-
 }

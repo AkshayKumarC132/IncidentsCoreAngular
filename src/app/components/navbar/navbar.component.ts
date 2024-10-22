@@ -78,4 +78,10 @@ export class NavbarComponent {
       }
     );
   }
+
+  // Method to navigate to Team component
+  goToTeam(): void {
+    this.router.navigate(['/team']);
+  }
+  
 }

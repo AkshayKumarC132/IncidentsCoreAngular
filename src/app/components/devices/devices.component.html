@@ -1,30 +1,40 @@
 <app-navbar></app-navbar>
 <div class="neumorphic">
-<h2>Manage Devices</h2>
-<mat-form-field>
-  <mat-label>Device Name</mat-label>
-  <input matInput [(ngModel)]="newDevice.name">
-</mat-form-field>
+  <h2>Manage Devices</h2>
+  
+  <mat-form-field>
+    <mat-label>Device Name</mat-label>
+    <input matInput [(ngModel)]="newDevice.name" required>
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Device Type</mat-label>
-  <input matInput [(ngModel)]="newDevice.type">
-</mat-form-field>
+  <mat-form-field>
+    <mat-label>Device Type</mat-label>
+    <input matInput [(ngModel)]="newDevice.type" required>
+  </mat-form-field>
 
-<mat-form-field>
-  <mat-label>Customer ID</mat-label>
-  <input matInput type="number" [(ngModel)]="newDevice.customerId">
-</mat-form-field>
+  <mat-form-field>
+    <mat-label>IP Address</mat-label>
+    <input matInput [(ngModel)]="newDevice.ip_address" required>
+  </mat-form-field>
 
-<button mat-raised-button color="primary" (click)="addDevice()">Add Device</button>
+  <mat-form-field>
+    <mat-label>Customer</mat-label>
+    <mat-select [(ngModel)]="selectedCustomerId" required>
+      <mat-option *ngFor="let customer of customers" [value]="customer.id">
+        {{ customer.name }} (ID: {{ customer.id }})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<h3>Device List</h3>
-<mat-list>
-  <mat-list-item *ngFor="let device of devices">
-    {{ device.name }} - {{ device.type }}
-    <button mat-icon-button (click)="deleteDevice(device.id)">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </mat-list-item>
-</mat-list>
+  <button mat-raised-button color="primary" (click)="addDevice()">Add Device</button>
+
+  <h3>Device List</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let device of devices" class="text">
+      {{ device.name }} - {{ device.device_type }} (Customer ID: {{ device.client }})
+      <button mat-icon-button (click)="deleteDevice(device.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
 </div>

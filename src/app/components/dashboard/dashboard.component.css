@@ -47,7 +47,7 @@ body {
   .card p {
     font-size: 28px;
     font-weight: 700;
-    color: #007bff;
+    /* color: #007bff; */
     margin: 10px 0 0;
   }
   
@@ -149,10 +149,10 @@ body {
     font-size: 20px;
   }
   
-  .styled-table thead tr {
+  /* .styled-table thead tr {
     background-color: var(--table-header-bg);
     color: #fff;
-  }
+  } */
   
   .styled-table tbody tr:hover {
     background-color: var(--table-row-hover-bg);
