@@ -13,10 +13,8 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root'
 })
 export class BackendService {
-  post(arg0: string, payload: { company_id: string; public_key: string; private_key: string; client_id: string; instance_url: string; }) {
-    throw new Error('Method not implemented.');
-  }
   private apiUrl = 'http://127.0.0.1:5000/api';  // Your backend API URL
+  // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
 
   constructor(private http: HttpClient) { }
 
