@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-// import { BrowserModule } from '@angular/platform-browser';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -20,8 +18,6 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrls: ['./integrations.component.css'],
   providers: [BackendService],
   imports: [
-    // BrowserModule,
-    // BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -36,12 +32,90 @@ import { HttpClientModule } from '@angular/common/http';
   ]
 })
 export class IntegrationsComponent {
-  connectWiseApiKey = '';
-  haloPsaApiKey = '';
+  // Form states
+  integrationType: string = 'ConnectWise';  // Default to ConnectWise
+  connectWiseForm = {
+    company_id: '',
+    public_key: '',
+    private_key: '',
+    client_id: '',
+    instance_url: ''
+  };
+  haloPSAForm = {
+    instance_url: '',
+    client_id: '',
+    client_secret: ''
+  };
 
-  saveIntegration(serviceName: string, apiKey: string) {
-    // Logic to save the API key for the specific service (e.g., ConnectWise, HaloPSA)
-    // alert(${serviceName} API key saved: ${apiKey});
-    alert("Saved Successful")
+  // Message and success state
+  message: string = '';
+  success: boolean = false;
+
+  constructor(private backendService: BackendService) {}
+
+  // Function to submit the form
+  submitIntegrationForm() {
+    if (this.integrationType === 'ConnectWise') {
+      this.saveConnectWiseIntegration();
+    } else if (this.integrationType === 'HaloPSA') {
+      this.saveHaloPSAIntegration();
+    }
+  }
+
+  // Function to save ConnectWise integration
+  saveConnectWiseIntegration() {
+    const payload = {
+      company_id: this.connectWiseForm.company_id,
+      public_key: this.connectWiseForm.public_key,
+      private_key: this.connectWiseForm.private_key,
+      client_id: this.connectWiseForm.client_id,
+      instance_url: this.connectWiseForm.instance_url  // Ensure this is being set
+    };
+    console.log(payload)
+
+    this.backendService.saveConnectWiseIntegration(payload).subscribe(
+      (response: any) => {
+        this.message = response.message;
+        this.success = true;
+      },
+      (error: any) => {
+        this.message = error.error.message || 'Failed to save ConnectWise integration';
+        this.success = false;
+      }
+    );
+  }
+
+  // Function to save HaloPSA integration
+  saveHaloPSAIntegration() {
+    const payload = {
+      instance_url: this.haloPSAForm.instance_url,
+      client_id: this.haloPSAForm.client_id,
+      client_secret: this.haloPSAForm.client_secret
+    };
+
+    this.backendService.saveHaloPSAIntegration(payload).subscribe(
+      (response: any) => {
+        this.message = response.message;
+        this.success = true;
+      },
+      (error: any) => {
+        this.message = error.error.message || 'Failed to save HaloPSA integration';
+        this.success = false;
+      }
+    );
+  }
+
+  // Function to fetch data
+  fetchData() {
+    this.backendService.fetchData().subscribe(
+      (response: any) => {
+        this.message = 'Data fetched successfully';
+        this.success = true;
+      },
+      (error: any) => {
+        this.message = 'Failed to fetch data';
+        this.success = false;
+      }
+    );
   }
 }

@@ -13,6 +13,9 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root'
 })
 export class BackendService {
+  post(arg0: string, payload: { company_id: string; public_key: string; private_key: string; client_id: string; instance_url: string; }) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://127.0.0.1:5000/api';  // Your backend API URL
 
   constructor(private http: HttpClient) { }
@@ -24,6 +27,10 @@ export class BackendService {
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+    if (!token) {
+      console.error('No auth token found!');
+      return new HttpHeaders();
+    }
     return new HttpHeaders().set('Authorization', `Token ${token}`);
   }
 
@@ -193,5 +200,23 @@ export class BackendService {
   getMsps(): Observable<Msp[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<Msp[]>(`${this.apiUrl}/msps/`, { headers });
+  }
+
+  // Function to save ConnectWise integration
+  saveConnectWiseIntegration(payload: any): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/connectwise/setup/`, payload, { headers });
+  }
+
+  // Function to save HaloPSA integration
+  saveHaloPSAIntegration(payload: any): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/halopsa/setup/`, payload, { headers });
+  }
+
+  // Function to fetch data
+  fetchData(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/fetch-data/`,  { headers });
   }
 }

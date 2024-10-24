@@ -1,16 +1,53 @@
 <app-navbar></app-navbar>
-<h2>Integrations</h2>
+<div class="integration-container">
+  <h2>Integration Setup</h2>
 
-<h3>ConnectWise</h3>
-<mat-form-field>
-  <mat-label>ConnectWise API Key</mat-label>
-  <input matInput [(ngModel)]="connectWiseApiKey">
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="saveIntegration('ConnectWise', connectWiseApiKey)">Save ConnectWise Integration</button>
+  <!-- Select Integration Type -->
+  <div class="form-group">
+    <label for="integration-type">Select Integration Type</label>
+    <select [(ngModel)]="integrationType" class="form-control" id="integration-type">
+      <option value="ConnectWise">ConnectWise</option>
+      <option value="HaloPSA">HaloPSA</option>
+    </select>
+  </div>
 
-<h3>HaloPSA</h3>
-<mat-form-field>
-  <mat-label>HaloPSA API Key</mat-label>
-  <input matInput [(ngModel)]="haloPsaApiKey">
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="saveIntegration('HaloPSA', haloPsaApiKey)">Save HaloPSA Integration</button>
+  <!-- Form Fields for ConnectWise -->
+  <div *ngIf="integrationType === 'ConnectWise'" class="form-group">
+    <label for="company_id">Company ID</label>
+    <input type="text" [(ngModel)]="connectWiseForm.company_id" class="form-control" id="company_id">
+
+    <label for="public_key">Public Key</label>
+    <input type="text" [(ngModel)]="connectWiseForm.public_key" class="form-control" id="public_key">
+
+    <label for="private_key">Private Key</label>
+    <input type="text" [(ngModel)]="connectWiseForm.private_key" class="form-control" id="private_key">
+
+    <label for="client_id">Client ID</label>
+    <input type="text" [(ngModel)]="connectWiseForm.client_id" class="form-control" id="client_id">
+
+    <label for="instance_url">Site URL</label>
+    <input type="text" [(ngModel)]="connectWiseForm.instance_url" class="form-control" id="instance_url">
+  </div>
+
+  <!-- Form Fields for HaloPSA -->
+  <div *ngIf="integrationType === 'HaloPSA'" class="form-group">
+    <label for="instance_url">Instance URL</label>
+    <input type="text" [(ngModel)]="haloPSAForm.instance_url" class="form-control" id="instance_url">
+
+    <label for="client_id">Client ID</label>
+    <input type="text" [(ngModel)]="haloPSAForm.client_id" class="form-control" id="client_id">
+
+    <label for="client_secret">Client Secret</label>
+    <input type="text" [(ngModel)]="haloPSAForm.client_secret" class="form-control" id="client_secret">
+  </div>
+
+  <!-- Submit Button -->
+  <button (click)="submitIntegrationForm()" class="btn btn-primary">
+    Save Integration
+  </button>
+
+  <!-- Display Success or Error Messages -->
+  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': success, 'alert-danger': !success}">
+    {{ message }}
+  </div>
+</div>
