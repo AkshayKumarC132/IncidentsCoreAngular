@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
-<div class="integration-container">
+<div [ngClass]="{'integration-container': true, 'dark-mode': isDarkMode}">
   <h2>Integration Setup</h2>
 
   <!-- Select Integration Type -->
   <div class="form-group">
     <label for="integration-type">Select Integration Type</label>
-    <select [(ngModel)]="integrationType" class="form-control" id="integration-type">
+    <select [(ngModel)]="integrationType" class="form-control" id="integration-type" required>
       <option value="ConnectWise">ConnectWise</option>
       <option value="HaloPSA">HaloPSA</option>
     </select>
@@ -14,35 +14,43 @@
   <!-- Form Fields for ConnectWise -->
   <div *ngIf="integrationType === 'ConnectWise'" class="form-group">
     <label for="company_id">Company ID</label>
-    <input type="text" [(ngModel)]="connectWiseForm.company_id" class="form-control" id="company_id">
+    <input type="text" [(ngModel)]="connectWiseForm.company_id" class="form-control" id="company_id" required>
+    <div *ngIf="!connectWiseForm.company_id" class="text-danger">Company ID is required.</div>
 
     <label for="public_key">Public Key</label>
-    <input type="text" [(ngModel)]="connectWiseForm.public_key" class="form-control" id="public_key">
+    <input type="text" [(ngModel)]="connectWiseForm.public_key" class="form-control" id="public_key" required>
+    <div *ngIf="!connectWiseForm.public_key" class="text-danger">Public Key is required.</div>
 
     <label for="private_key">Private Key</label>
-    <input type="text" [(ngModel)]="connectWiseForm.private_key" class="form-control" id="private_key">
+    <input type="text" [(ngModel)]="connectWiseForm.private_key" class="form-control" id="private_key" required>
+    <div *ngIf="!connectWiseForm.private_key" class="text-danger">Private Key is required.</div>
 
     <label for="client_id">Client ID</label>
-    <input type="text" [(ngModel)]="connectWiseForm.client_id" class="form-control" id="client_id">
+    <input type="text" [(ngModel)]="connectWiseForm.client_id" class="form-control" id="client_id" required>
+    <div *ngIf="!connectWiseForm.client_id" class="text-danger">Client ID is required.</div>
 
     <label for="instance_url">Site URL</label>
-    <input type="text" [(ngModel)]="connectWiseForm.instance_url" class="form-control" id="instance_url">
+    <input type="text" [(ngModel)]="connectWiseForm.instance_url" class="form-control" id="instance_url" required>
+    <div *ngIf="!connectWiseForm.instance_url" class="text-danger">Site URL is required.</div>
   </div>
 
   <!-- Form Fields for HaloPSA -->
   <div *ngIf="integrationType === 'HaloPSA'" class="form-group">
     <label for="instance_url">Instance URL</label>
-    <input type="text" [(ngModel)]="haloPSAForm.instance_url" class="form-control" id="instance_url">
+    <input type="text" [(ngModel)]="haloPSAForm.instance_url" class="form-control" id="instance_url" required>
+    <div *ngIf="!haloPSAForm.instance_url" class="text-danger">Instance URL is required.</div>
 
     <label for="client_id">Client ID</label>
-    <input type="text" [(ngModel)]="haloPSAForm.client_id" class="form-control" id="client_id">
+    <input type="text" [(ngModel)]="haloPSAForm.client_id" class="form-control" id="client_id" required>
+    <div *ngIf="!haloPSAForm.client_id" class="text-danger">Client ID is required.</div>
 
     <label for="client_secret">Client Secret</label>
-    <input type="text" [(ngModel)]="haloPSAForm.client_secret" class="form-control" id="client_secret">
+    <input type="text" [(ngModel)]="haloPSAForm.client_secret" class="form-control" id="client_secret" required>
+    <div *ngIf="!haloPSAForm.client_secret" class="text-danger">Client Secret is required.</div>
   </div>
 
   <!-- Submit Button -->
-  <button (click)="submitIntegrationForm()" class="btn btn-primary">
+  <button (click)="submitIntegrationForm()" [disabled]="!isFormValid && submitted === false" class="btn btn-primary">
     Save Integration
   </button>
 

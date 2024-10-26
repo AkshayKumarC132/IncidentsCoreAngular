@@ -6,6 +6,13 @@
     --shadow-color-dark: rgba(163, 177, 198, 0.8);  /* Shadow color */
     --shadow-color-light: rgba(255, 255, 255, 0.7); /* Highlight color */
     --icon-shadow-color: rgba(0, 123, 255, 0.5);   /* Custom shadow for icons */
+
+    /* Table colors for light mode */
+    --table-bg: #fff;
+    --table-header-bg: #f4f4f4;
+    --table-border-color: #ddd;
+    --table-text-color: #333;
+
   }
   
   /* Dark Mode Variables */
@@ -16,6 +23,12 @@
     --shadow-color-dark: rgba(50, 50, 50, 0.9);
     --shadow-color-light: rgba(50, 50, 50, 0.5);
     --icon-shadow-color: rgba(102, 178, 255, 0.5); /* Custom shadow for icons in dark mode */
+
+    /* Table colors for dark mode */
+    --table-bg: #333;
+    --table-header-bg: #444;
+    --table-border-color: #555;
+    --table-text-color: #eee;
   }
   
   /* Global Body Styles */

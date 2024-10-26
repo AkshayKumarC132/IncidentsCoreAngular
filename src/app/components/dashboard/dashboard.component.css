@@ -176,51 +176,25 @@ canvas.bar-chart {
   max-height: 450px;
 }
 
-/* Styles for the drilldown component */
-.drilldown {
-    margin: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.drilldown h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 15px;
-}
-
+/* Base styles for the drill-down table */
 .drilldown table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.drilldown th, .drilldown td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--table-bg);
+  border: 1px solid var(--table-border-color);
 }
 
 .drilldown th {
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white;
-}
-
-.drilldown tr:hover {
-    background-color: #f1f1f1; /* Light grey on hover */
+  padding: 8px 12px;
+  background-color: var(--table-header-bg);
+  color: var(--table-text-color);
+  text-align: left;
+  border: 1px solid var(--table-border-color);
 }
 
 .drilldown td {
-    color: #555; /* Dark grey for text */
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .drilldown table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
+  padding: 8px 12px;
+  background-color: var(--table-bg);
+  color: var(--table-text-color);
+  border: 1px solid var(--table-border-color);
 }

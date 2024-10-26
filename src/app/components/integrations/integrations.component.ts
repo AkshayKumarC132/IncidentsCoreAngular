@@ -46,19 +46,39 @@ export class IntegrationsComponent {
     client_id: '',
     client_secret: ''
   };
+  isDarkMode: boolean = false;
 
   // Message and success state
   message: string = '';
   success: boolean = false;
+  submitted: boolean = false; // Track if the form has been submitted
 
   constructor(private backendService: BackendService) {}
 
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+  }
+  get isFormValid(): boolean {
+    if (this.integrationType === 'ConnectWise') {
+      return Object.values(this.connectWiseForm).every(field => field.trim() !== '');
+    } else if (this.integrationType === 'HaloPSA') {
+      return Object.values(this.haloPSAForm).every(field => field.trim() !== '');
+    }
+    return false;
+  }
+
   // Function to submit the form
   submitIntegrationForm() {
+    this.submitted = true; // Set submitted to true on form submission
+    if (this.isFormValid) {
     if (this.integrationType === 'ConnectWise') {
       this.saveConnectWiseIntegration();
     } else if (this.integrationType === 'HaloPSA') {
       this.saveHaloPSAIntegration();
+    }
+    } else {
+      this.message = 'Please fill all required fields.';
+      this.success = false;
     }
   }
 
