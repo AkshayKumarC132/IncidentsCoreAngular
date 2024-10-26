@@ -1,0 +1,57 @@
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  /* Compact Layout */
+  body.compact-layout .dashboard {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+  
+  /* Spacious Layout */
+  body.spacious-layout .dashboard {
+    padding: 30px;
+    font-size: 1.2em;
+  }
+
+  /* Default Neumorphism Colors */
+:root {
+  --background-color: #e0e5ec;
+  --shadow-color: #a3b1c6;
+}
+
+/* Dark Mode (Optional) */
+body.dark-mode {
+  --background-color: #1a1a1a;
+  --shadow-color: #333;
+}
+
+/* Neumorphic Container */
+.neumorphic {
+  background: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 8px 8px 15px var(--shadow-color),
+              -8px -8px 15px #ffffff;
+  padding: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Example Button with Neumorphism */
+.neumorphic-button {
+  background: var(--background-color);
+  border-radius: 12px;
+  box-shadow: 5px 5px 10px var(--shadow-color),
+              -5px -5px 10px #ffffff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.neumorphic-button:hover {
+  box-shadow: 2px 2px 5px var(--shadow-color),
+              -2px -2px 5px #ffffff;
+}

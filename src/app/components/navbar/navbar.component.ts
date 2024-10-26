@@ -83,5 +83,9 @@ export class NavbarComponent {
   goToTeam(): void {
     this.router.navigate(['/team']);
   }
+
+  goToProfile(){
+    this.router.navigate(['/profile']);
+  }
   
 }

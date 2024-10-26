@@ -8,6 +8,7 @@ import { IntegrationsComponent } from './components/integrations/integrations.co
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TeamComponent } from './components/team/team.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'incidents', component: IncidentsComponent },
     { path: 'integrations', component: IntegrationsComponent },
     { path: 'team', component: TeamComponent },  // Add the Team route
+    { path: 'profile', component: ProfileComponent }, 
     { path: '', redirectTo: '/register', pathMatch: 'full' }, // Optional: redirect to register page on startup
     { path: '**', redirectTo: '/register', pathMatch: 'full' }, // Catch-all route
 

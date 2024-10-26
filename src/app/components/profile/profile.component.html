@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<h2>My Profile</h2>
+<form [formGroup]="profileForm" (ngSubmit)="savePreferences()">
+  <!-- Theme Selection -->
+  <div>
+    <label for="theme">Theme:</label>
+    <select formControlName="theme" id="theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+
+  <!-- Notifications Toggle -->
+  <div>
+    <label for="notifications">Notifications:</label>
+    <input type="checkbox" formControlName="notifications" id="notifications" />
+    Receive Notifications
+  </div>
+
+  <!-- Layout Selection -->
+  <div>
+    <label for="layout">Layout:</label>
+    <select formControlName="layout" id="layout">
+      <option value="default">Default Layout</option>
+      <option value="compact">Compact Layout</option>
+      <option value="spacious">Spacious Layout</option>
+    </select>
+  </div>
+
+  <!-- Neumorphism Background Color Picker -->
+  <div>
+    <label for="backgroundColor">Background Color:</label>
+    <input type="color" formControlName="backgroundColor" id="backgroundColor" />
+  </div>
+
+  <!-- Neumorphism Shadow Color Picker -->
+  <div>
+    <label for="shadowColor">Shadow Color:</label>
+    <input type="color" formControlName="shadowColor" id="shadowColor" />
+  </div>
+
+  <button type="submit">Save Preferences</button>
+</form>
