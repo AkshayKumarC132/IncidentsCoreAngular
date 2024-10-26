@@ -1,10 +1,6 @@
 <app-navbar></app-navbar>
-<div class="dashboard-container">
-  <div class="header">
-    <h1>Dashboard</h1>
-    <h3 *ngIf="role">Welcome, {{ role }}</h3> <!-- Welcome the user based on their role -->
-  </div>
-
+<div class="dashboard">
+  <h1>Dashboard Overview</h1>
   <div class="dashboard-grid">
     <div class="card">
       <h3>Total Customers</h3>
@@ -26,26 +22,38 @@
       <p>{{ resolvedIncidents }}</p>
     </div>
   </div>
+  <!-- Chart for Incident Severities -->
+  <div>
+    <h3>Incidents by Severity</h3>
+    <canvas baseChart class="pie-chart" [datasets]="severityChartData" [labels]="severityChartLabels" [type]="'pie'"
+      (click)="onNativeChartClick('severity', $event)">
+    </canvas>
+  </div>
 
-  <div class="table-section">
+  <div>
+    <h3>Incidents by Device</h3>
+    <canvas baseChart class="bar-chart" [datasets]="deviceChartData" [labels]="deviceChartLabels" [type]="'bar'"
+      (click)="onNativeChartClick('device', $event)">
+    </canvas>
+  </div>
+
+  <div *ngIf="drillDownData.length > 0" class="drilldown">
     <h2>Incident Details</h2>
-    <table class="styled-table">
+    <table>
       <thead>
         <tr>
-          <th>Incident ID</th>
           <th>Title</th>
-          <th>Description</th>
-          <th>Status</th>
+          <th>Device</th>
           <th>Severity</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let incident of incidents">
-          <td>{{ incident.id }}</td>
+        <tr *ngFor="let incident of drillDownData">
           <td>{{ incident.title }}</td>
-          <td>{{ incident.description }}</td>
+          <td>{{ incident.device__name }}</td>
+          <td>{{ incident.severity__level }}</td>
           <td>{{ incident.resolved ? 'Resolved' : 'Active' }}</td>
-          <td>{{ getSeverityLabel(incident.severity_id) }}</td>
         </tr>
       </tbody>
     </table>

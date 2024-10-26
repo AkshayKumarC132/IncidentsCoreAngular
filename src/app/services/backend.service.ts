@@ -217,4 +217,28 @@ export class BackendService {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/fetch-data/`,  { headers });
   }
+
+
+  // Fetch the high-level summary from the backend
+  getDashboardSummary(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<any>(`${this.apiUrl}/dashboard-summary/`, { headers });
+  }
+
+  // Fetch detailed incidents based on status (active/resolved)
+  getIncidentsByStatus(status: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/incidents/status/${status}/`,{ headers });
+  }
+
+  getIncidentsByDevice(severity: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/incidents/device/${severity}/`,{ headers });
+  }
+  
+  getIncidentsBySeverity(device: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/incidents/severity/${device}/`,{ headers });
+}
+
 }

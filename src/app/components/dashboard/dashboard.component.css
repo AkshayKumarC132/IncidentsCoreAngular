@@ -157,3 +157,70 @@ body {
   .styled-table tbody tr:hover {
     background-color: var(--table-row-hover-bg);
   }
+
+/* Set chart size for pie chart */
+canvas {
+  max-width: 700px;  /* Adjust the width as needed */
+  max-height: 400px; /* Adjust the height as needed */
+  margin: 0 auto;    /* Center the chart */
+}
+
+/* Specific adjustments for different charts */
+canvas.pie-chart {
+  max-width: 600px;
+  max-height: 400px;
+}
+
+canvas.bar-chart {
+  max-width: 800px;
+  max-height: 450px;
+}
+
+/* Styles for the drilldown component */
+.drilldown {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.drilldown h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.drilldown table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.drilldown th, .drilldown td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.drilldown th {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+}
+
+.drilldown tr:hover {
+    background-color: #f1f1f1; /* Light grey on hover */
+}
+
+.drilldown td {
+    color: #555; /* Dark grey for text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .drilldown table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
