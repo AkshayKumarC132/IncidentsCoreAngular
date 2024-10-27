@@ -55,6 +55,18 @@ export class NavbarComponent implements OnInit {
           console.log(this.logoUrl)
           this.logoUrl = `${this.backendService.getApiUrl()}${preferences.logo_url}`;
           console.log(this.logoUrl)
+          this.menuPosition = preferences.menu_position;
+          // Apply theme
+          document.body.classList.toggle('dark-mode', preferences.theme === 'dark');
+
+          // Set CSS variables for background and shadow colors
+          document.documentElement.style.setProperty('--background-color', preferences.background_color);
+          document.documentElement.style.setProperty('--shadow-color', preferences.shadow_color);
+
+          // Adjust layout if needed (for compact or spacious layouts)
+          document.body.classList.toggle('compact-layout', preferences.layout === 'compact');
+          document.body.classList.toggle('spacious-layout', preferences.layout === 'spacious');
+          this.applyLayoutClass();
         }
         // Set other preferences if needed
       },
@@ -62,6 +74,18 @@ export class NavbarComponent implements OnInit {
         console.error('Error fetching user preferences', error);
       }
     );
+  }
+
+  applyLayoutClass() {
+    // Remove any existing layout class first
+    document.body.classList.remove('left-menu-active', 'top-menu-active');
+    
+    // Apply the layout class based on menu position
+    if (this.menuPosition === 'left') {
+      document.body.classList.add('left-menu-active');
+    } else {
+      document.body.classList.add('top-menu-active');
+    }
   }
   
   goToDashboard(){
@@ -91,6 +115,9 @@ export class NavbarComponent implements OnInit {
         console.log('Logout successful', response);
         // Clear the token from local storage
         localStorage.removeItem('authToken');
+
+        // Reset theme and layout preferences
+        this.resetUserPreferences();
         // Redirect to the login page
         this.router.navigate(['/login']);
       },
@@ -99,6 +126,16 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
+
+  resetUserPreferences() {
+    // Remove CSS variables
+    document.documentElement.style.removeProperty('--background-color');
+    document.documentElement.style.removeProperty('--shadow-color');
+    // Remove theme classes
+    document.body.classList.remove('dark-mode');
+    document.body.classList.remove('compact-layout');
+    document.body.classList.remove('spacious-layout');
+}
 
   // Method to navigate to Team component
   goToTeam(): void {
