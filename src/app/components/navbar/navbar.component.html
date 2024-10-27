@@ -1,4 +1,5 @@
 <mat-toolbar color="primary">
+  <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
     <span>Incidents Core</span>
     <span class="spacer"></span>
     <ng-container *ngIf="shouldDisplayNavItems()">

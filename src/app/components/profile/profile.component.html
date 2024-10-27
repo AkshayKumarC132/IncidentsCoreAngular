@@ -27,16 +27,31 @@
     </select>
   </div>
 
+  <!-- Menu Position -->
+  <!-- <div>
+    <label for="menu_position">Menu Position:</label>
+    <select formControlName="menu_position" id="menu_position">
+      <option value="top">Top</option>
+      <option value="left">Left</option>
+    </select>
+  </div> -->
+
   <!-- Neumorphism Background Color Picker -->
   <div>
-    <label for="backgroundColor">Background Color:</label>
-    <input type="color" formControlName="backgroundColor" id="backgroundColor" />
+    <label for="background_color">Background Color:</label>
+    <input type="color" formControlName="background_color" id="background_color" />
   </div>
 
   <!-- Neumorphism Shadow Color Picker -->
   <div>
-    <label for="shadowColor">Shadow Color:</label>
-    <input type="color" formControlName="shadowColor" id="shadowColor" />
+    <label for="shadow_color">Shadow Color:</label>
+    <input type="color" formControlName="shadow_color" id="shadow_color" />
+  </div>
+
+  <!-- Logo Upload -->
+  <div>
+    <label for="logo_url">Upload Logo:</label>
+    <input type="file" (change)="onFileChange($event)" />
   </div>
 
   <button type="submit">Save Preferences</button>

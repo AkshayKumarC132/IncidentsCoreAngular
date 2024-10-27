@@ -20,14 +20,16 @@ import { HttpClientModule } from '@angular/common/http';
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private backendService:BackendService) {
     // Initialize the form with default values
     this.profileForm = this.fb.group({
       theme: ['light'],
       notifications: [true],
       layout: ['default'],
-      backgroundColor: ['#e0e5ec'],  // Default background color for neumorphism
-      shadowColor: ['#a3b1c6'],      // Default shadow color for neumorphism
+      background_color: ['#e0e5ec'],// Default background color for neumorphism
+      shadow_color: ['#a3b1c6'], // Default shadow color for neumorphism
+      menu_position: ['top'],// Default menu Options
+      logo_url: [null]
     });
   }
 
@@ -37,20 +39,34 @@ export class ProfileComponent implements OnInit {
 
   // Load preferences if previously saved
   loadUserPreferences() {
-    const savedPreferences = JSON.parse(localStorage.getItem('userPreferences') || '{}');
-    if (savedPreferences) {
-      this.profileForm.patchValue(savedPreferences);
-    }
+    this.backendService.getUserPreferences().subscribe(
+      (preferences) => {
+        this.profileForm.patchValue(preferences);
+        console.log(this.profileForm)
+      },
+      (error) => console.error("Error loading preferences:", error)
+    );
   }
 
-  // Save preferences
   savePreferences() {
     const preferences = this.profileForm.value;
-    localStorage.setItem('userPreferences', JSON.stringify(preferences));
-    console.log('Preferences saved:', preferences);
-    alert('Preferences saved!');
-    // Apply the preferences immediately
-    this.applyUserPreferences(preferences);
+    if (this.profileForm.get('logo_url')?.value instanceof File) {
+      preferences.logo_url = this.profileForm.get('logo_url')?.value;
+    }
+
+    this.backendService.saveUserPreferences(preferences).subscribe(
+      (response) => {
+        console.log(response)
+        alert('Preferences saved successfully!');
+        // Apply the preferences immediately
+        this.applyUserPreferences(preferences);
+      },
+      (error) => console.error("Error saving preferences:", error)
+    );
+  }
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    this.profileForm.patchValue({ logo_url: file });
   }
   // Apply preferences dynamically
   applyUserPreferences(preferences: any) {
@@ -58,8 +74,8 @@ export class ProfileComponent implements OnInit {
     document.body.classList.toggle('dark-mode', preferences.theme === 'dark');
 
     // Set CSS variables for background and shadow colors
-    document.documentElement.style.setProperty('--background-color', preferences.backgroundColor);
-    document.documentElement.style.setProperty('--shadow-color', preferences.shadowColor);
+    document.documentElement.style.setProperty('--background-color', preferences.background_color);
+    document.documentElement.style.setProperty('--shadow-color', preferences.shadow_color);
 
     // Adjust layout if needed (for compact or spacious layouts)
     document.body.classList.toggle('compact-layout', preferences.layout === 'compact');

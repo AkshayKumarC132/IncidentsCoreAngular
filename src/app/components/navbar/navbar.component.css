@@ -1,18 +1,18 @@
 .spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
-  
+
 .dark-theme {
-    background-color: #303030;
-    color: white;
+  background-color: #303030;
+  color: white;
 }
 
 /* Simplified dark theme styles */
 /* .dark-theme {
-    background-color: black !important;
-    color: white !important;
-  } */
-  
+  background-color: black !important;
+  color: white !important;
+} */
+
 .dark-theme .mat-toolbar {
 background-color: black;
 color: white;
@@ -26,12 +26,19 @@ color: white;
 background-color: #333;
 color: white;
 }
-  
+
 .spaced-button {
-    margin-right: 16px; /* Adjust the value as needed */
+  margin-right: 16px; /* Adjust the value as needed */
 }
 
 /* Remove margin from the last button to prevent excess space */
 .spaced-button:last-child {
-    margin-right: 0;
+  margin-right: 0;
+}
+
+/* Logo styling */
+.company-logo {
+  max-width: 50px; /* Adjust width as needed */
+  margin-right: 15px;
+  display: inline-block;
 }

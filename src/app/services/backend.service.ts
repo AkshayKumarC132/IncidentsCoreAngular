@@ -13,10 +13,14 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root'
 })
 export class BackendService {
-  // private apiUrl = 'http://127.0.0.1:5000/api';  // Your backend API URL
-  private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
+  private apiUrl = 'http://127.0.0.1:5000/api';  // Your backend API URL
+  // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
 
   constructor(private http: HttpClient) { }
+
+  public getApiUrl(): string {
+    return this.apiUrl;
+}
 
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error);
@@ -239,6 +243,22 @@ export class BackendService {
   getIncidentsBySeverity(device: string): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/incidents/severity/${device}/`,{ headers });
+}
+
+getUserPreferences(): Observable<any> {
+  const headers = this.getAuthHeaders();
+  return this.http.get(`${this.apiUrl}/user/preferences/`, { headers });
+}
+
+saveUserPreferences(preferences: any): Observable<any> {
+  const headers = this.getAuthHeaders();
+  const formData = new FormData();
+  for (const key in preferences) {
+    if (preferences.hasOwnProperty(key)) {
+      formData.append(key, preferences[key]);
+    }
+  }
+  return this.http.post(`${this.apiUrl}/user/preferences/update/`, formData, { headers });
 }
 
 }
