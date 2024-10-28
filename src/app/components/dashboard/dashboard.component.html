@@ -23,18 +23,20 @@
     </div>
   </div>
   <!-- Chart for Incident Severities -->
-  <div>
-    <h3>Incidents by Severity</h3>
-    <canvas baseChart class="pie-chart" [datasets]="severityChartData" [labels]="severityChartLabels" [type]="'pie'"
-      (click)="onNativeChartClick('severity', $event)">
-    </canvas>
-  </div>
-
-  <div>
-    <h3>Incidents by Device</h3>
-    <canvas baseChart class="bar-chart" [datasets]="deviceChartData" [labels]="deviceChartLabels" [type]="'bar'"
-      (click)="onNativeChartClick('device', $event)">
-    </canvas>
+  <div class="chart-container">
+    <div class="chart">
+      <h3>Incidents by Severity</h3>
+      <canvas baseChart class="pie-chart" [datasets]="severityChartData" [labels]="severityChartLabels" [type]="'pie'"
+        (click)="onNativeChartClick('severity', $event)">
+      </canvas>
+    </div>
+  
+    <div class="chart">
+      <h3>Incidents by Device</h3>
+      <canvas baseChart class="bar-chart" [datasets]="deviceChartData" [labels]="deviceChartLabels" [type]="'bar'"
+        (click)="onNativeChartClick('device', $event)">
+      </canvas>
+    </div>
   </div>
 
   <div *ngIf="drillDownData.length > 0" class="drilldown">

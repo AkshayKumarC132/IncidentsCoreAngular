@@ -180,13 +180,13 @@ canvas.bar-chart {
 .drilldown table {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--table-bg);
+  /* background-color: var(--table-bg); */
   border: 1px solid var(--table-border-color);
 }
 
 .drilldown th {
   padding: 8px 12px;
-  background-color: var(--table-header-bg);
+  /* background-color: var(--table-header-bg); */
   color: var(--table-text-color);
   text-align: left;
   border: 1px solid var(--table-border-color);
@@ -194,7 +194,25 @@ canvas.bar-chart {
 
 .drilldown td {
   padding: 8px 12px;
-  background-color: var(--table-bg);
+  /* background-color: var(--table-bg); */
   color: var(--table-text-color);
   border: 1px solid var(--table-border-color);
+}
+
+.chart-container {
+  display: flex;
+  justify-content: space-between; /* Space out the charts */
+  margin-bottom: 40px; /* Adjust spacing below charts */
+}
+
+.chart {
+  flex: 1; /* Allow charts to grow equally */
+  margin: 0 10px; /* Add some margin between charts */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  padding: 20px; /* Optional: add padding inside the chart container */
+}
+
+.chart h3 {
+  text-align: left; /* Center the title */
 }
