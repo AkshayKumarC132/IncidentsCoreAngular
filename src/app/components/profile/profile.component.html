@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<div class="profile" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
 <h2>My Profile</h2>
 <form [formGroup]="profileForm" (ngSubmit)="savePreferences()">
   <!-- Theme Selection -->
@@ -28,13 +29,13 @@
   </div>
 
   <!-- Menu Position -->
-  <!-- <div>
+  <div>
     <label for="menu_position">Menu Position:</label>
     <select formControlName="menu_position" id="menu_position">
       <option value="top">Top</option>
       <option value="left">Left</option>
     </select>
-  </div> -->
+  </div>
 
   <!-- Neumorphism Background Color Picker -->
   <div>
@@ -56,3 +57,4 @@
 
   <button type="submit">Save Preferences</button>
 </form>
+</div>

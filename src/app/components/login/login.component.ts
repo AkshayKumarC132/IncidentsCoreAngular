@@ -5,6 +5,7 @@ import { BackendService } from '../../services/backend.service'; // Import your 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarService } from '../../services/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +28,14 @@ export class LoginComponent {
   };
 
   errorMessage: string = '';
+  menuOption : any = 'top'
 
-  constructor (private backendService: BackendService, private route:Router){
+  constructor (private backendService: BackendService, private route:Router, private navservice :NavbarService){
+
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+      console.log("Dashbaord ", this.menuOption )
+    });
 
   }
 

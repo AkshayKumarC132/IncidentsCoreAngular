@@ -2,29 +2,34 @@
   flex: 1 1 auto;
 }
 
-.dark-theme {
-  background-color: #303030;
-  color: white;
+.navbar-top {
+  width: 100%;
 }
 
-/* Simplified dark theme styles */
-/* .dark-theme {
-  background-color: black !important;
-  color: white !important;
-} */
+.navbar-left {
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #3f51b5;
+  color: white;
+  padding-top: 10px;
+}
+
+.side-nav-button {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  color: white;
+  margin-bottom: 15px;
+}
 
 .dark-theme .mat-toolbar {
-background-color: black;
-color: white;
-}
-
-.dark-theme .mat-button {
-color: white;
-}
-
-.dark-theme .mat-card {
-background-color: #333;
-color: white;
+  background-color: black;
+  color: white;
 }
 
 .spaced-button {
@@ -36,9 +41,8 @@ color: white;
   margin-right: 0;
 }
 
-/* Logo styling */
 .company-logo {
-  max-width: 50px; /* Adjust width as needed */
+  max-width: 60px;
   margin-right: 15px;
   display: inline-block;
 }

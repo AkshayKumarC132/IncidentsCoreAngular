@@ -16,6 +16,11 @@ body {
     font-weight: 700;
     color: #333;
   }
+  .navbar-left{
+    margin-left: 200px;
+    /* padding-left: 210px; */
+  }
+  
   
   /* Dashboard grid for cards */
   .dashboard-grid {

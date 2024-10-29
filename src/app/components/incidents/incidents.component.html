@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="neumorphic">
+<div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
   <div class="incident-container">
     <h2>Manage Incidents</h2>
 

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Msp } from '../../models/msp.model';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { NavbarService } from '../../services/navbar.service';
 
 
 @Component({
@@ -37,12 +38,18 @@ export class TeamComponent implements OnInit {
   newTeamName: string = '';
   selectedMsp : any;
   msps: Msp[] = []; // Define this property
+  menuOption :any = 'top'
 
-  constructor(private backendService: BackendService,private fb: FormBuilder) {
+  constructor(private backendService: BackendService,private fb: FormBuilder, private navservice : NavbarService) {
     this.teamForm = this.fb.group({
       name: [''],
       members: [[]],
       msp_id: [''] // Add MSP ID to the form
+    });
+
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+      console.log("Dashbaord ", this.menuOption )
     });
   }
 

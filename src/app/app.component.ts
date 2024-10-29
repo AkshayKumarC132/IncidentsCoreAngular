@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  title = 'Incident Core';
+  title = 'Incident';
   ngOnInit(): void {
     this.applyUserPreferences();
   }

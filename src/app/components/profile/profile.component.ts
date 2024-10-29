@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { BackendService } from '../../services/backend.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarService } from '../../services/navbar.service';
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -19,9 +20,16 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
+  menuOption: any = 'top';
 
-  constructor(private fb: FormBuilder, private backendService:BackendService) {
+  constructor(private fb: FormBuilder, private backendService:BackendService, private navservice: NavbarService) {
     // Initialize the form with default values
+
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+      console.log("Dashbaord ", this.menuOption )
+    });
+    
     this.profileForm = this.fb.group({
       theme: ['light'],
       notifications: [true],

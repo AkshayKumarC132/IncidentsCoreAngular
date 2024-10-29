@@ -1,20 +1,45 @@
-<mat-toolbar color="primary">
-  <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
-    <span>Incidents Core</span>
+<!-- Top Navbar Layout -->
+<div *ngIf="menuPosition === 'top'" class="navbar-top">
+  <mat-toolbar color="primary">
+    <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
+    <!-- <span>Incidents Core</span> -->
     <span class="spacer"></span>
     <ng-container *ngIf="shouldDisplayNavItems()">
-        <button mat-button class="spaced-button" (click)="goToDashboard()">Dashboard</button>
-        <button mat-button class="spaced-button" (click)="goToCustomer()">Customers</button>
-        <button mat-button class="spaced-button" (click)="goToDevices()">Devices</button>
-        <button mat-button class="spaced-button" (click)="goToIncidents()">Incidents</button>
-        <button mat-button class="spaced-button" (click)="goToIntegrations()">Integrations</button>
-        <button mat-button class="spaced-button" (click)="goToProfile()">My Profile</button>
-        <!-- New Team Button -->
-        <button mat-button class="spaced-button" (click)="goToTeam()">Team</button>
-        <button mat-button class="spaced-button" (click)="onLogout()">Logout</button>
+      <button mat-button class="spaced-button" (click)="goToDashboard()">Dashboard</button>
+      <button mat-button class="spaced-button" (click)="goToCustomer()">Customers</button>
+      <button mat-button class="spaced-button" (click)="goToDevices()">Devices</button>
+      <button mat-button class="spaced-button" (click)="goToIncidents()">Incidents</button>
+      <button mat-button class="spaced-button" (click)="goToIntegrations()">Integrations</button>
+      <button mat-button class="spaced-button" (click)="goToProfile()">My Profile</button>
+      <button mat-button class="spaced-button" (click)="goToTeam()">Team</button>
+      <button mat-button class="spaced-button" (click)="onLogout()">Logout</button>
     </ng-container>
-
     <button mat-icon-button (click)="toggleDarkMode()">
       <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>
     </button>
-  </mat-toolbar>  
+  </mat-toolbar>
+</div>
+
+<!-- Left Navbar Layout -->
+<div *ngIf="menuPosition === 'left'" class="navbar-left">
+  <mat-toolbar color="primary">
+    <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
+    <!-- <span>Incidents Core</span> -->
+    
+  </mat-toolbar>
+  <nav>
+    <ng-container *ngIf="shouldDisplayNavItems()">
+      <button mat-button class="side-nav-button" (click)="goToDashboard()">Dashboard</button>
+      <button mat-button class="side-nav-button" (click)="goToCustomer()">Customers</button>
+      <button mat-button class="side-nav-button" (click)="goToDevices()">Devices</button>
+      <button mat-button class="side-nav-button" (click)="goToIncidents()">Incidents</button>
+      <button mat-button class="side-nav-button" (click)="goToIntegrations()">Integrations</button>
+      <button mat-button class="side-nav-button" (click)="goToProfile()">My Profile</button>
+      <button mat-button class="side-nav-button" (click)="goToTeam()">Team</button>
+      <button mat-button class="side-nav-button" (click)="onLogout()">Logout</button>
+    </ng-container>
+    <button mat-icon-button (click)="toggleDarkMode()">
+      <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>
+    </button>
+  </nav>
+</div>

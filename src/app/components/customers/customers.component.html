@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<div class="customer" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
 <h2>Manage Customers</h2>
 
 <!-- Display list of customers -->
@@ -47,3 +48,4 @@
 <button mat-raised-button color="primary" (click)="addCustomer()">
   {{ editMode ? 'Update Customer' : 'Add Customer' }}
 </button>
+</div>

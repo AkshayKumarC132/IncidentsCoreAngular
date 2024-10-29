@@ -14,6 +14,7 @@ import { Customer } from '../../models/customer.model';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { User } from '../../models/user.model';
+import { NavbarService } from '../../services/navbar.service';
 
 
 @Component({
@@ -55,8 +56,14 @@ export class CustomersComponent{
   selectedMspId: any;
   selectedClientId: any; // Variable to hold selected client ID for assignment
   selectedTeamMemberId: any; // Variable to hold selected team member ID for assignment
+  menuOption: string = 'top';
 
-  constructor(private backendService:BackendService){}
+  constructor(private backendService:BackendService, private navservice : NavbarService){
+
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+    });
+  }
 
   ngOnInit(): void {
     // Fetch customers

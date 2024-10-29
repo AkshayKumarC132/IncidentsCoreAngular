@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
+import { NavbarService } from '../../services/navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -31,10 +32,10 @@ import { BackendService } from '../../services/backend.service';
 export class NavbarComponent implements OnInit {
   darkMode = false
   logoUrl: string = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSU4XJGamDxhlvThNq1qYu0npxuH0GsUq1wQ&s';  // Store logo URL
-  menuPosition: string = 'top';  // Default to top menu
-  companyLogoUrl: string = 'default-logo.png'; // Default logo
+  menuPosition: 'top' | 'left' = 'top';
+  
 
-  constructor(private router:Router,private backendService: BackendService,){
+  constructor(private router:Router,private backendService: BackendService, private navservice :NavbarService){
 
   }
 
@@ -46,6 +47,10 @@ export class NavbarComponent implements OnInit {
     document.body.classList.toggle('dark-mode');
   }
 
+  setNavbarPosition(position: 'top' | 'left') {
+    this.navservice.setNavbarPosition(position);
+  }
+
   // this.logoUrl = `${this.backendService.getApiUrl()}${preferences.logo_url}`;
 
   getUserPreferences() {
@@ -55,7 +60,10 @@ export class NavbarComponent implements OnInit {
           console.log(this.logoUrl)
           this.logoUrl = `${this.backendService.getApiUrl()}${preferences.logo_url}`;
           console.log(this.logoUrl)
-          this.menuPosition = preferences.menu_position;
+          this.menuPosition = preferences.menu_position || 'top';
+          this.navservice.menuOption = preferences.menu_position || 'top'
+          this.setNavbarPosition(preferences.menu_position)
+
           // Apply theme
           document.body.classList.toggle('dark-mode', preferences.theme === 'dark');
 
@@ -77,10 +85,7 @@ export class NavbarComponent implements OnInit {
   }
 
   applyLayoutClass() {
-    // Remove any existing layout class first
     document.body.classList.remove('left-menu-active', 'top-menu-active');
-    
-    // Apply the layout class based on menu position
     if (this.menuPosition === 'left') {
       document.body.classList.add('left-menu-active');
     } else {

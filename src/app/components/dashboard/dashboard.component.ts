@@ -8,6 +8,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
 import { Chart, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarController, BarElement, PieController } from 'chart.js'; 
 import { BaseChartDirective } from 'ng2-charts';
+import { NavbarService } from '../../services/navbar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,8 +43,15 @@ export class DashboardComponent {
   // Chart data for devices
   deviceChartLabels: string[] = [];
   deviceChartData: any[] = [];
+  menuOption :any = 'top'
 
-  constructor(private backendService: BackendService, private route: Router) {}
+  constructor(private backendService: BackendService, private route: Router, private navservice : NavbarService) {
+
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+      console.log("Dashbaord ", this.menuOption )
+    });
+  }
 
   ngOnInit(): void {
     // Programmatically set chart canvas size

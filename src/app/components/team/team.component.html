@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div [ngClass]="{ 'dark-mode': darkMode }" class="team-management">
+<div class="team-management teams" [ngClass]="{ 'dark-mode': darkMode , 'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
   <h2>Team Management</h2>
 
   <form [formGroup]="teamForm" (ngSubmit)="onSubmit()" [ngClass]="{ 'neumorphism-form': true, 'dark-mode': darkMode }">

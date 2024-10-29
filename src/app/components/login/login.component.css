@@ -64,3 +64,9 @@
 .register-prompt .link:hover {
   text-decoration: none; /* Optional: Remove underline on hover */
 }
+
+
+.navbar-left{
+  margin-left: 200px;
+  /* padding-left: 210px; */
+}

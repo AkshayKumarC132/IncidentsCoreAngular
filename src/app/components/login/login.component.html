@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="login-container neumorphic">
+<div class="login-container neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
     <h2>Login</h2>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <div class="form-group">

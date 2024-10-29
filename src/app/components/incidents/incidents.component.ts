@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BackendService } from '../../services/backend.service';
 import { Incident } from '../../models/incident.model';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarService } from '../../services/navbar.service';
 
 @Component({
   selector: 'app-incidents',
@@ -41,8 +42,14 @@ export class IncidentsComponent {
   newIncident: Incident = { id: 0, title: '', description: '', deviceId: 0, severity: '', status: '' };
   devices: any[] = []; // Adjust type based on your response
   severities: any[] = []; // Adjust type based on your response
+  menuOption :any = 'top'
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private navservice : NavbarService) {
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+      console.log("Dashbaord ", this.menuOption )
+    });
+  }
 
   ngOnInit(): void {
     this.backendService.getIncidents().subscribe((incidents) => {

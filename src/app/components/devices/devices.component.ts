@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarService } from '../../services/navbar.service';
 
 
 @Component({
@@ -41,8 +42,15 @@ export class DevicesComponent {
   devices: any[] = []; // Array to hold device data
   customers: any[] = []; // Array to hold customer data
   selectedCustomerId: any; // Variable to hold the selected customer ID
+  menuOption: any;
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private navservice : NavbarService) {
+
+    this.navservice.navbarPosition$.subscribe(position => {
+      this.menuOption = position;
+      console.log("Dashbaord ", this.menuOption )
+    });
+  }
 
   ngOnInit(): void {
     this.backendService.getDevices().subscribe((devices) => {

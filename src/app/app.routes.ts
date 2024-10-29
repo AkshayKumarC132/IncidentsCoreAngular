@@ -20,7 +20,7 @@ export const routes: Routes = [
     { path: 'integrations', component: IntegrationsComponent },
     { path: 'team', component: TeamComponent },  // Add the Team route
     { path: 'profile', component: ProfileComponent }, 
-    { path: '', redirectTo: '/register', pathMatch: 'full' }, // Optional: redirect to register page on startup
-    { path: '**', redirectTo: '/register', pathMatch: 'full' }, // Catch-all route
+    { path: '', redirectTo: '/login', pathMatch: 'full' }, // Optional: redirect to register page on startup
+    { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Catch-all route
 
 ];
