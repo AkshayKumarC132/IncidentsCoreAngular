@@ -4,23 +4,23 @@ import { Observable, throwError } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { Device } from '../models/device.model';
 import { Incident } from '../models/incident.model';
-import { catchError } from 'rxjs/operators';  // Import catchError
+import { catchError } from 'rxjs/operators'; // Import catchError
 import { Team } from '../models/team.model';
 import { User } from '../models/user.model';
 import { Msp } from '../models/msp.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BackendService {
-  private apiUrl = 'http://127.0.0.1:5000/api';  // Your backend API URL
+  private apiUrl = 'http://127.0.0.1:5000/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public getApiUrl(): string {
     return this.apiUrl;
-}
+  }
 
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error);
@@ -38,7 +38,7 @@ export class BackendService {
 
   // Register API call
   register(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register/`, data);  // Adjust the API URL as per your backend
+    return this.http.post<any>(`${this.apiUrl}/register/`, data); // Adjust the API URL as per your backend
   }
 
   login(data: any): Observable<any> {
@@ -53,12 +53,18 @@ export class BackendService {
 
   addCustomer(customerData: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post<any>(`${this.apiUrl}/customers/`, customerData,{ headers }); // Assuming POST to base URL
+    return this.http.post<any>(`${this.apiUrl}/customers/`, customerData, {
+      headers,
+    }); // Assuming POST to base URL
   }
 
   updateCustomer(customerData: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.put<any>(`${this.apiUrl}/customers/${customerData.id}/`, customerData,{ headers }); // Assuming PUT to the specific customer URL
+    return this.http.put<any>(
+      `${this.apiUrl}/customers/${customerData.id}/`,
+      customerData,
+      { headers }
+    ); // Assuming PUT to the specific customer URL
   }
 
   // addCustomer(customer: Customer): Observable<Customer> {
@@ -73,12 +79,15 @@ export class BackendService {
 
   deleteCustomer(customerId: number): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/customers/${customerId}/`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/customers/${customerId}/`, {
+      headers,
+    });
   }
 
-  getSeverities(): Observable<string[]> { // Adjust the return type as needed
+  getSeverities(): Observable<string[]> {
+    // Adjust the return type as needed
     const headers = this.getAuthHeaders();
-    return this.http.get<string[]>(`${this.apiUrl}/severities/`,{ headers }); // Change URL as necessary
+    return this.http.get<string[]>(`${this.apiUrl}/severities/`, { headers }); // Change URL as necessary
   }
 
   // Device API calls
@@ -89,38 +98,54 @@ export class BackendService {
 
   addDevice(device: Device): Observable<Device> {
     const headers = this.getAuthHeaders();
-    return this.http.post<Device>(`${this.apiUrl}/devices/`, device, { headers });
+    return this.http.post<Device>(`${this.apiUrl}/devices/`, device, {
+      headers,
+    });
   }
 
   updateDevice(device: Device): Observable<Device> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Device>(`${this.apiUrl}/devices/${device.id}/`, device, { headers });
+    return this.http.put<Device>(
+      `${this.apiUrl}/devices/${device.id}/`,
+      device,
+      { headers }
+    );
   }
 
   deleteDevice(deviceId: number): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/devices/${deviceId}/`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/devices/${deviceId}/`, {
+      headers,
+    });
   }
 
   // Incident API calls
-  getIncidents(): Observable<Incident[]> {
+  getIncidents() {
     const headers = this.getAuthHeaders();
-    return this.http.get<Incident[]>(`${this.apiUrl}/incidents/`, { headers });
+    return this.http.get(`${this.apiUrl}/incidents/`, { headers });
   }
 
   addIncident(incident: Incident): Observable<Incident> {
     const headers = this.getAuthHeaders();
-    return this.http.post<Incident>(`${this.apiUrl}/incidents/`, incident, { headers });
+    return this.http.post<Incident>(`${this.apiUrl}/incidents/`, incident, {
+      headers,
+    });
   }
 
   updateIncident(incident: Incident): Observable<Incident> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Incident>(`${this.apiUrl}/incidents/${incident.id}/`, incident, { headers });
+    return this.http.put<Incident>(
+      `${this.apiUrl}/incidents/${incident.id}/`,
+      incident,
+      { headers }
+    );
   }
 
   deleteIncident(incidentId: number): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/incidents/${incidentId}/`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/incidents/${incidentId}/`, {
+      headers,
+    });
   }
 
   // Function to get dashboard summary data
@@ -147,34 +172,50 @@ export class BackendService {
 
   updateTeam(teamId: number, teamData: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.put(`${this.apiUrl}/teams/${teamId}/`, teamData, { headers });
+    return this.http.put(`${this.apiUrl}/teams/${teamId}/`, teamData, {
+      headers,
+    });
   }
 
-  deleteTeam(teamId: number): Observable<void> {  // Add this method
+  deleteTeam(teamId: number): Observable<void> {
+    // Add this method
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/teams/${teamId}/`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/teams/${teamId}/`, {
+      headers,
+    });
   }
 
   // Method to assign a team member to a client
   assignTeamMember(clientId: number, teamMemberId: number): Observable<any> {
     const headers = this.getAuthHeaders();
     const body = { team_member_id: teamMemberId };
-    return this.http.post(`${this.apiUrl}/clients/${clientId}/assign_team_member/`, body, { headers });
+    return this.http.post(
+      `${this.apiUrl}/clients/${clientId}/assign_team_member/`,
+      body,
+      { headers }
+    );
   }
 
   assignClientsToTeamMember(data: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/api/assign-clients/`, data,{ headers });
+    return this.http.post(`${this.apiUrl}/api/assign-clients/`, data, {
+      headers,
+    });
   }
 
   unassignClients(data: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.delete(`${this.apiUrl}/api/assign-clients/`, { body: data , headers }); // Use DELETE method for unassignment
+    return this.http.delete(`${this.apiUrl}/api/assign-clients/`, {
+      body: data,
+      headers,
+    }); // Use DELETE method for unassignment
   }
 
   getTeamMembers(): Observable<User[]> {
     const headers = this.getAuthHeaders();
-    return this.http.get<User[]>(`${this.apiUrl}/api/team-members/`,{ headers });
+    return this.http.get<User[]>(`${this.apiUrl}/api/team-members/`, {
+      headers,
+    });
   }
 
   // Fetch all clients
@@ -192,12 +233,20 @@ export class BackendService {
   // Method to add or remove team members
   addTeamMember(teamId: number, userId: number): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/teams/${teamId}/add_member/`, { user_id: userId }, { headers });
+    return this.http.post(
+      `${this.apiUrl}/teams/${teamId}/add_member/`,
+      { user_id: userId },
+      { headers }
+    );
   }
-  
+
   removeTeamMember(teamId: number, userId: number): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/teams/${teamId}/remove_member/`, { user_id: userId }, { headers });
+    return this.http.post(
+      `${this.apiUrl}/teams/${teamId}/remove_member/`,
+      { user_id: userId },
+      { headers }
+    );
   }
   getMsps(): Observable<Msp[]> {
     const headers = this.getAuthHeaders();
@@ -207,21 +256,24 @@ export class BackendService {
   // Function to save ConnectWise integration
   saveConnectWiseIntegration(payload: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/connectwise/setup/`, payload, { headers });
+    return this.http.post(`${this.apiUrl}/connectwise/setup/`, payload, {
+      headers,
+    });
   }
 
   // Function to save HaloPSA integration
   saveHaloPSAIntegration(payload: any): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/halopsa/setup/`, payload, { headers });
+    return this.http.post(`${this.apiUrl}/halopsa/setup/`, payload, {
+      headers,
+    });
   }
 
   // Function to fetch data
   fetchData(): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/fetch-data/`,  { headers });
+    return this.http.get(`${this.apiUrl}/fetch-data/`, { headers });
   }
-
 
   // Fetch the high-level summary from the backend
   getDashboardSummary(): Observable<any> {
@@ -232,33 +284,45 @@ export class BackendService {
   // Fetch detailed incidents based on status (active/resolved)
   getIncidentsByStatus(status: string): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/status/${status}/`,{ headers });
+    return this.http.get(`${this.apiUrl}/incidents/status/${status}/`, {
+      headers,
+    });
   }
 
   getIncidentsByDevice(severity: string): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/device/${severity}/`,{ headers });
+    return this.http.get(`${this.apiUrl}/incidents/device/${severity}/`, {
+      headers,
+    });
   }
-  
+
   getIncidentsBySeverity(device: string): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/severity/${device}/`,{ headers });
-}
-
-getUserPreferences(): Observable<any> {
-  const headers = this.getAuthHeaders();
-  return this.http.get(`${this.apiUrl}/user/preferences/`, { headers });
-}
-
-saveUserPreferences(preferences: any): Observable<any> {
-  const headers = this.getAuthHeaders();
-  const formData = new FormData();
-  for (const key in preferences) {
-    if (preferences.hasOwnProperty(key)) {
-      formData.append(key, preferences[key]);
-    }
+    return this.http.get(`${this.apiUrl}/incidents/severity/${device}/`, {
+      headers,
+    });
   }
-  return this.http.post(`${this.apiUrl}/user/preferences/update/`, formData, { headers });
-}
 
+  getUserPreferences(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/user/preferences/`, { headers });
+  }
+
+  saveUserPreferences(preferences: any): Observable<any> {
+    const headers = this.getAuthHeaders();
+    const formData = new FormData();
+    for (const key in preferences) {
+      if (preferences.hasOwnProperty(key)) {
+        formData.append(key, preferences[key]);
+      }
+    }
+    return this.http.post(`${this.apiUrl}/user/preferences/update/`, formData, {
+      headers,
+    });
+  }
+
+  runOrchestratioLayer(id: any) {
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/orchestration/${id}/`, { headers });
+  }
 }

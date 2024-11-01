@@ -14,6 +14,7 @@ import { BackendService } from '../../services/backend.service';
 import { Incident } from '../../models/incident.model';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NavbarService } from '../../services/navbar.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-incidents',
@@ -33,27 +34,45 @@ import { NavbarService } from '../../services/navbar.service';
     HttpClientModule,
     NavbarComponent,
   ],
-  providers:[BackendService],
+  providers: [BackendService],
   templateUrl: './incidents.component.html',
-  styleUrl: './incidents.component.css'
+  styleUrl: './incidents.component.css',
 })
 export class IncidentsComponent {
   incidents: Incident[] = [];
-  newIncident: Incident = { id: 0, title: '', description: '', deviceId: 0, severity: '', status: '' };
+  newIncident: Incident = {
+    id: 0,
+    title: '',
+    description: '',
+    deviceId: 0,
+    severity: '',
+    status: '',
+  };
   devices: any[] = []; // Adjust type based on your response
   severities: any[] = []; // Adjust type based on your response
-  menuOption :any = 'top'
+  menuOption: any = 'top';
 
-  constructor(private backendService: BackendService, private navservice : NavbarService) {
-    this.navservice.navbarPosition$.subscribe(position => {
+  incidentsData: any[] = [];
+
+  constructor(
+    private backendService: BackendService,
+    private navservice: NavbarService
+  ) {
+    this.navservice.navbarPosition$.subscribe((position) => {
       this.menuOption = position;
-      console.log("Dashbaord ", this.menuOption )
+      console.log('Dashbaord ', this.menuOption);
     });
   }
 
   ngOnInit(): void {
-    this.backendService.getIncidents().subscribe((incidents) => {
-      this.incidents = incidents;
+    this.backendService.getIncidents().subscribe({
+      next: (responce: any) => {
+        console.log(responce);
+        this.incidentsData = responce;
+      },
+      error: (error) => {
+        console.log(error);
+      },
     });
     // Fetch devices and severities
     this.backendService.getDevices().subscribe((devices) => {
@@ -65,16 +84,42 @@ export class IncidentsComponent {
     });
   }
 
+  callOrchestrationLayer(id: any) {
+    this.backendService.runOrchestratioLayer(id).subscribe({
+      next: (responce: any) => {
+        console.log(responce);
+        if (responce) {
+          Swal.fire({
+            icon: 'success',
+            text: responce.message,
+            width: '400px',
+          });
+        }
+        // this.incidentsData = responce;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
   addIncident(): void {
     this.backendService.addIncident(this.newIncident).subscribe((incident) => {
       this.incidents.push(incident);
-      this.newIncident = { id: 0, title: '', description: '', deviceId: 0, severity: '', status: '' };  // Reset form
+      this.newIncident = {
+        id: 0,
+        title: '',
+        description: '',
+        deviceId: 0,
+        severity: '',
+        status: '',
+      }; // Reset form
     });
   }
 
   deleteIncident(id: number): void {
     this.backendService.deleteIncident(id).subscribe(() => {
-      this.incidents = this.incidents.filter(incident => incident.id !== id);
+      this.incidents = this.incidents.filter((incident) => incident.id !== id);
     });
   }
 }

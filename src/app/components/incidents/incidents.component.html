@@ -33,14 +33,43 @@
 
     <button mat-raised-button color="primary" (click)="addIncident()">Add Incident</button>
 
-    <h3>Incident List</h3>
-    <mat-list>
+
+    <div class="drilldown">
+      <h2>Incident Details</h2>
+      <table>
+        <thead>
+          <tr >
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Resolved Status</th>
+            <th>Device</th>
+            <th>Severity</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incident of incidentsData">
+            <td>{{ incident.id}}</td>
+            <td>{{ incident.title }}</td>
+            <td>{{ incident.description }}</td>
+            <td>{{ incident.resolved ? 'Resolved' : 'Active' }}</td>
+            <td> {{ incident.device.name}}</td>
+            <td>{{ incident.severity.level }}</td>
+            <td><button (click)="callOrchestrationLayer(incident.id)">Run Orchestration</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <h3>Incident List</h3> -->
+    
+    <!-- <mat-list>
       <mat-list-item *ngFor="let incident of incidents">
         {{ incident.title }} - {{ incident.status }}
         <button mat-icon-button (click)="deleteIncident(incident.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-list-item>
-    </mat-list>
+    </mat-list> -->
   </div>
 </div>
