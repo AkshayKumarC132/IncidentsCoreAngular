@@ -5,14 +5,15 @@
     <!-- <span>Incidents Core</span> -->
     <span class="spacer"></span>
     <ng-container *ngIf="shouldDisplayNavItems()">
-      <button mat-button class="spaced-button" (click)="goToDashboard()">Dashboard</button>
-      <button mat-button class="spaced-button" (click)="goToCustomer()">Customers</button>
-      <button mat-button class="spaced-button" (click)="goToDevices()">Devices</button>
-      <button mat-button class="spaced-button" (click)="goToIncidents()">Incidents</button>
-      <button mat-button class="spaced-button" (click)="goToIntegrations()">Integrations</button>
-      <button mat-button class="spaced-button" (click)="goToProfile()">My Profile</button>
-      <button mat-button class="spaced-button" (click)="goToTeam()">Team</button>
-      <button mat-button class="spaced-button" (click)="onLogout()">Logout</button>
+      <button mat-button class="spaced-button" (click)="goToDashboard()">
+        <fa-icon [icon]="faDashboard"></fa-icon> Dashboard</button>
+      <button mat-button class="spaced-button" (click)="goToCustomer()"><fa-icon [icon]="faCustomers"></fa-icon> Customers</button>
+      <button mat-button class="spaced-button" (click)="goToDevices()"><fa-icon [icon]="faDevices"></fa-icon> Devices</button>
+      <button mat-button class="spaced-button" (click)="goToIncidents()"><fa-icon [icon]="faIncidents"></fa-icon> Incidents</button>
+      <button mat-button class="spaced-button" (click)="goToIntegrations()"><fa-icon [icon]="faIntegrations"></fa-icon> Integrations</button>
+      <button mat-button class="spaced-button" (click)="goToProfile()"><fa-icon [icon]="faProfile"></fa-icon> My Profile</button>
+      <button mat-button class="spaced-button" (click)="goToTeam()"><fa-icon [icon]="faTeam"></fa-icon> Team</button>
+      <button mat-button class="spaced-button" (click)="onLogout()"><fa-icon [icon]="faLogout"></fa-icon> Logout</button>
     </ng-container>
     <button mat-icon-button (click)="toggleDarkMode()">
       <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>
@@ -27,16 +28,33 @@
     <!-- <span>Incidents Core</span> -->
     
   </mat-toolbar>
+  <span class="spacer-left"></span>
   <nav>
     <ng-container *ngIf="shouldDisplayNavItems()">
-      <button mat-button class="side-nav-button" (click)="goToDashboard()">Dashboard</button>
-      <button mat-button class="side-nav-button" (click)="goToCustomer()">Customers</button>
-      <button mat-button class="side-nav-button" (click)="goToDevices()">Devices</button>
-      <button mat-button class="side-nav-button" (click)="goToIncidents()">Incidents</button>
-      <button mat-button class="side-nav-button" (click)="goToIntegrations()">Integrations</button>
-      <button mat-button class="side-nav-button" (click)="goToProfile()">My Profile</button>
-      <button mat-button class="side-nav-button" (click)="goToTeam()">Team</button>
-      <button mat-button class="side-nav-button" (click)="onLogout()">Logout</button>
+      <button mat-button class="side-nav-button" (click)="goToDashboard()">
+        <fa-icon [icon]="faDashboard"></fa-icon> <br> <span>Dashboard</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToCustomer()">
+        <fa-icon [icon]="faCustomers"></fa-icon> <br> <span>Customers</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToDevices()">
+        <fa-icon [icon]="faDevices"></fa-icon> <br> <span>Devices</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToIncidents()">
+        <fa-icon [icon]="faIncidents"></fa-icon> <br> <span>Incidents</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToIntegrations()">
+        <fa-icon [icon]="faIntegrations"></fa-icon> <br> <span>Integrations</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToProfile()">
+        <fa-icon [icon]="faProfile"></fa-icon> <br> <span>My Profile</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToTeam()">
+        <fa-icon [icon]="faTeam"></fa-icon> <br> <span>Team</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="onLogout()">
+        <fa-icon [icon]="faLogout"></fa-icon> <br> <span>Logout</span>
+      </button>
     </ng-container>
     <button mat-icon-button (click)="toggleDarkMode()">
       <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>

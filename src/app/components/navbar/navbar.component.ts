@@ -11,6 +11,19 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { NavbarService } from '../../services/navbar.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  faDashboard,
+  faUsers,
+  faLaptop,
+  faExclamationTriangle,
+  faPlug,
+  faUser,
+  faUsersCog,
+  faSignOutAlt,
+  faMoon,
+  faSun,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -25,6 +38,7 @@ import { NavbarService } from '../../services/navbar.service';
     MatFormFieldModule,
     FormsModule,
     CommonModule,
+    FontAwesomeModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -35,6 +49,16 @@ export class NavbarComponent implements OnInit {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSU4XJGamDxhlvThNq1qYu0npxuH0GsUq1wQ&s'; // Store logo URL
   menuPosition: string = 'top';
   currentTheme: string = 'light';
+  faDashboard = faDashboard;
+  faCustomers = faUsers;
+  faDevices = faLaptop;
+  faIncidents = faExclamationTriangle;
+  faIntegrations = faPlug;
+  faProfile = faUser;
+  faTeam = faUsersCog;
+  faLogout = faSignOutAlt;
+  faDarkMode = faMoon;
+  faLightMode = faSun;
 
   constructor(
     private router: Router,

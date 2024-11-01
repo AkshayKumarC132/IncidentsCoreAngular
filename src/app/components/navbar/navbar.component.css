@@ -2,6 +2,10 @@
   flex: 1 1 auto;
 }
 
+.spacer-left {
+  margin-bottom: 5px;
+}
+
 .navbar-top {
   width: 100%;
 }
@@ -27,8 +31,8 @@ background-color: #1e1e1e !important;
 
 .side-nav-button {
   width: 100%;
-  text-align: left;
-  padding: 10px;
+  text-align: center;
+  padding: 30px;
   margin-bottom: 15px;
 }
 
