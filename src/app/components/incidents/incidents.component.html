@@ -23,13 +23,13 @@
     </mat-form-field>
 
     <mat-form-field>
-        <mat-label>Severity</mat-label>
-        <mat-select [(ngModel)]="newIncident.severity" required>
-          <mat-option *ngFor="let severity of severities" [value]="severity.level"> <!-- Use severity.level -->
-            {{ severity.level }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-label>Severity</mat-label>
+      <mat-select [(ngModel)]="newIncident.severity" required>
+        <mat-option *ngFor="let severity of severities" [value]="severity.level"> <!-- Use severity.level -->
+          {{ severity.level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="addIncident()">Add Incident</button>
 
@@ -38,7 +38,7 @@
       <h2>Incident Details</h2>
       <table>
         <thead>
-          <tr >
+          <tr>
             <th>Id</th>
             <th>Title</th>
             <th>Description</th>
@@ -56,20 +56,48 @@
             <td>{{ incident.resolved ? 'Resolved' : 'Active' }}</td>
             <td> {{ incident.device.name}}</td>
             <td>{{ incident.severity.level }}</td>
-            <td><button (click)="callOrchestrationLayer(incident.id)">Run Orchestration</button></td>
+            <td>
+              <div class="button-container">
+                <button (click)="callOrchestrationLayer(incident.id)">
+                  <fa-icon [icon]="faPlay"></fa-icon> <!-- Font Awesome play icon -->
+                </button>
+                <button (click)="viewLogDetails(incident.id)">
+                  <fa-icon [icon]="faEye"></fa-icon> <!-- Font Awesome eye icon -->
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <!-- <h3>Incident List</h3> -->
     
-    <!-- <mat-list>
-      <mat-list-item *ngFor="let incident of incidents">
-        {{ incident.title }} - {{ incident.status }}
-        <button mat-icon-button (click)="deleteIncident(incident.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list> -->
-  </div>
+      <!-- Log Details Section -->
+      <div #logDetailsSection *ngIf="selectedIncidentId !== null && logDetails.length > 0">
+        <h3>Log Details for Incident ID: {{ selectedIncidentId }}</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Log ID</th>
+              <th>Assigned Agent</th>
+              <th>Assigned At</th>
+              <th>Resolved At</th>
+              <th>Resolution Time (s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of logDetails">
+              <td>{{ log.id }}</td>
+              <td>{{ log.assigned_agent }}</td>
+              <td>{{ log.assigned_at | date:'short' }}</td>
+              <td>{{ log.resolved_at ? (log.resolved_at | date:'short') : 'Not Resolved' }}</td>
+              <td>
+                <ng-container *ngIf="log.resolution_time; else noResolutionTime">
+                  {{ (log.resolution_time * 1000) | number:'1.2-2' }} ms
+                </ng-container>
+                <ng-template #noResolutionTime>N/A</ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>    
 </div>

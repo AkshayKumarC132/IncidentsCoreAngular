@@ -325,4 +325,9 @@ export class BackendService {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/orchestration/${id}/`, { headers });
   }
+
+  getIncidentLogs(id: any) {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/incident/${id}/logs/`, { headers });
+  }
 }

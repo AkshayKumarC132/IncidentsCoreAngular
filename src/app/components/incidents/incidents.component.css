@@ -30,3 +30,21 @@
   color: var(--table-text-color);
   border: 1px solid var(--table-border-color);
 }
+
+.button-container {
+  display: flex;               /* Use flexbox to layout the buttons */
+  gap: 5px;                   /* Reduced space between buttons */
+  align-items: center;        /* Center items vertically */
+}
+
+.button-container button {
+  padding: 4px;               /* Decrease padding for smaller buttons */
+  font-size: 14px;            /* Adjust font size */
+  width: 30px;                /* Set a fixed width for buttons */
+  height: 30px;               /* Set a fixed height for buttons */
+  min-width: 30px;            /* Minimum width to ensure consistent size */
+}
+
+.button-container fa-icon {
+  font-size: 16px;            /* Adjust icon size */
+}
