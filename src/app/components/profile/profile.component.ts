@@ -8,36 +8,40 @@ import { NavbarService } from '../../services/navbar.service';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports:[
-    CommonModule, 
+  imports: [
+    CommonModule,
     ReactiveFormsModule,
     NavbarComponent,
-    HttpClientModule
+    HttpClientModule,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
-  providers:[BackendService]
+  providers: [BackendService],
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   menuOption: any = 'top';
 
-  constructor(private fb: FormBuilder, private backendService:BackendService, private navservice: NavbarService) {
+  constructor(
+    private fb: FormBuilder,
+    private backendService: BackendService,
+    private navservice: NavbarService
+  ) {
     // Initialize the form with default values
 
-    this.navservice.navbarPosition$.subscribe(position => {
+    this.navservice.navbarPosition$.subscribe((position) => {
       this.menuOption = position;
-      console.log("Dashbaord ", this.menuOption )
+      console.log('Dashbaord ', this.menuOption);
     });
-    
+
     this.profileForm = this.fb.group({
       theme: ['light'],
       notifications: [true],
       layout: ['default'],
-      background_color: ['#e0e5ec'],// Default background color for neumorphism
+      background_color: ['#e0e5ec'], // Default background color for neumorphism
       shadow_color: ['#a3b1c6'], // Default shadow color for neumorphism
-      menu_position: ['top'],// Default menu Options
-      logo_url: [null]
+      menu_position: ['top'], // Default menu Options
+      logo_url: [null],
     });
   }
 
@@ -50,9 +54,9 @@ export class ProfileComponent implements OnInit {
     this.backendService.getUserPreferences().subscribe(
       (preferences) => {
         this.profileForm.patchValue(preferences);
-        console.log(this.profileForm)
+        console.log(this.profileForm);
       },
-      (error) => console.error("Error loading preferences:", error)
+      (error) => console.error('Error loading preferences:', error)
     );
   }
 
@@ -64,12 +68,17 @@ export class ProfileComponent implements OnInit {
 
     this.backendService.saveUserPreferences(preferences).subscribe(
       (response) => {
-        console.log(response)
+        console.log(response);
+
+        console.log('Saved Theme ', this.profileForm.value.theme);
         alert('Preferences saved successfully!');
+        this.navservice.setNavbarPosition(this.profileForm.value.menu_position);
+        console.log('Menu Options', this.profileForm.value.menu_position);
+        this.navservice.setTheme(this.profileForm.value.theme);
         // Apply the preferences immediately
         this.applyUserPreferences(preferences);
       },
-      (error) => console.error("Error saving preferences:", error)
+      (error) => console.error('Error saving preferences:', error)
     );
   }
   onFileChange(event: any) {
@@ -82,11 +91,23 @@ export class ProfileComponent implements OnInit {
     document.body.classList.toggle('dark-mode', preferences.theme === 'dark');
 
     // Set CSS variables for background and shadow colors
-    document.documentElement.style.setProperty('--background-color', preferences.background_color);
-    document.documentElement.style.setProperty('--shadow-color', preferences.shadow_color);
+    document.documentElement.style.setProperty(
+      '--background-color',
+      preferences.background_color
+    );
+    document.documentElement.style.setProperty(
+      '--shadow-color',
+      preferences.shadow_color
+    );
 
     // Adjust layout if needed (for compact or spacious layouts)
-    document.body.classList.toggle('compact-layout', preferences.layout === 'compact');
-    document.body.classList.toggle('spacious-layout', preferences.layout === 'spacious');
+    document.body.classList.toggle(
+      'compact-layout',
+      preferences.layout === 'compact'
+    );
+    document.body.classList.toggle(
+      'spacious-layout',
+      preferences.layout === 'spacious'
+    );
   }
 }

@@ -72,6 +72,11 @@
     box-shadow: 5px 5px 15px var(--shadow-color-dark), -5px -5px 15px var(--shadow-color-light);
     transition: all 0.3s ease;
   }
+
+  /* .card {
+    box-shadow:0 4px 14px var(--shadow-color-dark), 0 -4px 14px var(--shadow-color-light);
+    /* box-shadow: 0 4px 14px rgb(250, 243, 243); */
+  /* }  */
   
   button:hover {
     box-shadow: 3px 3px 8px var(--shadow-color-dark), -3px -3px 8px var(--shadow-color-light);

@@ -43,7 +43,8 @@ export class DashboardComponent {
   // Chart data for devices
   deviceChartLabels: string[] = [];
   deviceChartData: any[] = [];
-  menuOption :any = 'top'
+  menuOption :any = 'top';
+
 
   constructor(private backendService: BackendService, private route: Router, private navservice : NavbarService) {
 

@@ -1,6 +1,6 @@
 <!-- Top Navbar Layout -->
-<div *ngIf="menuPosition === 'top'" class="navbar-top">
-  <mat-toolbar color="primary">
+<div *ngIf="menuPosition === 'top'" [ngClass]="{'dark-theme-top': currentTheme === 'dark', 'navbar-top': currentTheme === 'light'}">
+  <mat-toolbar>
     <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
     <!-- <span>Incidents Core</span> -->
     <span class="spacer"></span>
@@ -21,8 +21,8 @@
 </div>
 
 <!-- Left Navbar Layout -->
-<div *ngIf="menuPosition === 'left'" class="navbar-left">
-  <mat-toolbar color="primary">
+<div *ngIf="menuPosition === 'left'" [ngClass]="{'dark-theme': currentTheme === 'dark', 'navbar-left': currentTheme === 'light'}">
+  <mat-toolbar>
     <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
     <!-- <span>Incidents Core</span> -->
     

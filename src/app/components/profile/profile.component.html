@@ -1,60 +1,61 @@
 <app-navbar></app-navbar>
-<div class="profile" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
-<h2>My Profile</h2>
-<form [formGroup]="profileForm" (ngSubmit)="savePreferences()">
-  <!-- Theme Selection -->
-  <div>
-    <label for="theme">Theme:</label>
-    <select formControlName="theme" id="theme">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-  </div>
+<!-- <div class="profile" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}"> -->
+<div class="profile">
+  <h2>My Profile</h2>
+  <form [formGroup]="profileForm" (ngSubmit)="savePreferences()">
+    <!-- Theme Selection -->
+    <div>
+      <label for="theme">Theme:</label>
+      <select formControlName="theme" id="theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
 
-  <!-- Notifications Toggle -->
-  <div>
-    <label for="notifications">Notifications:</label>
-    <input type="checkbox" formControlName="notifications" id="notifications" />
-    Receive Notifications
-  </div>
+    <!-- Notifications Toggle -->
+    <div>
+      <label for="notifications">Notifications:</label>
+      <input type="checkbox" formControlName="notifications" id="notifications" />
+      Receive Notifications
+    </div>
 
-  <!-- Layout Selection -->
-  <div>
-    <label for="layout">Layout:</label>
-    <select formControlName="layout" id="layout">
-      <option value="default">Default Layout</option>
-      <option value="compact">Compact Layout</option>
-      <option value="spacious">Spacious Layout</option>
-    </select>
-  </div>
+    <!-- Layout Selection -->
+    <div>
+      <label for="layout">Layout:</label>
+      <select formControlName="layout" id="layout">
+        <option value="default">Default Layout</option>
+        <option value="compact">Compact Layout</option>
+        <option value="spacious">Spacious Layout</option>
+      </select>
+    </div>
 
-  <!-- Menu Position -->
-  <div>
-    <label for="menu_position">Menu Position:</label>
-    <select formControlName="menu_position" id="menu_position">
-      <option value="top">Top</option>
-      <option value="left">Left</option>
-    </select>
-  </div>
+    <!-- Menu Position -->
+    <div>
+      <label for="menu_position">Menu Position:</label>
+      <select formControlName="menu_position" id="menu_position">
+        <option value="top">Top</option>
+        <option value="left">Left</option>
+      </select>
+    </div>
 
-  <!-- Neumorphism Background Color Picker -->
-  <div>
-    <label for="background_color">Background Color:</label>
-    <input type="color" formControlName="background_color" id="background_color" />
-  </div>
+    <!-- Neumorphism Background Color Picker -->
+    <div>
+      <label for="background_color">Background Color:</label>
+      <input type="color" formControlName="background_color" id="background_color" />
+    </div>
 
-  <!-- Neumorphism Shadow Color Picker -->
-  <div>
-    <label for="shadow_color">Shadow Color:</label>
-    <input type="color" formControlName="shadow_color" id="shadow_color" />
-  </div>
+    <!-- Neumorphism Shadow Color Picker -->
+    <div>
+      <label for="shadow_color">Shadow Color:</label>
+      <input type="color" formControlName="shadow_color" id="shadow_color" />
+    </div>
 
-  <!-- Logo Upload -->
-  <div>
-    <label for="logo_url">Upload Logo:</label>
-    <input type="file" (change)="onFileChange($event)" />
-  </div>
+    <!-- Logo Upload -->
+    <div>
+      <label for="logo_url">Upload Logo:</label>
+      <input type="file" (change)="onFileChange($event)" />
+    </div>
 
-  <button type="submit">Save Preferences</button>
-</form>
+    <button type="submit">Save Preferences</button>
+  </form>
 </div>
