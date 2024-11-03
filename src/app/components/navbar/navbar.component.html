@@ -13,6 +13,9 @@
       <button mat-button class="spaced-button" (click)="goToIntegrations()"><fa-icon [icon]="faIntegrations"></fa-icon> Integrations</button>
       <button mat-button class="spaced-button" (click)="goToProfile()"><fa-icon [icon]="faProfile"></fa-icon> My Profile</button>
       <button mat-button class="spaced-button" (click)="goToTeam()"><fa-icon [icon]="faTeam"></fa-icon> Team</button>
+      <button mat-button class="spaced-button" (click)="goToLogView()">
+        <fa-icon [icon]="faLogs"></fa-icon> Logs
+      </button>
       <button mat-button class="spaced-button" (click)="onLogout()"><fa-icon [icon]="faLogout"></fa-icon> Logout</button>
     </ng-container>
     <button mat-icon-button (click)="toggleDarkMode()">
@@ -51,6 +54,9 @@
       </button>
       <button mat-button class="side-nav-button" (click)="goToTeam()">
         <fa-icon [icon]="faTeam"></fa-icon> <br> <span>Team</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToLogView()">
+        <fa-icon [icon]="faLogs"></fa-icon> Logs
       </button>
       <button mat-button class="side-nav-button" (click)="onLogout()">
         <fa-icon [icon]="faLogout"></fa-icon> <br> <span>Logout</span>

@@ -115,7 +115,7 @@ export class IncidentsComponent {
 
   viewLogDetails(id: any) {
     this.selectedIncidentId = id; // Set the selected incident ID
-    this.backendService.getIncidentLogs(id).subscribe({
+    this.backendService.getIncidentLogsByID(id).subscribe({
       next: (responce: any) => {
         console.log(responce);
         if (responce) {

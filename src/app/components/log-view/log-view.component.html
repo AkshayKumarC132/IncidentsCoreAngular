@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
+    <h1>Logs Overview</h1>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Total Incidents</h3>
+            <p>{{ totalIncidents }}</p>
+        </div>
+        <div class="card">
+            <h3>Average Resolution Time (hours)</h3>
+            <p>{{ averageResolutionTime | number: '1.2-2' }}</p>
+        </div>
+        <div class="card">
+            <h3>Human Intervention Incidents</h3>
+            <p>{{ humanInterventionIncidents }}</p>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div>
+            <h3>Incidents by Severity</h3>
+            <canvas baseChart class="pie-chart" [datasets]="severityData" [labels]="severityLabels" [type]="'pie'">
+            </canvas>
+        </div>
+    </div>
+    <h3>Log Details</h3>
+    <table class="log-table">
+        <thead>
+            <tr>
+                <th>Incident ID</th>
+                <th>Assigned Agent</th>
+                <th>Assigned At</th>
+                <th>Resolved At</th>
+                <th>Resolution Time (hours)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let log of logs">
+                <td>{{ log.incident_id }}</td>
+                <td>{{ log.assigned_agent }}</td>
+                <td>{{ log.assigned_at | date: 'short' }}</td>
+                <td>{{ log.resolved_at ? (log.resolved_at | date: 'short') : 'N/A' }}</td>
+                <td>{{ log.resolution_time !== 'N/A' ? (log.resolution_time | number: '1.2-2') : 'N/A' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

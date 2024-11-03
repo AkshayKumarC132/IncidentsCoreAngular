@@ -326,8 +326,20 @@ export class BackendService {
     return this.http.post(`${this.apiUrl}/orchestration/${id}/`, { headers });
   }
 
-  getIncidentLogs(id: any) {
+  getIncidentLogsByID(id: any) {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/incident/${id}/logs/`, { headers });
+  }
+
+  getAllIncidentLogs(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/incident-logs/`, { headers });
+  }
+
+  getIncidentLogs(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<any>(`${this.apiUrl}/incident-log-details/`, {
+      headers,
+    });
   }
 }

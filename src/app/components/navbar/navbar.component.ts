@@ -23,6 +23,7 @@ import {
   faSignOutAlt,
   faMoon,
   faSun,
+  faClipboardList,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -59,6 +60,7 @@ export class NavbarComponent implements OnInit {
   faLogout = faSignOutAlt;
   faDarkMode = faMoon;
   faLightMode = faSun;
+  faLogs = faClipboardList;
 
   constructor(
     private router: Router,
@@ -206,5 +208,9 @@ export class NavbarComponent implements OnInit {
 
   goToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  goToLogView(): void {
+    this.router.navigate(['/log-view']);
   }
 }
