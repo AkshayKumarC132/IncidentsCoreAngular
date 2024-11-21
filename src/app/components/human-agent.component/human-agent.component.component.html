@@ -1,0 +1,46 @@
+<!-- <div class="recording-container">
+    <h2>Human Agent: Screen Recording</h2>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="startRecording()"
+      [disabled]="isRecording"
+    >
+      Start Recording
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="stopRecording()"
+      [disabled]="!isRecording"
+    >
+      Stop Recording
+    </button>
+    <p>Status: {{ isRecording ? 'Recording in progress...' : 'Not recording' }}</p>
+  </div> -->
+  <app-navbar></app-navbar>
+  <div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
+  <div class="dashboard-container">
+    <h2>Assigned Tickets</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Severity</th>
+          <th>Assigned At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.title }}</td>
+          <td>{{ ticket.description }}</td>
+          <td>{{ ticket.severity }}</td>
+          <td>{{ ticket.assigned_at | date:'short' }}</td>
+          <td><button [disabled]="recordStatus" *ngIf="!ticket.is_recording" (click)="startRecording(ticket.id)"><fa-icon [icon]="faPlay"></fa-icon></button>  <button *ngIf="ticket.is_recording" (click)="stopRecording(ticket.id)"><fa-icon [icon]="faPause"></fa-icon></button> </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>

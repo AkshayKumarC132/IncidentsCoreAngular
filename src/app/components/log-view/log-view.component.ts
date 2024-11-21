@@ -38,6 +38,7 @@ export class LogViewComponent {
   severityData: any[] = [];
   severityLabels: string[] = [];
   menuOption: any = 'top';
+  tickets: any;
 
   constructor(
     private backendService: BackendService,
@@ -72,6 +73,18 @@ export class LogViewComponent {
       PieController
     );
     this.loadLogs();
+    this.fetchAssignedTickets();
+  }
+
+  fetchAssignedTickets(): void {
+    this.backendService.getAssignedTickets().subscribe(
+      (data) => {
+        this.tickets = data;
+      },
+      (error) => {
+        console.error('Error fetching tickets:', error);
+      }
+    );
   }
 
   loadLogs() {

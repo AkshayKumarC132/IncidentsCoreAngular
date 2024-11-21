@@ -23,6 +23,28 @@
             </canvas>
         </div>
     </div>
+    <div class="dashboard-container">
+        <h2>Assigned Tickets</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Severity</th>
+              <th>Assigned At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ticket of tickets">
+              <td>{{ ticket.title }}</td>
+              <td>{{ ticket.description }}</td>
+              <td>{{ ticket.severity }}</td>
+              <td>{{ ticket.assigned_at | date:'short' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
     <h3>Log Details</h3>
     <table class="log-table">
         <thead>

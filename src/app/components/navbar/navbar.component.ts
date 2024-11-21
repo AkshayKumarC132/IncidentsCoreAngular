@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit {
   faDarkMode = faMoon;
   faLightMode = faSun;
   faLogs = faClipboardList;
-
+  isAdmin = false;
   constructor(
     private router: Router,
     private backendService: BackendService,
@@ -80,6 +80,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserPreferences();
+    this.isAdmin = this.backendService.isAdmin;
   }
 
   toggleDarkMode() {
@@ -149,7 +150,9 @@ export class NavbarComponent implements OnInit {
       document.body.classList.add('top-menu-active');
     }
   }
-
+  goToHumanAgentDashboard() {
+    this.router.navigate(['/human-agent-dashboard']);
+  }
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }

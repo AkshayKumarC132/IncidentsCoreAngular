@@ -13,11 +13,10 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root',
 })
 export class BackendService {
-  private apiUrl = 'http://127.0.0.1:5000/api'; // Your backend API URL
+  private apiUrl = 'http://172.16.16.64:5000/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
-
+  isAdmin = false;
   constructor(private http: HttpClient) {}
-
   public getApiUrl(): string {
     return this.apiUrl;
   }
@@ -341,5 +340,79 @@ export class BackendService {
     return this.http.get<any>(`${this.apiUrl}/incident-log-details/`, {
       headers,
     });
+  }
+
+  getAssignedTickets(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<any>(`${this.apiUrl}/get_assigned_tickets/`, {
+      headers,
+    });
+  }
+
+  /**
+   * Start recording for a given ticket ID.
+   * @param ticketId The ticket ID to start recording for.
+   */
+  startRecording(ticketId: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    // const url = ${this.baseUrl}/start_recording/;
+    return this.http.post(
+      `${this.apiUrl}/start_recording/`,
+      {
+        ticket_id: ticketId,
+      },
+      { headers }
+    );
+  }
+
+  /**
+   * Stop recording for a given ticket ID.
+   * @param ticketId The ticket ID to stop recording for.
+   */
+  stopRecording(ticketId: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post(
+      `${this.apiUrl}/stop_recording/`,
+      {
+        ticket_id: ticketId,
+      },
+      { headers }
+    );
+  }
+
+  /**
+   * Upload a recording chunk.
+   * @param file The chunk of the recording to upload.
+   * @param ticketId The ticket ID the recording is associated with.
+   */
+  uploadRecordingChunk(file: Blob, ticketId: string): Observable<any> {
+    const url = `${this.apiUrl}/stop_recording/`;
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('ticket_id', ticketId);
+    return this.http.post(url, formData);
+  }
+
+  uploadChunk(chunk: Blob, ticketId: string) {
+    const headers = this.getAuthHeaders(); // Authorization or other required headers
+
+    const formData = new FormData();
+    formData.append('file', chunk); // Add the chunk to FormData
+    formData.append('ticket_id', ticketId); // Add the ticket ID
+
+    // Send the FormData
+    return this.http.post(`${this.apiUrl}/upload_recording_chunk/`, formData, {
+      headers, // Ensure headers don't include `Content-Type` as it will be set by `FormData`
+    });
+  }
+
+  /**
+   * Finalize the recording after all chunks are uploaded.
+   * @param ticketId The ticket ID to finalize the recording for.
+   */
+  finalizeRecording(ticketId: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    const url = `${this.apiUrl}/finalize_recording/`;
+    return this.http.post(url, { ticket_id: ticketId }, { headers });
   }
 }

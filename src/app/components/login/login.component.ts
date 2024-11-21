@@ -10,44 +10,48 @@ import { NavbarService } from '../../services/navbar.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    NavbarComponent
-  ],
+  imports: [CommonModule, FormsModule, HttpClientModule, NavbarComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   providers: [BackendService],
 })
 export class LoginComponent {
-
   loginData = {
     username: '',
-    password: ''
+    password: '',
   };
 
   errorMessage: string = '';
-  menuOption : any = 'top'
+  menuOption: any = 'top';
 
-  constructor (private backendService: BackendService, private route:Router, private navservice :NavbarService){
-
-    this.navservice.navbarPosition$.subscribe(position => {
+  constructor(
+    private backendService: BackendService,
+    private route: Router,
+    private navservice: NavbarService
+  ) {
+    this.navservice.navbarPosition$.subscribe((position) => {
       this.menuOption = position;
-      console.log("Dashbaord ", this.menuOption )
+      console.log('Dashbaord ', this.menuOption);
     });
-
   }
 
   onSubmit() {
     this.backendService.login(this.loginData).subscribe(
       (response) => {
         console.log('Login successful', response);
+        // this.backendService.isAdmin=response.role
+        if (response.data[0].role !== 'human_agent') {
+          console.log(this.backendService.isAdmin);
+          this.backendService.isAdmin = true;
+          console.log(this.backendService.isAdmin);
+          this.route.navigate(['/dashboard']); // Adjust the URL as needed
+        } else {
+          this.route.navigate(['/human-agent-dashboard']); // Adjust the URL as needed
+        }
         // Store the token in local storage or a service for later use
         localStorage.setItem('authToken', response.token); // Store the token
-        
+
         // Redirect to the dashboard or any other page on success
-        this.route.navigate(['/dashboard']); // Adjust the URL as needed
       },
       (error) => {
         // Handle backend error response appropriately
@@ -61,8 +65,7 @@ export class LoginComponent {
     );
   }
 
-  goToRegisterPage(){
-    this.route.navigate(['/register'])
+  goToRegisterPage() {
+    this.route.navigate(['/register']);
   }
-
 }
