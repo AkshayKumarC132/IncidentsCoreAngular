@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { Device } from '../models/device.model';
 import { Incident } from '../models/incident.model';
-import { catchError } from 'rxjs/operators'; // Import catchError
 import { Team } from '../models/team.model';
 import { User } from '../models/user.model';
 import { Msp } from '../models/msp.model';
@@ -13,8 +12,9 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root',
 })
 export class BackendService {
-  private apiUrl = 'http://172.16.16.64:5000/api'; // Your backend API URL
+  // private apiUrl = 'https://hask.app/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
+  private apiUrl = 'http://localhost:5000/api';
   isAdmin = false;
   constructor(private http: HttpClient) {}
   public getApiUrl(): string {
@@ -46,23 +46,25 @@ export class BackendService {
 
   // Customer API calls
   getCustomers(): Observable<Customer[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Customer[]>(`${this.apiUrl}/customers/`, { headers });
+    const token = localStorage.getItem('authToken');
+    return this.http.get<Customer[]>(`${this.apiUrl}/customers/` + token);
   }
 
   addCustomer(customerData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post<any>(`${this.apiUrl}/customers/`, customerData, {
-      headers,
-    }); // Assuming POST to base URL
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post<any>(
+      `${this.apiUrl}/customers/` + token,
+      customerData
+    ); // Assuming POST to base URL
   }
 
   updateCustomer(customerData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
     return this.http.put<any>(
-      `${this.apiUrl}/customers/${customerData.id}/`,
-      customerData,
-      { headers }
+      `${this.apiUrl}/customers/${customerData.id}/` + token,
+      customerData
     ); // Assuming PUT to the specific customer URL
   }
 
@@ -76,112 +78,117 @@ export class BackendService {
   //   return this.http.put<Customer>(`${this.apiUrl}/customers/${customer.id}`, customer, { headers });
   // }
 
-  deleteCustomer(customerId: number): Observable<void> {
-    const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/customers/${customerId}/`, {
-      headers,
-    });
+  deleteCustomer(customerId: number): Observable<any> {
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.delete<void>(
+      `${this.apiUrl}/customers/${customerId}/` + token
+    );
   }
 
   getSeverities(): Observable<string[]> {
     // Adjust the return type as needed
-    const headers = this.getAuthHeaders();
-    return this.http.get<string[]>(`${this.apiUrl}/severities/`, { headers }); // Change URL as necessary
+    const token = localStorage.getItem('authToken');
+    return this.http.get<string[]>(`${this.apiUrl}/severities/` + token); // Change URL as necessary
   }
 
   // Device API calls
   getDevices(): Observable<Device[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Device[]>(`${this.apiUrl}/devices/`, { headers });
+    const token = localStorage.getItem('authToken');
+    return this.http.get<Device[]>(`${this.apiUrl}/devices/` + token);
   }
 
   addDevice(device: Device): Observable<Device> {
-    const headers = this.getAuthHeaders();
-    return this.http.post<Device>(`${this.apiUrl}/devices/`, device, {
-      headers,
-    });
+    const token = localStorage.getItem('authToken');
+    return this.http.post<Device>(`${this.apiUrl}/devices/` + token, device);
   }
 
   updateDevice(device: Device): Observable<Device> {
-    const headers = this.getAuthHeaders();
+    // const headers = this.getAuthHeaders();
+
+    const token = localStorage.getItem('authToken');
     return this.http.put<Device>(
-      `${this.apiUrl}/devices/${device.id}/`,
-      device,
-      { headers }
+      `${this.apiUrl}/devices/${device.id}/` + token,
+      device
     );
   }
 
   deleteDevice(deviceId: number): Observable<void> {
-    const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/devices/${deviceId}/`, {
-      headers,
-    });
+    const token = localStorage.getItem('authToken');
+    return this.http.delete<void>(
+      `${this.apiUrl}/devices/${deviceId}/` + token
+    );
   }
 
   // Incident API calls
   getIncidents() {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/incidents/` + token);
   }
 
   addIncident(incident: Incident): Observable<Incident> {
-    const headers = this.getAuthHeaders();
-    return this.http.post<Incident>(`${this.apiUrl}/incidents/`, incident, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post<Incident>(
+      `${this.apiUrl}/incidents/` + token,
+      incident
+    );
   }
 
   updateIncident(incident: Incident): Observable<Incident> {
-    const headers = this.getAuthHeaders();
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
     return this.http.put<Incident>(
-      `${this.apiUrl}/incidents/${incident.id}/`,
-      incident,
-      { headers }
+      `${this.apiUrl}/incidents/${incident.id}/` + token,
+      incident
     );
   }
 
   deleteIncident(incidentId: number): Observable<void> {
-    const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/incidents/${incidentId}/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.delete<void>(
+      `${this.apiUrl}/incidents/${incidentId}/` + token
+    );
   }
 
   // Function to get dashboard summary data
   getIncidentData(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<any>(`${this.apiUrl}/dashboard-summary/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+    return this.http.get<any>(`${this.apiUrl}/dashboard-summary/` + token);
   }
 
   logout(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/logout/`, {}, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/logout/` + token, {});
   }
 
   // Team API calls
   getTeams(): Observable<Team[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Team[]>(`${this.apiUrl}/teams/`, { headers });
+    const token = localStorage.getItem('authToken');
+    return this.http.get<Team[]>(`${this.apiUrl}/teams/` + token);
   }
 
   addTeam(teamData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/teams/`, teamData, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/teams/` + token, teamData);
   }
 
   updateTeam(teamId: number, teamData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.put(`${this.apiUrl}/teams/${teamId}/`, teamData, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.put(`${this.apiUrl}/teams/${teamId}/` + token, teamData);
   }
 
   deleteTeam(teamId: number): Observable<void> {
     // Add this method
-    const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}/teams/${teamId}/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.delete<void>(`${this.apiUrl}/teams/${teamId}/` + token);
   }
 
   // Method to assign a team member to a client
@@ -196,31 +203,30 @@ export class BackendService {
   }
 
   assignClientsToTeamMember(data: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/api/assign-clients/`, data, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/api/assign-clients/` + token, data);
   }
 
   unassignClients(data: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.delete(`${this.apiUrl}/api/assign-clients/`, {
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.delete(`${this.apiUrl}/api/assign-clients/` + token, {
       body: data,
-      headers,
     }); // Use DELETE method for unassignment
   }
 
   getTeamMembers(): Observable<User[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<User[]>(`${this.apiUrl}/api/team-members/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get<User[]>(`${this.apiUrl}/api/team-members/` + token);
   }
 
   // Fetch all clients
   getClients(): Observable<Customer[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Customer[]>(`${this.apiUrl}/customers/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get<Customer[]>(`${this.apiUrl}/customers/` + token);
   }
 
   // Fetch all users
@@ -248,24 +254,23 @@ export class BackendService {
     );
   }
   getMsps(): Observable<Msp[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Msp[]>(`${this.apiUrl}/msps/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get<Msp[]>(`${this.apiUrl}/msps/`);
   }
 
   // Function to save ConnectWise integration
   saveConnectWiseIntegration(payload: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/connectwise/setup/`, payload, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/connectwise/setup/` + token, payload);
   }
 
   // Function to save HaloPSA integration
   saveHaloPSAIntegration(payload: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/halopsa/setup/`, payload, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/halopsa/setup/` + token, payload);
   }
 
   // Function to fetch data
@@ -276,77 +281,83 @@ export class BackendService {
 
   // Fetch the high-level summary from the backend
   getDashboardSummary(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<any>(`${this.apiUrl}/dashboard-summary/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+
+    return this.http.get<any>(`${this.apiUrl}/dashboard-summary/` + token);
   }
 
   // Fetch detailed incidents based on status (active/resolved)
   getIncidentsByStatus(status: string): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/status/${status}/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/incidents/status/${status}/` + token);
   }
 
   getIncidentsByDevice(severity: string): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/device/${severity}/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get(
+      `${this.apiUrl}/incidents/device/${severity}/` + token
+    );
   }
 
   getIncidentsBySeverity(device: string): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incidents/severity/${device}/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get(
+      `${this.apiUrl}/incidents/severity/${device}/` + token
+    );
   }
 
   getUserPreferences(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/user/preferences/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+    return this.http.get(`${this.apiUrl}/user/preferences/` + token);
   }
 
   saveUserPreferences(preferences: any): Observable<any> {
-    const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
     const formData = new FormData();
     for (const key in preferences) {
       if (preferences.hasOwnProperty(key)) {
         formData.append(key, preferences[key]);
       }
     }
-    return this.http.post(`${this.apiUrl}/user/preferences/update/`, formData, {
-      headers,
-    });
+    return this.http.post(
+      `${this.apiUrl}/user/preferences/update/` + token,
+      formData
+    );
   }
 
   runOrchestratioLayer(id: any) {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/orchestration/${id}/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/orchestration/${id}/` + token, {});
   }
 
   getIncidentLogsByID(id: any) {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incident/${id}/logs/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/incident/${id}/logs/` + token);
   }
 
   getAllIncidentLogs(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/incident-logs/`, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/incident-logs/` + token);
   }
 
   getIncidentLogs(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<any>(`${this.apiUrl}/incident-log-details/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get<any>(`${this.apiUrl}/incident-log-details/` + token);
   }
 
   getAssignedTickets(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<any>(`${this.apiUrl}/get_assigned_tickets/`, {
-      headers,
-    });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.get<any>(`${this.apiUrl}/get_assigned_tickets/` + token);
   }
 
   /**
@@ -354,15 +365,12 @@ export class BackendService {
    * @param ticketId The ticket ID to start recording for.
    */
   startRecording(ticketId: string): Observable<any> {
-    const headers = this.getAuthHeaders();
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
     // const url = ${this.baseUrl}/start_recording/;
-    return this.http.post(
-      `${this.apiUrl}/start_recording/`,
-      {
-        ticket_id: ticketId,
-      },
-      { headers }
-    );
+    return this.http.post(`${this.apiUrl}/start_recording/` + token, {
+      ticket_id: ticketId,
+    });
   }
 
   /**
@@ -370,14 +378,11 @@ export class BackendService {
    * @param ticketId The ticket ID to stop recording for.
    */
   stopRecording(ticketId: string): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(
-      `${this.apiUrl}/stop_recording/`,
-      {
-        ticket_id: ticketId,
-      },
-      { headers }
-    );
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/stop_recording/` + token, {
+      ticket_id: ticketId,
+    });
   }
 
   /**
@@ -386,7 +391,8 @@ export class BackendService {
    * @param ticketId The ticket ID the recording is associated with.
    */
   uploadRecordingChunk(file: Blob, ticketId: string): Observable<any> {
-    const url = `${this.apiUrl}/stop_recording/`;
+    const token = localStorage.getItem('authToken');
+    const url = `${this.apiUrl}/stop_recording/` + token;
     const formData = new FormData();
     formData.append('file', file);
     formData.append('ticket_id', ticketId);
@@ -394,16 +400,17 @@ export class BackendService {
   }
 
   uploadChunk(chunk: Blob, ticketId: string) {
-    const headers = this.getAuthHeaders(); // Authorization or other required headers
-
+    // const headers = this.getAuthHeaders(); // Authorization or other required headers
+    const token = localStorage.getItem('authToken');
     const formData = new FormData();
     formData.append('file', chunk); // Add the chunk to FormData
     formData.append('ticket_id', ticketId); // Add the ticket ID
 
     // Send the FormData
-    return this.http.post(`${this.apiUrl}/upload_recording_chunk/`, formData, {
-      headers, // Ensure headers don't include `Content-Type` as it will be set by `FormData`
-    });
+    return this.http.post(
+      `${this.apiUrl}/upload_recording_chunk/` + token,
+      formData
+    );
   }
 
   /**
@@ -411,8 +418,9 @@ export class BackendService {
    * @param ticketId The ticket ID to finalize the recording for.
    */
   finalizeRecording(ticketId: string): Observable<any> {
-    const headers = this.getAuthHeaders();
-    const url = `${this.apiUrl}/finalize_recording/`;
-    return this.http.post(url, { ticket_id: ticketId }, { headers });
+    // const headers = this.getAuthHeaders();
+    const token = localStorage.getItem('authToken');
+    const url = `${this.apiUrl}/finalize_recording/` + token;
+    return this.http.post(url, { ticket_id: ticketId });
   }
 }
