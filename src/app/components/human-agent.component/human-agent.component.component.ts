@@ -7,6 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlay, faEye, faPause } from '@fortawesome/free-solid-svg-icons';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NavbarService } from '../../services/navbar.service';
+import { tick } from '@angular/core/testing';
+import { response } from 'express';
 @Component({
   selector: 'app-human-agent.component',
   standalone: true,
@@ -104,6 +106,7 @@ export class HumanAgentComponentComponent implements OnInit {
         ticket.is_recording = false;
         this.recordStatus = false;
         this.cdr.detectChanges();
+        // this.finalizeRecording(id);
       }
     }
   }
@@ -154,6 +157,39 @@ export class HumanAgentComponentComponent implements OnInit {
     this.backendService.uploadChunk(chunk, ticketId).subscribe({
       next: (response) => console.log('Chunk uploaded successfully:', response),
       error: (error) => console.error('Error uploading chunk:', error),
+    });
+  }
+
+  finalizeRecording(ticketId: string): void {
+    const formData = new FormData();
+    formData.append('ticket_id', ticketId);
+
+    this.backendService.finalizeRecording(formData).subscribe({
+      next: (response) => {
+        console.log('Recording finalized:', response);
+        // alert('Recording finalized and converted to MP4!');
+        this.extractTextFromFinalizedVideo(ticketId);
+        alert(
+          'Recording finalized and converted to MP4! and Extracted Text fron Video'
+        );
+      },
+      error: (error) => {
+        console.error('Error finalizing recording:', error.error.error);
+        alert(error.error.error);
+      },
+    });
+  }
+
+  extractTextFromFinalizedVideo(ticketId: string): void {
+    this.backendService.extractTextFromVideo(ticketId).subscribe({
+      next: (response) => {
+        console.log('Success', response);
+        alert('Extracted Text fron Video');
+      },
+      error: (error) => {
+        console.error('Error :', error.error);
+        alert(error.error);
+      },
     });
   }
 }

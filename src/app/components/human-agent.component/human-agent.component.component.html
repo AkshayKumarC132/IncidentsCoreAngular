@@ -25,6 +25,7 @@
     <table>
       <thead>
         <tr>
+          <th>Id</th>
           <th>Title</th>
           <th>Description</th>
           <th>Severity</th>
@@ -34,11 +35,26 @@
       </thead>
       <tbody>
         <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.id }}</td>
           <td>{{ ticket.title }}</td>
           <td>{{ ticket.description }}</td>
           <td>{{ ticket.severity }}</td>
           <td>{{ ticket.assigned_at | date:'short' }}</td>
-          <td><button [disabled]="recordStatus" *ngIf="!ticket.is_recording" (click)="startRecording(ticket.id)"><fa-icon [icon]="faPlay"></fa-icon></button>  <button *ngIf="ticket.is_recording" (click)="stopRecording(ticket.id)"><fa-icon [icon]="faPause"></fa-icon></button> </td>
+          <td>
+            <button [disabled]="recordStatus" *ngIf="!ticket.is_recording" (click)="startRecording(ticket.id)"><fa-icon
+                [icon]="faPlay"></fa-icon></button> 
+
+            <button *ngIf="ticket.is_recording"
+              (click)="stopRecording(ticket.id)"><fa-icon [icon]="faPause"></fa-icon></button>
+            
+            <button mat-button (click)="finalizeRecording(ticket.id)">
+              Finalize Recording
+              </button>
+              <!-- <button mat-button (click)="extractTextFromFinalizedVideo(ticket.id)">
+                Extract Text
+                </button> -->
+          </td>
+
         </tr>
       </tbody>
     </table>

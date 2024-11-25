@@ -12,9 +12,9 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root',
 })
 export class BackendService {
-  // private apiUrl = 'https://hask.app/api'; // Your backend API URL
+  private apiUrl = 'https://hask.app/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
-  private apiUrl = 'http://localhost:5000/api';
+  // private apiUrl = 'http://127.0.0.1:5000/api';
   isAdmin = false;
   constructor(private http: HttpClient) {}
   public getApiUrl(): string {
@@ -417,10 +417,17 @@ export class BackendService {
    * Finalize the recording after all chunks are uploaded.
    * @param ticketId The ticket ID to finalize the recording for.
    */
-  finalizeRecording(ticketId: string): Observable<any> {
+  finalizeRecording(formData: FormData): Observable<any> {
     // const headers = this.getAuthHeaders();
     const token = localStorage.getItem('authToken');
     const url = `${this.apiUrl}/finalize_recording/` + token;
-    return this.http.post(url, { ticket_id: ticketId });
+    return this.http.post(url, formData);
+  }
+
+  extractTextFromVideo(ticket_id: any) {
+    const url = `${this.apiUrl}/generate_workflow/`;
+    const formData = new FormData();
+    formData.append('ticket_id', ticket_id); // Add the ticket ID
+    return this.http.post(url, formData);
   }
 }
