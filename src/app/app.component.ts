@@ -5,18 +5,20 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,CommonModule],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Incident';
   ngOnInit(): void {
-    this.applyUserPreferences();
+    // this.applyUserPreferences();
   }
 
   applyUserPreferences() {
-    const preferences = JSON.parse(localStorage.getItem('userPreferences') || '{}');
+    const preferences = JSON.parse(
+      localStorage.getItem('userPreferences') || '{}'
+    );
 
     // Apply theme
     if (preferences.theme) {
@@ -25,10 +27,16 @@ export class AppComponent implements OnInit{
 
     // Set neumorphism colors as CSS variables
     if (preferences.backgroundColor) {
-      document.documentElement.style.setProperty('--background-color', preferences.backgroundColor);
+      document.documentElement.style.setProperty(
+        '--background-color',
+        preferences.backgroundColor
+      );
     }
     if (preferences.shadowColor) {
-      document.documentElement.style.setProperty('--shadow-color', preferences.shadowColor);
+      document.documentElement.style.setProperty(
+        '--shadow-color',
+        preferences.shadowColor
+      );
     }
   }
 }

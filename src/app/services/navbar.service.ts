@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -21,6 +22,13 @@ export class NavbarService {
 
   setTheme(theme: string) {
     this.themeSubject.next(theme);
+  }
+
+  private isAdminSubject = new BehaviorSubject<boolean>(false);
+  isAdmin$ = this.isAdminSubject.asObservable();
+
+  setIsAdmin(value: boolean) {
+    this.isAdminSubject.next(value);
   }
 
   //   toggleSidebar() {

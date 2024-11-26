@@ -41,11 +41,16 @@ export class LoginComponent {
         console.log('Login successful', response);
         // this.backendService.isAdmin=response.role
         if (response.data[0].role !== 'human_agent') {
-          console.log(this.backendService.isAdmin);
-          this.backendService.isAdmin = true;
-          console.log(this.backendService.isAdmin);
+          // console.log(this.backendService.isAdmin);
+          // this.backendService.isAdmin = true;
+          // console.log(this.backendService.isAdmin);
+
+          this.navservice.setIsAdmin(true);
+          localStorage.setItem('isAdmin', 'true');
           this.route.navigate(['/dashboard']); // Adjust the URL as needed
         } else {
+          this.navservice.setIsAdmin(false);
+          localStorage.setItem('isAdmin', 'false');
           this.route.navigate(['/human-agent-dashboard']); // Adjust the URL as needed
         }
         // Store the token in local storage or a service for later use

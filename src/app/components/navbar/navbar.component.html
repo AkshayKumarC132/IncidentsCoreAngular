@@ -1,10 +1,13 @@
 <!-- Top Navbar Layout -->
 <div *ngIf="menuPosition === 'top'" [ngClass]="{'dark-theme-top': currentTheme === 'dark', 'navbar-top': currentTheme === 'light'}">
   <mat-toolbar>
-    <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
+    <div class="logo-container-top" *ngIf="logoUrl">
+      <img [src]="logoUrl" alt="Company Logo" class="company-logo">
+    </div>
+    <!-- <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo"> -->
     <!-- <span>Incidents Core</span> -->
     <span class="spacer"></span>
-    <ng-container *ngIf="shouldDisplayNavItems()">
+    <ng-container *ngIf="shouldDisplayNavItems() && isAdmin">
       <button mat-button class="spaced-button" (click)="goToDashboard()">
         <fa-icon [icon]="faDashboard"></fa-icon> Dashboard</button>
       <button mat-button class="spaced-button" (click)="goToCustomer()"><fa-icon [icon]="faCustomers"></fa-icon> Customers</button>
@@ -19,13 +22,13 @@
       <button mat-button class="spaced-button" (click)="onLogout()"><fa-icon [icon]="faLogout"></fa-icon> Logout</button>
     
     </ng-container>
-    <!-- <ng-container *ngIf="shouldDisplayNavItems() && !isAdmin ">
-      <button mat-button class="spaced-button" (click)="goToHumanAgentDashboard()"><fa-icon [icon]="faDashboard"></fa-icon>Human Agent</button>
+    <ng-container *ngIf="shouldDisplayNavItems() && !isAdmin ">
+      <!-- <button mat-button class="spaced-button" (click)="goToHumanAgentDashboard()"><fa-icon [icon]="faDashboard"></fa-icon>Human Agent</button> -->
       <button mat-button class="spaced-button" (click)="goToProfile()"><fa-icon [icon]="faProfile"></fa-icon> My Profile</button>
 
       <button mat-button class="spaced-button" (click)="onLogout()"><fa-icon [icon]="faLogout"></fa-icon> Logout</button>
     
-    </ng-container> -->
+    </ng-container>
     <button mat-icon-button (click)="toggleDarkMode()">
       <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>
     </button>
@@ -35,13 +38,14 @@
 <!-- Left Navbar Layout -->
 <div *ngIf="menuPosition === 'left'" [ngClass]="{'dark-theme': currentTheme === 'dark', 'navbar-left': currentTheme === 'light'}">
   <mat-toolbar>
-    <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo">
-    <!-- <span>Incidents Core</span> -->
-    
+    <!-- <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo"> -->
+    <div class="logo-container-left" *ngIf="logoUrl">
+      <img [src]="logoUrl" alt="Company Logo" class="company-logo">
+    </div>
   </mat-toolbar>
   <span class="spacer-left"></span>
   <nav>
-    <ng-container *ngIf="shouldDisplayNavItems()">
+    <ng-container *ngIf="shouldDisplayNavItems() && isAdmin" >
       <button mat-button class="side-nav-button" (click)="goToDashboard()">
         <fa-icon [icon]="faDashboard"></fa-icon> <br> <span>Dashboard</span>
       </button>
@@ -71,10 +75,10 @@
       </button>
     </ng-container>
 
-    <!-- <ng-container *ngIf="shouldDisplayNavItems() && !isAdmin">
-      <button mat-button class="side-nav-button" (click)="goToHumanAgentDashboard()">
+    <ng-container *ngIf="shouldDisplayNavItems() && !isAdmin">
+      <!-- <button mat-button class="side-nav-button" (click)="goToHumanAgentDashboard()">
         <fa-icon [icon]="faDashboard"></fa-icon> <br> <span>Human Agent</span>
-      </button>
+      </button> -->
       <button mat-button class="side-nav-button" (click)="goToProfile()">
         <fa-icon [icon]="faProfile"></fa-icon> <br> <span>My Profile</span>
       </button>
@@ -82,7 +86,7 @@
         <fa-icon [icon]="faLogout"></fa-icon> <br> <span>Logout</span>
       </button>
 
-    </ng-container> -->
+    </ng-container>
 
     <button mat-icon-button (click)="toggleDarkMode()">
       <mat-icon>{{ darkMode ? 'brightness_7' : 'brightness_4' }}</mat-icon>

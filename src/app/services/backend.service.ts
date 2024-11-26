@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { Device } from '../models/device.model';
 import { Incident } from '../models/incident.model';
@@ -15,7 +15,14 @@ export class BackendService {
   private apiUrl = 'https://hask.app/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
   // private apiUrl = 'http://127.0.0.1:5000/api';
-  isAdmin = false;
+
+  private isAdminSubject = new BehaviorSubject<boolean>(false);
+  isAdmin$ = this.isAdminSubject.asObservable();
+
+  setIsAdmin(value: boolean) {
+    this.isAdminSubject.next(value);
+  }
+
   constructor(private http: HttpClient) {}
   public getApiUrl(): string {
     return this.apiUrl;

@@ -79,8 +79,21 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserPreferences();
-    this.isAdmin = this.backendService.isAdmin;
+    // Check for the access token in local storage
+    const accessToken = localStorage.getItem('authToken');
+
+    // If the access token exists, call the getUserPreferences method
+    if (accessToken) {
+      this.getUserPreferences();
+      if (localStorage.getItem('isAdmin') === 'true') {
+        this.isAdmin = true;
+      }
+    }
+    // this.navservice.isAdmin$.subscribe((value) => {
+    //   this.isAdmin = value;
+    // });
+
+    console.log('NavBar is Admin check', this.isAdmin);
   }
 
   toggleDarkMode() {
@@ -182,6 +195,7 @@ export class NavbarComponent implements OnInit {
         console.log('Logout successful', response);
         // Clear the token from local storage
         localStorage.removeItem('authToken');
+        localStorage.clear();
 
         // Reset theme and layout preferences
         this.resetUserPreferences();
