@@ -168,10 +168,10 @@ export class HumanAgentComponentComponent implements OnInit {
       next: (response) => {
         console.log('Recording finalized:', response);
         // alert('Recording finalized and converted to MP4!');
-        this.extractTextFromFinalizedVideo(ticketId);
-        alert(
-          'Recording finalized and converted to MP4! and Extracted Text fron Video'
-        );
+        // this.extractTextFromFinalizedVideo(ticketId);
+        // alert(
+        //   'Recording finalized and converted to MP4! and Extracted Text fron Video'
+        // );
       },
       error: (error) => {
         console.error('Error finalizing recording:', error.error.error);
@@ -184,7 +184,7 @@ export class HumanAgentComponentComponent implements OnInit {
     this.backendService.extractTextFromVideo(ticketId).subscribe({
       next: (response) => {
         console.log('Success', response);
-        alert('Extracted Text fron Video');
+        // alert('Extracted Text fron Video');
       },
       error: (error) => {
         console.error('Error :', error.error);
