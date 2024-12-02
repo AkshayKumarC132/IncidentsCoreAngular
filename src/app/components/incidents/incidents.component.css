@@ -48,3 +48,47 @@
 .button-container fa-icon {
   font-size: 16px;            /* Adjust icon size */
 }
+
+
+/* Filters section styling */
+.filters {
+  margin-top: 20px;
+  padding: 10px;
+  /* background-color: var(--filter-bg, #f4f4f4); Light background for the filter section */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a neumorphic effect */
+}
+
+/* Filter label and select styling */
+.filters label {
+  font-size: 16px;
+  /* color: var(--label-color, #333); */
+  margin-right: 10px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.filters select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 4px;
+  width: 180px;
+  margin-right: 20px;
+}
+
+/* Styling for the Toggle Order button */
+.filters button {
+  /* padding: 8px 16px; */
+  font-size: 14px;
+  background-color: var(--button-bg, #007bff);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: var(--button-bg-hover, #0056b3);
+}

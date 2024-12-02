@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { Device } from '../models/device.model';
@@ -12,9 +12,9 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root',
 })
 export class BackendService {
-  private apiUrl = 'https://hask.app/api'; // Your backend API URL
+  // private apiUrl = 'https://hask.app/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
-  // private apiUrl = 'http://127.0.0.1:5000/api';
+  private apiUrl = 'http://127.0.0.1:5000/api';
 
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   isAdmin$ = this.isAdminSubject.asObservable();
@@ -128,10 +128,26 @@ export class BackendService {
   }
 
   // Incident API calls
-  getIncidents() {
-    // const headers = this.getAuthHeaders();
+  // getIncidents() {
+  //   // const headers = this.getAuthHeaders();
+  //   const token = localStorage.getItem('authToken');
+  //   return this.http.get(`${this.apiUrl}/incidents/` + token);
+  // }
+
+  getIncidents(
+    filter: string = '',
+    sortBy: string = 'created_at',
+    order: string = 'desc'
+  ) {
     const token = localStorage.getItem('authToken');
-    return this.http.get(`${this.apiUrl}/incidents/` + token);
+    let params = new HttpParams()
+      .set('pagent', filter)
+      .set('sort_by', sortBy)
+      .set('order', order);
+
+    return this.http.get<any[]>(`${this.apiUrl}/incidents/${token}`, {
+      params: params,
+    });
   }
 
   addIncident(incident: Incident): Observable<Incident> {
@@ -436,5 +452,11 @@ export class BackendService {
     const formData = new FormData();
     formData.append('ticket_id', ticket_id); // Add the ticket ID
     return this.http.post(url, formData);
+  }
+
+  updatePostResolution(incidentId: number, payload: any): Observable<any> {
+    // const token = localStorage.getItem('authToken');
+    const url = `${this.apiUrl}/incident/${incidentId}/post-resolution`;
+    return this.http.post(url, payload);
   }
 }

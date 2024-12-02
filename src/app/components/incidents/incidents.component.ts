@@ -57,6 +57,17 @@ export class IncidentsComponent {
   faPlay = faPlay;
   faEye = faEye;
 
+  pagentFilter: string = '';
+  sortBy: string = 'created_at';
+  order: string = 'desc';
+  availableAgents: string[] = [
+    'network',
+    'security',
+    'hardware',
+    'software',
+    'human',
+  ];
+
   incidentsData: any[] = [];
   logDetails: any[] = []; // To store the log details for the selected incident
   selectedIncidentId: number | null = null; // To keep track of which incident's logs are being viewed
@@ -75,23 +86,48 @@ export class IncidentsComponent {
   logDetailsSection!: ElementRef;
 
   ngOnInit(): void {
-    this.backendService.getIncidents().subscribe({
-      next: (responce: any) => {
-        console.log(responce);
-        this.incidentsData = responce;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-    // Fetch devices and severities
-    this.backendService.getDevices().subscribe((devices) => {
-      this.devices = devices;
-    });
+    // this.backendService.getIncidents().subscribe({
+    //   next: (responce: any) => {
+    //     console.log(responce);
+    //     this.incidentsData = responce;
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
+    // // Fetch devices and severities
+    // this.backendService.getDevices().subscribe((devices) => {
+    //   this.devices = devices;
+    // });
+    this.fetchIncidents();
 
     this.backendService.getSeverities().subscribe((severities) => {
       this.severities = severities;
     });
+  }
+
+  fetchIncidents(): void {
+    this.backendService
+      .getIncidents(this.pagentFilter, this.sortBy, this.order)
+      .subscribe({
+        next: (data: any[]) => {
+          // Explicitly type the response as an array
+          this.incidentsData = data;
+          console.log(data);
+        },
+        error: (error) => {
+          console.error('Failed to fetch incidents', error);
+        },
+      });
+  }
+
+  applyFilter(): void {
+    this.fetchIncidents();
+  }
+
+  toggleOrder(): void {
+    this.order = this.order === 'asc' ? 'desc' : 'asc';
+    this.fetchIncidents();
   }
 
   callOrchestrationLayer(id: any) {

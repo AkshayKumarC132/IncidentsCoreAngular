@@ -9,10 +9,17 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { NavbarService } from '../../services/navbar.service';
 import { tick } from '@angular/core/testing';
 import { response } from 'express';
+import { FormsModule } from '@angular/forms'; // Add this line
 @Component({
   selector: 'app-human-agent.component',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FontAwesomeModule, NavbarComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    NavbarComponent,
+    FormsModule,
+  ],
   templateUrl: './human-agent.component.component.html',
   styleUrl: './human-agent.component.component.css',
   providers: [BackendService],
@@ -29,6 +36,18 @@ export class HumanAgentComponentComponent implements OnInit {
   private uploadInterval: any;
   private mediaStream: any;
   recordStatus = false;
+
+  classificationOptions: string[] = [
+    'software',
+    'network',
+    'hardware',
+    'security',
+    'human',
+  ];
+  selectedIncidentId: number | null = null;
+  postResolutionClassification = '';
+  postResolutionDescription = '';
+
   // private readonly uploadUrl = 'http://127.0.0.1:5000/api/upload_recording_chunk/';
   constructor(
     private backendService: BackendService,
@@ -189,6 +208,33 @@ export class HumanAgentComponentComponent implements OnInit {
       error: (error) => {
         console.error('Error :', error.error);
         alert(error.error);
+      },
+    });
+  }
+
+  submitPostResolution(
+    incidentId: number,
+    classification: string,
+    description: string
+  ): void {
+    if (!classification) {
+      alert('Please select a classification agent for the incident.');
+      return;
+    }
+
+    const payload = {
+      classification: classification,
+      description: description,
+    };
+
+    this.backendService.updatePostResolution(incidentId, payload).subscribe({
+      next: (response) => {
+        alert('Incident ${incidentId} updated successfully.');
+        this.fetchAssignedTickets(); // Refresh ticket list after update
+      },
+      error: (err) => {
+        console.error('Error updating incident:', err);
+        alert('Failed to update incident.');
       },
     });
   }

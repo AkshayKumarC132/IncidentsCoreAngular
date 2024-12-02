@@ -42,6 +42,7 @@
             <th>Id</th>
             <th>Title</th>
             <th>Description</th>
+            <th>Predicted Agent</th>
             <th>Resolved Status</th>
             <th>Device</th>
             <th>Severity</th>
@@ -53,6 +54,7 @@
             <td>{{ incident.id}}</td>
             <td>{{ incident.title }}</td>
             <td>{{ incident.description }}</td>
+            <td>{{ incident.pagent ? incident.pagent : 'Not Assigned'}}</td>
             <td>{{ incident.resolved ? 'Resolved' : 'Active' }}</td>
             <td> {{ incident.device.name}}</td>
             <td>{{ incident.severity.level }}</td>

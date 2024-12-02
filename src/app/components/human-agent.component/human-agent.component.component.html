@@ -1,25 +1,11 @@
-<!-- <div class="recording-container">
-    <h2>Human Agent: Screen Recording</h2>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="startRecording()"
-      [disabled]="isRecording"
-    >
-      Start Recording
-    </button>
-    <button
-      mat-raised-button
-      color="warn"
-      (click)="stopRecording()"
-      [disabled]="!isRecording"
-    >
-      Stop Recording
-    </button>
-    <p>Status: {{ isRecording ? 'Recording in progress...' : 'Not recording' }}</p>
-  </div> -->
-  <app-navbar></app-navbar>
-  <div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
+<app-navbar></app-navbar>
+<div
+  class="neumorphic"
+  [ngClass]="{
+    'navbar-top': menuOption === 'top',
+    'navbar-left': menuOption === 'left'
+  }"
+>
   <div class="dashboard-container">
     <h2>Assigned Tickets</h2>
     <table>
@@ -31,6 +17,7 @@
           <th>Severity</th>
           <th>Assigned At</th>
           <th>Actions</th>
+          <th>Post-Resolution</th>
         </tr>
       </thead>
       <tbody>
@@ -39,24 +26,41 @@
           <td>{{ ticket.title }}</td>
           <td>{{ ticket.description }}</td>
           <td>{{ ticket.severity }}</td>
-          <td>{{ ticket.assigned_at | date:'short' }}</td>
+          <td>{{ ticket.assigned_at | date: 'short' }}</td>
           <td>
-            <button [disabled]="recordStatus" *ngIf="!ticket.is_recording" (click)="startRecording(ticket.id)"><fa-icon
-                [icon]="faPlay"></fa-icon></button> 
+            <!-- Recording Buttons -->
+            <button
+              [disabled]="ticket.is_recording"
+              *ngIf="!ticket.is_recording"
+              (click)="startRecording(ticket.id)"
+            >
+              <fa-icon [icon]="faPlay"></fa-icon>
+            </button>
 
-            <button *ngIf="ticket.is_recording"
-              (click)="stopRecording(ticket.id)"><fa-icon [icon]="faPause"></fa-icon></button>
-            
+            <button *ngIf="ticket.is_recording" (click)="stopRecording(ticket.id)">
+              <fa-icon [icon]="faPause"></fa-icon>
+            </button>
+
             <button mat-button (click)="finalizeRecording(ticket.id)">
               Finalize Recording
-              </button>
-              <!-- <button mat-button (click)="extractTextFromFinalizedVideo(ticket.id)">
-                Extract Text
-                </button> -->
+            </button>
           </td>
-
+          <td>
+            <!-- Post-resolution classification -->
+            <select [(ngModel)]="ticket.classification" required>
+              <option value="" disabled selected>--Select Classification--</option>
+              <option *ngFor="let option of classificationOptions" [value]="option">{{ option }}</option>
+            </select>
+            <textarea
+              [(ngModel)]="ticket.resolution_description"
+              placeholder="Add resolution description"
+            ></textarea>
+            <button (click)="submitPostResolution(ticket.id, ticket.classification, ticket.resolution_description)">
+              Submit
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  </div>
+</div>
