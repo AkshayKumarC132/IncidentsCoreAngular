@@ -50,12 +50,102 @@
       <input type="color" formControlName="shadow_color" id="shadow_color" />
     </div>
 
-    <!-- Logo Upload -->
+    <!-- Font Style -->
+    <div>
+      <label for="font-style">Font Style:</label>
+      <select formControlName="font_style" id="font-style">
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Tahoma">Tahoma</option>
+      </select>
+    </div>
+
+    <!-- Font Size -->
+    <div>
+      <label for="font-size">Font Size:</label>
+      <input type="number" formControlName="font_size" id="font-size" min="10" max="36" />
+    </div>
+
+    <!-- Font Color -->
+    <div>
+      <label for="font-color">Font Color:</label>
+      <input type="color" formControlName="font_color" id="font-color" />
+    </div>
+
     <div>
       <label for="logo_url">Upload Logo:</label>
       <input type="file" (change)="onFileChange($event)" />
     </div>
+    <label for="logo-shape">Logo Shape:</label>
+    <select formControlName="logo_shape" id="logo-shape">
+      <option value="rectangle">Rectangle</option>
+      <option value="square">Square</option>
+      <option value="circle">Circle</option>
+    </select>
+<!-- Logo Position -->
+<div>
+  <label for="logo-position">Logo Position:</label>
+  <select formControlName="logo_position" id="logo-position">
+    <option value="top-left">Top Left</option>
+    <option value="top-right">Top Right</option>
+    <option value="center">Center</option>
+  </select>
+</div>
 
-    <button type="submit">Save Preferences</button>
-  </form>
+<div class="button-group">
+  <button type="submit" class="btn save-btn">Save Preferences</button>
+  <button type="button" class="btn reset-btn" (click)="confirmReset()">Reset to Default</button>
+</div>
+</form>
+
+<!-- Live Preview Section -->
+<div class="preview-container">
+  <h3>Font Live Preview</h3>
+  <div class="preview-box" [style.font-family]="profileForm.get('font_style')?.value"
+    [style.font-size.px]="profileForm.get('font_size')?.value" [style.color]="profileForm.get('font_color')?.value"
+    [style.background-color]="profileForm.get('background_color')?.value" [style.box-shadow]="
+        '10px 10px 20px ' + profileForm.get('shadow_color')?.value + ',
+        -10px -10px 20px ' + profileForm.get('background_color')?.value
+      ">
+    Sample Text for Live Preview
+  </div>
+</div>
+
+<!-- Dashboard Preview -->
+<div class="dashboard-preview">
+  <div
+    class="logo-preview"
+    [ngStyle]="{
+      'border-radius': profileForm.get('logo_shape')?.value === 'circle'
+        ? '50%'
+        : profileForm.get('logo_shape')?.value === 'square'
+        ? '0'
+        : '5px',
+      'position': 'absolute',
+      'top': profileForm.get('logo_position')?.value === 'top-left' ||
+             profileForm.get('logo_position')?.value === 'top-right'
+             ? '10px'
+             : profileForm.get('logo_position')?.value === 'center'
+             ? '50%'
+             : 'unset',
+      'left': profileForm.get('logo_position')?.value === 'top-left'
+        ? '10px'
+        : profileForm.get('logo_position')?.value === 'center'
+        ? '50%'
+        : 'unset',
+      'right': profileForm.get('logo_position')?.value === 'top-right'
+        ? '10px'
+        : 'unset',
+      'transform': profileForm.get('logo_position')?.value === 'center'
+        ? 'translate(-50%, -50%)'
+        : 'none'
+    }"
+  >
+    <img *ngIf="uploadedLogo" [src]="uploadedLogo" alt="Logo Preview" />
+  </div>
+  <div class="content-preview">
+    Logo Preview
+  </div>
+</div>
 </div>

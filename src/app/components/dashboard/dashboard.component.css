@@ -64,7 +64,8 @@ body {
     width: 100%;
     /* border-collapse: collapse; */
     font-size: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 4px 8px var(--shadow-color);
   }
   
   .styled-table thead tr {
@@ -103,7 +104,7 @@ body {
     --card-text-color: #007bff;
     --table-header-bg: #007bff;
     --table-row-hover-bg: #f1f1f1;
-    box-shadow: 0 4px 14px rgb(250, 243, 243);
+    box-shadow: 0 4px 14px var(--shadow-color);
     
   }
 
@@ -141,7 +142,7 @@ body {
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 14px rgb(250, 243, 243) !important; /* Lighter shadow for contrast in dark mode */
+    box-shadow: 0 4px 14px var(--shadow-color); /* Lighter shadow for contrast in dark mode */
   }
   
   .card h3 {
@@ -208,7 +209,7 @@ canvas.bar-chart {
   flex: 1; /* Allow charts to grow equally */
   margin: 0 10px; /* Add some margin between charts */
   border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 9px rgb(250, 243, 243) !important; /* Lighter shadow for contrast in dark mode */
+  box-shadow: 0 4px 14px var(--shadow-color) !important; /* Lighter shadow for contrast in dark mode */
   padding: 20px; /* Optional: add padding inside the chart container */
 }
 

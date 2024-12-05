@@ -92,6 +92,7 @@ background-color: #1e1e1e !important;
   object-fit: contain; /* Ensures proportional scaling */
 }
 
+/* Top Navbar Logo Position */
 .logo-container-top {
   display: flex;
   align-items: center;
@@ -102,6 +103,25 @@ background-color: #1e1e1e !important;
   margin-right: 15px; /* Space between logo and nav items */
 }
 
+.logo-container-top.top-left {
+  justify-content: flex-start;
+}
+
+.logo-container-top.top-right {
+  justify-content: flex-end;
+}
+
+.logo-container-top.bottom-left {
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.logo-container-top.bottom-right {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* Left Navbar Logo Position */
 .logo-container-left {
   display: flex;
   align-items: center;
@@ -110,4 +130,22 @@ background-color: #1e1e1e !important;
   height: 100px; /* Adjust height for a consistent layout */
   overflow: hidden; /* Ensures no overflow */
   margin-bottom: 20px; /* Adds spacing below the logo */
+}
+
+.logo-container-left.top-left {
+  justify-content: flex-start;
+}
+
+.logo-container-left.top-right {
+  justify-content: flex-end;
+}
+
+.logo-container-left.bottom-left {
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.logo-container-left.bottom-right {
+  justify-content: flex-end;
+  align-items: flex-end;
 }

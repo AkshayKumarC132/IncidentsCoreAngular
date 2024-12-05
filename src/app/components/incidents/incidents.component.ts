@@ -139,6 +139,13 @@ export class IncidentsComponent {
             icon: 'success',
             text: responce.message,
             width: '400px',
+            customClass: {
+              popup: 'swal-custom-popup',
+              title: 'swal-custom-title',
+              htmlContainer: 'swal-custom-html', // Use htmlContainer instead of content
+              confirmButton: 'swal-custom-button',
+              cancelButton: 'swal-custom-button',
+            },
           });
         }
         // this.incidentsData = responce;
@@ -163,6 +170,13 @@ export class IncidentsComponent {
               width: '400px',
               icon: 'info',
               confirmButtonText: 'OK',
+              customClass: {
+                popup: 'swal-custom-popup',
+                title: 'swal-custom-title',
+                htmlContainer: 'swal-custom-html', // Use htmlContainer instead of content
+                confirmButton: 'swal-custom-button',
+                cancelButton: 'swal-custom-button',
+              },
             });
           } else {
             // Scroll to the log details section if logs are available

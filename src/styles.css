@@ -32,23 +32,32 @@
   }
   
   /* Global Body Styles */
-  body {
+  /* body {
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: 'Roboto', sans-serif;
-  }
+  } */
   
+  body {
+    font-family: var(--font-family, Arial);
+    font-size: var(--font-size, 14px);
+    color: var(--font-color, #000000);
+    background-color: var(--background-color,#fff);
+    box-shadow: var(--shadow-color,#faf3f3);
+
+}
+
   /* Neumorphic Element Styles */
   .neumorphic {
     background-color: var(--background-color);
-    box-shadow: 10px 10px 20px var(--shadow-color-dark), -10px -10px 20px var(--shadow-color-light);
+    box-shadow: 10px 10px 20px var(--shadow-color-dark), -10px -10px 20px var(--shadow-color);
     border-radius: 15px;
     padding: 20px;
     transition: all 0.3s ease;
   }
   
   .neumorphic:hover {
-    box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
+    box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color);
   }
   
   /* Icon Styles */
@@ -69,7 +78,7 @@
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
-    box-shadow: 5px 5px 15px var(--shadow-color-dark), -5px -5px 15px var(--shadow-color-light);
+    box-shadow: 5px 5px 15px var(--shadow-color-dark), -5px -5px 15px var(--shadow-color);
     transition: all 0.3s ease;
   }
 
@@ -79,7 +88,7 @@
   /* }  */
   
   button:hover {
-    box-shadow: 3px 3px 8px var(--shadow-color-dark), -3px -3px 8px var(--shadow-color-light);
+    box-shadow: 3px 3px 8px var(--shadow-color-dark), -3px -3px 8px var(--shadow-color);
   }
   
   /* Example for Icon Inside a Neumorphic Element */
@@ -87,3 +96,27 @@
     font-size: 36px;
     margin: 10px 0;
   }
+
+  /* Smaller Swal Popup */
+.swal-custom-popup {
+  width: 300px; /* Adjust box width */
+  padding: 15px; /* Reduce padding */
+  font-size: 14px; /* Adjust font size */
+}
+
+/* Smaller Swal Title */
+.swal-custom-title {
+  font-size: 16px; /* Smaller title font size */
+  font-weight: bold;
+}
+
+/* Smaller Swal Content Text */
+.swal-custom-content {
+  font-size: 12px; /* Smaller content font size */
+}
+
+/* Smaller Swal Buttons */
+.swal-custom-button {
+  font-size: 12px; /* Adjust button font size */
+  padding: 5px 10px; /* Adjust button padding */
+}

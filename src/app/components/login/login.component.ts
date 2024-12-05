@@ -47,6 +47,7 @@ export class LoginComponent {
 
           this.navservice.setIsAdmin(true);
           localStorage.setItem('isAdmin', 'true');
+          localStorage.setItem('role', response.data[0].role);
           this.route.navigate(['/dashboard']); // Adjust the URL as needed
         } else {
           this.navservice.setIsAdmin(false);

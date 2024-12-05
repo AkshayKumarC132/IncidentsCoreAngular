@@ -1,7 +1,7 @@
 <!-- Top Navbar Layout -->
 <div *ngIf="menuPosition === 'top'" [ngClass]="{'dark-theme-top': currentTheme === 'dark', 'navbar-top': currentTheme === 'light'}">
   <mat-toolbar>
-    <div class="logo-container-top" *ngIf="logoUrl">
+    <div class="logo-container-top" [ngClass]="logoPosition" *ngIf="logoUrl">
       <img [src]="logoUrl" alt="Company Logo" class="company-logo">
     </div>
     <!-- <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo"> -->
@@ -10,6 +10,7 @@
     <ng-container *ngIf="shouldDisplayNavItems() && isAdmin">
       <button mat-button class="spaced-button" (click)="goToDashboard()">
         <fa-icon [icon]="faDashboard"></fa-icon> Dashboard</button>
+        <button mat-button class="spaced-button" *ngIf="userRole === 'gl'" (click)="goToGlDashboard()"><fa-icon [icon]="faDashboard"></fa-icon> GL Dashboard</button>
       <button mat-button class="spaced-button" (click)="goToCustomer()"><fa-icon [icon]="faCustomers"></fa-icon> Customers</button>
       <button mat-button class="spaced-button" (click)="goToDevices()"><fa-icon [icon]="faDevices"></fa-icon> Devices</button>
       <button mat-button class="spaced-button" (click)="goToIncidents()"><fa-icon [icon]="faIncidents"></fa-icon> Incidents</button>
@@ -39,7 +40,7 @@
 <div *ngIf="menuPosition === 'left'" [ngClass]="{'dark-theme': currentTheme === 'dark', 'navbar-left': currentTheme === 'light'}">
   <mat-toolbar>
     <!-- <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="company-logo"> -->
-    <div class="logo-container-left" *ngIf="logoUrl">
+    <div class="logo-container-left" [ngClass]="logoPosition" *ngIf="logoUrl">
       <img [src]="logoUrl" alt="Company Logo" class="company-logo">
     </div>
   </mat-toolbar>

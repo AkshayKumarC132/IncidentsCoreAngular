@@ -38,7 +38,7 @@
   border-radius: 8px;
   padding: 12px;
   width: 100%;
-  box-shadow: inset 3px 3px 6px var(--shadow-color-dark), inset -3px -3px 6px var(--shadow-color-light);
+  box-shadow: inset 3px 3px 6px var(--shadow-color-dark), inset -3px -3px 6px var(--shadow-color);
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
   font-size: 14px;
 }
@@ -57,7 +57,7 @@ button.btn-primary {
   border-radius: 12px;
   padding: 12px;
   width: 100%;
-  box-shadow: 4px 4px 12px var(--shadow-color-dark), -4px -4px 12px var(--shadow-color-light);
+  box-shadow: 4px 4px 12px var(--shadow-color-dark), -4px -4px 12px var(--shadow-color);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   font-size: 16px;
   font-weight: bold;
@@ -66,7 +66,7 @@ button.btn-primary {
 
 button.btn-primary:hover {
   background-color: darken(var(--icon-color), 5%);
-  box-shadow: 2px 2px 8px var(--shadow-color-dark), -2px -2px 8px var(--shadow-color-light);
+  box-shadow: 2px 2px 8px var(--shadow-color-dark), -2px -2px 8px var(--shadow-color);
 }
 
 /* Alert Messages */
@@ -76,7 +76,7 @@ button.btn-primary:hover {
   margin-top: 20px;
   color: var(--text-color);
   background-color: var(--table-bg);
-  box-shadow: 2px 2px 5px var(--shadow-color-dark), -2px -2px 5px var(--shadow-color-light);
+  box-shadow: 2px 2px 5px var(--shadow-color-dark), -2px -2px 5px var(--shadow-color);
 }
 
 /* Dark Mode Styles */

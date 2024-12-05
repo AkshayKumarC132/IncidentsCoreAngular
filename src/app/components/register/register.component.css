@@ -23,7 +23,7 @@ body.dark-mode {
     width: 400px;
     margin: 50px auto;
     background-color: var(--background-color);
-    box-shadow: 10px 10px 20px var(--shadow-color-dark), -10px -10px 20px var(--shadow-color-light);
+    box-shadow: 10px 10px 20px var(--shadow-color-dark), -10px -10px 20px var(--shadow-color);
     border-radius: 15px;
     padding: 20px;
     transition: all 0.3s ease;
@@ -48,7 +48,7 @@ select {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    box-shadow: inset 5px 5px 10px var(--shadow-color-dark), inset -5px -5px 10px var(--shadow-color-light);
+    box-shadow: inset 5px 5px 10px var(--shadow-color-dark), inset -5px -5px 10px var(--shadow-color);
     background-color: var(--background-color);
     color: var(--text-color);
     transition: all 0.3s ease;
@@ -81,13 +81,13 @@ select:focus {
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
-    box-shadow: 5px 5px 15px var(--shadow-color-dark), -5px -5px 15px var(--shadow-color-light);
+    box-shadow: 5px 5px 15px var(--shadow-color-dark), -5px -5px 15px var(--shadow-color);
     transition: all 0.3s ease;
 }
 
 .btn:hover {
     background-color: darken(var(--icon-color), 10%);
-    box-shadow: 3px 3px 8px var(--shadow-color-dark), -3px -3px 8px var(--shadow-color-light);
+    box-shadow: 3px 3px 8px var(--shadow-color-dark), -3px -3px 8px var(--shadow-color);
 }
 
 .btn:disabled {

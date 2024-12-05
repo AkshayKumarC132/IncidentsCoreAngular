@@ -459,4 +459,25 @@ export class BackendService {
     const url = `${this.apiUrl}/incident/${incidentId}/post-resolution`;
     return this.http.post(url, payload);
   }
+
+  fetchUsers(
+    page: number,
+    pageSize: number,
+    searchQuery: string = ''
+  ): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('page_size', pageSize.toString())
+      .set('search', searchQuery);
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/gl-dashboard/` + token, { params });
+  }
+
+  updateRole(userId: number, role: string): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}` + '/update-role/' + token, {
+      user_id: userId,
+      role,
+    });
+  }
 }

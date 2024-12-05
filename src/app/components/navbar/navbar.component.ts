@@ -25,6 +25,7 @@ import {
   faSun,
   faClipboardList,
 } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -62,6 +63,10 @@ export class NavbarComponent implements OnInit {
   faLightMode = faSun;
   faLogs = faClipboardList;
   isAdmin = false;
+  logoShape: string = 'rectangle'; // Default shape
+  logoPosition: string = 'top-left'; // Default position
+  userRole: any;
+
   constructor(
     private router: Router,
     private backendService: BackendService,
@@ -79,21 +84,20 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Check for the access token in local storage
-    const accessToken = localStorage.getItem('authToken');
+    try {
+      // Check for the access token in local storage
+      const accessToken = localStorage.getItem('authToken');
 
-    // If the access token exists, call the getUserPreferences method
-    if (accessToken) {
-      this.getUserPreferences();
-      if (localStorage.getItem('isAdmin') === 'true') {
-        this.isAdmin = true;
+      // If the access token exists, call the getUserPreferences method
+      if (accessToken) {
+        this.getUserPreferences();
+        if (localStorage.getItem('isAdmin') === 'true') {
+          this.isAdmin = true;
+        }
       }
+    } catch (e) {
+      // Handle error if localStorage is not available
     }
-    // this.navservice.isAdmin$.subscribe((value) => {
-    //   this.isAdmin = value;
-    // });
-
-    console.log('NavBar is Admin check', this.isAdmin);
   }
 
   toggleDarkMode() {
@@ -109,44 +113,82 @@ export class NavbarComponent implements OnInit {
   getUserPreferences() {
     this.backendService.getUserPreferences().subscribe(
       (preferences) => {
+        this.userRole = preferences.role;
         if (preferences.logo_url) {
           console.log(this.logoUrl);
           this.logoUrl = `${this.backendService.getApiUrl()}${
             preferences.logo_url
           }`;
-          console.log(this.logoUrl);
-          this.menuPosition = preferences.menu_position || 'top';
-          this.navservice.menuOption = preferences.menu_position || 'top';
-          this.setNavbarPosition(preferences.menu_position);
-          this.navservice.setTheme(preferences.theme);
-
-          // Apply theme
-          document.body.classList.toggle(
-            'dark-mode',
-            preferences.theme === 'dark'
-          );
-
-          // Set CSS variables for background and shadow colors
-          document.documentElement.style.setProperty(
-            '--background-color',
-            preferences.background_color
-          );
-          document.documentElement.style.setProperty(
-            '--shadow-color',
-            preferences.shadow_color
-          );
-
-          // Adjust layout if needed (for compact or spacious layouts)
-          document.body.classList.toggle(
-            'compact-layout',
-            preferences.layout === 'compact'
-          );
-          document.body.classList.toggle(
-            'spacious-layout',
-            preferences.layout === 'spacious'
-          );
-          this.applyLayoutClass();
         }
+        console.log(this.logoUrl);
+        this.menuPosition = preferences.menu_position || 'top';
+        this.navservice.menuOption = preferences.menu_position || 'top';
+        this.logoShape = preferences.logo_shape || 'rectangle';
+        this.logoPosition = preferences.logo_position || 'top-left';
+        this.setNavbarPosition(preferences.menu_position);
+        this.navservice.setTheme(preferences.theme);
+
+        // Apply theme
+        document.body.classList.toggle(
+          'dark-mode',
+          preferences.theme === 'dark'
+        );
+
+        document.documentElement.style.setProperty(
+          '--background-color',
+          preferences.background_color
+        );
+        document.documentElement.style.setProperty(
+          '--shadow-color',
+          preferences.shadow_color
+        );
+        document.documentElement.style.setProperty(
+          '--font-style',
+          preferences.font_style
+        );
+        document.documentElement.style.setProperty(
+          '--font-size',
+          `${preferences.font_size}px`
+        );
+        document.documentElement.style.setProperty(
+          '--font-color',
+          preferences.font_color
+        );
+
+        // Adjust layout if needed (for compact or spacious layouts)
+        document.body.classList.toggle(
+          'compact-layout',
+          preferences.layout === 'compact'
+        );
+        document.body.classList.toggle(
+          'spacious-layout',
+          preferences.layout === 'spacious'
+        );
+
+        // Adjust logo shape dynamically
+        const logoElement = document.querySelector(
+          '.company-logo'
+        ) as HTMLElement;
+        if (logoElement) {
+          logoElement.style.borderRadius =
+            this.logoShape === 'circle' ? '50%' : '0';
+        }
+
+        // Adjust logo position dynamically
+        if (this.logoPosition && logoElement) {
+          // Reset any previous logo position classes
+          logoElement.classList.remove(
+            'top-left',
+            'top-right',
+            'bottom-left',
+            'bottom-right'
+          );
+
+          // Add the appropriate class based on logoPosition
+          logoElement.classList.add(this.logoPosition); // 'top-left', 'top-right', 'bottom-left', 'bottom-right'
+        }
+        this.applyLayoutClass();
+        // }
         // Set other preferences if needed
       },
       (error) => {
@@ -182,6 +224,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/integrations']);
   }
 
+  goToGlDashboard() {
+    this.router.navigate(['/gl-dashboard']);
+  }
+
   shouldDisplayNavItems(): boolean {
     const currentRoute = this.router.url;
     return (
@@ -189,23 +235,66 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  onLogout() {
-    this.backendService.logout().subscribe(
-      (response) => {
-        console.log('Logout successful', response);
-        // Clear the token from local storage
-        localStorage.removeItem('authToken');
-        localStorage.clear();
-
-        // Reset theme and layout preferences
-        this.resetUserPreferences();
-        // Redirect to the login page
-        this.router.navigate(['/login']);
+  onLogout(): void {
+    Swal.fire({
+      title: 'Are you sure you want to logout?',
+      // text: 'You will need to log in again to access your account.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#007bff',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'swal-custom-popup',
+        title: 'swal-custom-title',
+        htmlContainer: 'swal-custom-html', // Use htmlContainer instead of content
+        confirmButton: 'swal-custom-button',
+        cancelButton: 'swal-custom-button',
       },
-      (error) => {
-        console.error('Logout failed', error);
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.backendService.logout().subscribe(
+          (response) => {
+            console.log('Logout successful', response);
+
+            // Clear the token from local storage
+            localStorage.removeItem('authToken');
+            localStorage.clear();
+
+            // Reset theme and layout preferences
+            this.resetUserPreferences();
+
+            // Redirect to the login page
+            this.router.navigate(['/login']);
+
+            Swal.fire({
+              title: 'Logged out!',
+              text: 'You have been logged out successfully.',
+              icon: 'success',
+              customClass: {
+                popup: 'swal-custom-popup',
+                title: 'swal-custom-title',
+                confirmButton: 'swal-custom-button',
+              },
+            });
+          },
+          (error) => {
+            console.error('Logout failed', error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to logout. Please try again.',
+              icon: 'error',
+              customClass: {
+                popup: 'swal-custom-popup',
+                title: 'swal-custom-title',
+                confirmButton: 'swal-custom-button',
+              },
+            });
+          }
+        );
       }
-    );
+    });
   }
 
   resetUserPreferences() {
@@ -216,6 +305,11 @@ export class NavbarComponent implements OnInit {
     document.body.classList.remove('dark-mode');
     document.body.classList.remove('compact-layout');
     document.body.classList.remove('spacious-layout');
+
+    // Reset font-related styles
+    document.documentElement.style.removeProperty('--font-style');
+    document.documentElement.style.removeProperty('--font-size');
+    document.documentElement.style.removeProperty('--font-color');
   }
 
   // Method to navigate to Team component
