@@ -39,20 +39,23 @@ export class LoginComponent {
     this.backendService.login(this.loginData).subscribe(
       (response) => {
         console.log('Login successful', response);
-        // this.backendService.isAdmin=response.role
-        if (response.data[0].role !== 'human_agent') {
-          // console.log(this.backendService.isAdmin);
-          // this.backendService.isAdmin = true;
-          // console.log(this.backendService.isAdmin);
+        const userRole = response.data[0].role;
 
-          this.navservice.setIsAdmin(true);
-          localStorage.setItem('isAdmin', 'true');
-          localStorage.setItem('role', response.data[0].role);
-          this.route.navigate(['/dashboard']); // Adjust the URL as needed
-        } else {
+        if (userRole === 'human_agent') {
           this.navservice.setIsAdmin(false);
           localStorage.setItem('isAdmin', 'false');
-          this.route.navigate(['/human-agent-dashboard']); // Adjust the URL as needed
+          localStorage.setItem('role', userRole);
+          this.route.navigate(['/human-agent-dashboard']); // Redirect for human agent role
+        } else if (userRole === 'gl') {
+          this.navservice.setIsAdmin(true);
+          localStorage.setItem('isAdmin', 'true');
+          localStorage.setItem('role', userRole);
+          this.route.navigate(['/gl-dashboard']); // Redirect for gl role
+        } else {
+          this.navservice.setIsAdmin(true);
+          localStorage.setItem('isAdmin', 'true');
+          localStorage.setItem('role', userRole);
+          this.route.navigate(['/dashboard']); // Redirect for any other role
         }
         // Store the token in local storage or a service for later use
         localStorage.setItem('authToken', response.token); // Store the token

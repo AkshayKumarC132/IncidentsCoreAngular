@@ -1,1 +1,10 @@
 
+.mat-mdc-table  {
+    /* table-layout: auto;
+    white-space: normal; */
+    background-color: var(--background-color) !important; 
+}
+
+.mat-mdc-paginator {
+background-color: var(--background-color) !important; 
+}
