@@ -17,7 +17,7 @@
       <mat-label>Device</mat-label>
       <mat-select [(ngModel)]="newIncident.deviceId" required>
         <mat-option *ngFor="let device of devices" [value]="device.id">
-          {{ device.name }} <!-- Change according to your device property -->
+          {{ device.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>

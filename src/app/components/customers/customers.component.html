@@ -3,7 +3,7 @@
 <h2>Manage Customers</h2>
 
 <!-- Display list of customers -->
-<ul>
+<!-- <ul>
   <li *ngFor="let customer of customers"  style="list-style: none;">
     <span style="margin-right: 20px;">
         {{ customer.name }} - {{ customer.email }} - Assigned to: {{ customer.team_member ? customer.team_member.username : 'Unassigned' }}
@@ -12,7 +12,38 @@
     <button mat-button color="primary" (click)="editCustomer(customer)">Edit</button>
     <button mat-button color="accent" (click)="unassignClientFromTeam(customer.id)">Unassign</button>
   </li>
-</ul>
+</ul> -->
+<div class="table-container">
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="padding: 10px; text-align: left;">ID</th>
+        <th style="padding: 10px; text-align: left;">Name</th>
+        <th style="padding: 10px; text-align: left;">Email</th>
+        <th style="padding: 10px; text-align: left;">Phone</th>
+        <th style="padding: 10px; text-align: left;">Assigned To</th>
+        <!-- <th style="padding: 10px; text-align: left;">Actions</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td style="padding: 10px;">{{ customer.id }}</td>
+        <td style="padding: 10px;">{{ customer.name }}</td>
+        <td style="padding: 10px;">{{ customer.email || 'N/A' }}</td>
+        <td style="padding: 10px;">{{ customer.phone || 'N/A' }}</td>
+        <td style="padding: 10px;">
+          {{ customer.team_member ? customer.team_member.username : 'Unassigned' }}
+        </td>
+        <!-- <td style="padding: 10px;">
+          <button (click)="deleteCustomer(customer.id)" style="margin-right: 5px;">Delete</button>
+          <button (click)="editCustomer(customer)" style="margin-right: 5px;">Edit</button>
+          <button (click)="unassignClientFromTeam(customer.id)">Unassign</button>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 <!-- Form to add a new customer -->
 <mat-form-field>

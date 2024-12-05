@@ -1,5 +1,43 @@
 <app-navbar></app-navbar>
 <div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
+  
+  <h3>Device List</h3>
+  <!-- <mat-list>
+    <mat-list-item *ngFor="let device of devices" class="text">
+      {{ device.name }} - {{ device.device_type }} (Customer ID: {{ device.client }})
+      <button mat-icon-button (click)="deleteDevice(device.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list> -->
+  <div class="table-container">
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="padding: 10px; text-align: left;">ID</th>
+          <th style="padding: 10px; text-align: left;">Name</th>
+          <th style="padding: 10px; text-align: left;">Device Type</th>
+          <th style="padding: 10px; text-align: left;">Customer ID</th>
+          <th style="padding: 10px; text-align: left;">IP Address</th>
+          <th style="padding: 10px; text-align: left;">Created At</th>
+          <!-- <th style="padding: 10px; text-align: left;">Actions</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of devices">
+          <td style="padding: 10px;">{{ device.id }}</td>
+          <td style="padding: 10px;">{{ device.name }}</td>
+          <td style="padding: 10px;">{{ device.device_type || 'N/A' }}</td>
+          <td style="padding: 10px;">{{ device.client }}</td>
+          <td style="padding: 10px;">{{ device.ip_address || 'N/A' }}</td>
+          <td style="padding: 10px;">{{ device.created_at | date: 'medium' }}</td>
+          <!-- <td style="padding: 10px;">
+            <button (click)="deleteDevice(device.id)" style="cursor: pointer;">Delete</button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>  
   <h2>Manage Devices</h2>
   
   <mat-form-field>
@@ -27,14 +65,4 @@
   </mat-form-field>
 
   <button mat-raised-button color="primary" (click)="addDevice()">Add Device</button>
-
-  <h3>Device List</h3>
-  <mat-list>
-    <mat-list-item *ngFor="let device of devices" class="text">
-      {{ device.name }} - {{ device.device_type }} (Customer ID: {{ device.client }})
-      <button mat-icon-button (click)="deleteDevice(device.id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-list-item>
-  </mat-list>
 </div>

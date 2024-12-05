@@ -211,6 +211,8 @@ canvas.bar-chart {
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 4px 14px var(--shadow-color) !important; /* Lighter shadow for contrast in dark mode */
   padding: 20px; /* Optional: add padding inside the chart container */
+  cursor: pointer; /* Makes the chart area clickable */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation for hover effect */
 }
 
 .chart h3 {

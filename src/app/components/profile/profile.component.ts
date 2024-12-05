@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
     if (this.profileForm.get('logo_url')?.value instanceof File) {
       preferences.logo_url = this.profileForm.get('logo_url')?.value;
     }
-
+    console.log([preferences.logo_url]);
     this.backendService.saveUserPreferences(preferences).subscribe(
       (response) => {
         console.log('Preferences saved successfully:', response);
@@ -128,17 +128,21 @@ export class ProfileComponent implements OnInit {
     this.updateLogoStyle();
   }
 
-  onFileChange(event: any): void {
+  // onFileChange(event: any): void {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       if (e.target?.result !== undefined) {
+  //         this.uploadedLogo = e.target.result;
+  //       }
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
+  onFileChange(event: any) {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result !== undefined) {
-          this.uploadedLogo = e.target.result;
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+    this.profileForm.patchValue({ logo_url: file });
   }
 
   updateLogoStyle(): void {
