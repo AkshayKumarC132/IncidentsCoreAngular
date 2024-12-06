@@ -36,6 +36,45 @@
 
     <div class="drilldown">
       <h2>Incident Details</h2>
+      <div class="filters">
+        <label>
+          Predicted Agent:
+          <input
+            type="text"
+            [(ngModel)]="pagentFilter"
+            placeholder="Filter by agent"
+          />
+        </label>
+      
+        <label>
+          Sort By:
+          <select [(ngModel)]="sortBy">
+            <option value="created_at">Created At</option>
+            <option value="severity.level">Severity</option>
+            <option value="title">Title</option>
+          </select>
+        </label>
+      
+        <label>
+          Order:
+          <select [(ngModel)]="order">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </label>
+      
+        <label>
+          Jira Ticket:
+          <select [(ngModel)]="jiraTicket">
+            <option [value]="null">All</option>
+            <option [value]="true">With Jira Ticket</option>
+            <option [value]="false">Without Jira Ticket</option>
+          </select>
+        </label>
+      
+        <!-- Apply Button -->
+        <button (click)="applyFilter()">Apply</button>
+      </div>
       <table>
         <thead>
           <tr>

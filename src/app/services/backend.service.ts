@@ -137,13 +137,26 @@ export class BackendService {
   getIncidents(
     filter: string = '',
     sortBy: string = 'created_at',
-    order: string = 'desc'
+    order: string = 'desc',
+    jiraTicket: boolean | null
   ) {
     const token = localStorage.getItem('authToken');
-    let params = new HttpParams()
-      .set('pagent', filter)
-      .set('sort_by', sortBy)
-      .set('order', order);
+    // let params = new HttpParams()
+    //   .set('pagent', filter)
+    //   .set('sort_by', sortBy)
+    //   .set('order', order);
+    let params: any = {
+      sort_by: sortBy,
+      order: order,
+    };
+
+    if (filter) {
+      params.pagent = filter;
+    }
+
+    if (jiraTicket !== null) {
+      params.jira_ticket = jiraTicket; // Add jira_ticket filter
+    }
 
     return this.http.get<any[]>(`${this.apiUrl}/incidents/${token}`, {
       params: params,
@@ -479,5 +492,18 @@ export class BackendService {
       user_id: userId,
       role,
     });
+  }
+
+  saveJiraIntegration(payload: any) {
+    const token = localStorage.getItem('authToken');
+    return this.http.post(
+      `${this.apiUrl}` + '/validate-and-save-jira/' + token,
+      payload
+    );
+  }
+
+  fetchJiraIssues() {
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}` + '/fetch-jira-issues/' + token);
   }
 }

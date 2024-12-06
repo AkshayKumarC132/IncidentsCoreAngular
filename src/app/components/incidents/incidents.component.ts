@@ -60,6 +60,7 @@ export class IncidentsComponent {
   pagentFilter: string = '';
   sortBy: string = 'created_at';
   order: string = 'desc';
+  jiraTicket: boolean | null = null; // Holds the boolean filter for jira_ticket (null for no filter)
   availableAgents: string[] = [
     'network',
     'security',
@@ -108,7 +109,7 @@ export class IncidentsComponent {
 
   fetchIncidents(): void {
     this.backendService
-      .getIncidents(this.pagentFilter, this.sortBy, this.order)
+      .getIncidents(this.pagentFilter, this.sortBy, this.order, this.jiraTicket)
       .subscribe({
         next: (data: any[]) => {
           // Explicitly type the response as an array
@@ -119,6 +120,10 @@ export class IncidentsComponent {
           console.error('Failed to fetch incidents', error);
         },
       });
+  }
+
+  onFilterChange(): void {
+    this.fetchIncidents();
   }
 
   applyFilter(): void {

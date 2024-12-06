@@ -44,6 +44,7 @@
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>Title</th>
           <th>Device</th>
           <th>Severity</th>
@@ -52,6 +53,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let incident of drillDownData">
+          <td>{{ incident.id }}</td>
           <td>{{ incident.title }}</td>
           <td>{{ incident.device__name }}</td>
           <td>{{ incident.severity__level }}</td>

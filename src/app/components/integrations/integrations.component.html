@@ -8,6 +8,7 @@
     <select [(ngModel)]="integrationType" class="form-control" id="integration-type" required>
       <option value="ConnectWise">ConnectWise</option>
       <option value="HaloPSA">HaloPSA</option>
+      <option value="Jira">Jira</option>
     </select>
   </div>
 
@@ -47,6 +48,28 @@
     <label for="client_secret">Client Secret</label>
     <input type="text" [(ngModel)]="haloPSAForm.client_secret" class="form-control" id="client_secret" required>
     <div *ngIf="!haloPSAForm.client_secret" class="text-danger">Client Secret is required.</div>
+  </div>
+
+  <!-- Form Fields for Jira -->
+  <div *ngIf="integrationType === 'Jira'" class="form-group">
+    <label for="jira_api_base_url">API Base URL</label>
+    <input type="text" [(ngModel)]="jiraForm.api_base_url" class="form-control" id="jira_api_base_url" required>
+    <div *ngIf="!jiraForm.api_base_url" class="text-danger">API Base URL is required.</div>
+
+    <label for="jira_user_email">User Email</label>
+    <input type="email" [(ngModel)]="jiraForm.user_email" class="form-control" id="jira_user_email" required>
+    <div *ngIf="!jiraForm.user_email" class="text-danger">User Email is required.</div>
+
+    <label for="jira_api_token">API Token</label>
+    <input type="password" [(ngModel)]="jiraForm.api_token" class="form-control" id="jira_api_token" required>
+    <div *ngIf="!jiraForm.api_token" class="text-danger">API Token is required.</div>
+
+    <label for="jira_project_key">Project Key</label>
+    <input type="text" [(ngModel)]="jiraForm.project_key" class="form-control" id="jira_project_key" required>
+    <div *ngIf="!jiraForm.project_key" class="text-danger">Project Key is required.</div>
+
+    <label for="jira_project_name">Project Name</label>
+    <input type="text" [(ngModel)]="jiraForm.project_name" class="form-control" id="jira_project_name">
   </div>
 
   <!-- Submit Button -->
