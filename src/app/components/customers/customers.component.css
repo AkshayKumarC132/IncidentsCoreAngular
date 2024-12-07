@@ -3,6 +3,9 @@
     /* padding-left: 210px; */
   }
 
+  h2 {
+    color: var(--table-text-color);
+  }
  /* Base styles for the drill-down table */
  table {
   width: 100%;
@@ -24,4 +27,7 @@
   /* background-color: var(--table-bg); */
   color: var(--table-text-color);
   border: 1px solid var(--table-border-color);
+}
+.customer{
+  margin-top: 5px;
 }

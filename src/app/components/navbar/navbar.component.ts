@@ -227,6 +227,9 @@ export class NavbarComponent implements OnInit {
   goToGlDashboard() {
     this.router.navigate(['/gl-dashboard']);
   }
+  goToJiraDashboard() {
+    this.router.navigate(['/jira-dashboard']);
+  }
 
   shouldDisplayNavItems(): boolean {
     const currentRoute = this.router.url;

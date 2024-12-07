@@ -1,21 +1,20 @@
-
-
 <!-- <app-navbar></app-navbar> -->
-<p>role-dialog works!</p>
-<h2 mat-dialog-title>Assign Role</h2>
-<mat-dialog-content>
-  <p>Assign a new role to <strong>{{ data.user.name }}</strong></p>
-  <mat-form-field>
-    <mat-label>Role</mat-label>
-    <mat-select [(value)]="newRole">
-      <mat-option value="admin">Admin</mat-option>
-      <mat-option value="msp_superuser">MSP SuperUser</mat-option>
-      <mat-option value="msp_user">MSP User</mat-option>
-      <mat-option value="gl">GL</mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="closeDialog()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="saveRole()">Save</button>
-</mat-dialog-actions>
+<div>
+  <h2 mat-dialog-title>Assign Role</h2>
+  <mat-dialog-content>
+    <p>Assign a new role to <strong>{{ data.user.name }}</strong></p>
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select [(value)]="newRole">
+        <mat-option value="admin">Admin</mat-option>
+        <mat-option value="msp_superuser">MSP SuperUser</mat-option>
+        <mat-option value="msp_user">MSP User</mat-option>
+        <mat-option value="gl">GL</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="saveRole()">Save</button>
+  </mat-dialog-actions>
+</div>

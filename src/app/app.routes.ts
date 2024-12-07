@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { LogViewComponent } from './components/log-view/log-view.component';
 import { HumanAgentComponentComponent } from './components/human-agent.component/human-agent.component.component';
 import { GlDashboardComponent } from './components/gl-dashboard/gl-dashboard.component';
+import { JiraDashboardComponent } from './components/jira-dashboard/jira-dashboard.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'log-view', component: LogViewComponent },
   { path: 'human-agent-dashboard', component: HumanAgentComponentComponent },
   { path: 'gl-dashboard', component: GlDashboardComponent },
+  { path: 'jira-dashboard', component: JiraDashboardComponent },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Optional: redirect to register page on startup
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Catch-all route

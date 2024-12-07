@@ -1,0 +1,70 @@
+<app-navbar></app-navbar>
+<div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
+    <div class="jira-dashboard">
+        <h2>Jira Tickets</h2>
+        <!-- Filter Options -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Status:</label>
+                <select [(ngModel)]="statusFilter" (change)="applyFilters()">
+                    <option value="">All</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Done">Done</option>
+                    <option value="To Do">To Do</option>
+                    <option value="Development Done">Development Done</option>
+                    <option value="On hold">On hold</option>
+                    <option value="Deployed to QA">Deployed to QA</option>
+                    <option value="Unassigned">Unassigned</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Open">Open</option>
+                </select>
+            </div>
+        
+            <div class="filter-group">
+                <label>Priority:</label>
+                <select [(ngModel)]="priorityFilter" (change)="applyFilters()">
+                    <option value="">All</option>
+                    <option value="Critical">Critical</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+        
+            <!-- Sorting Options -->
+            <!-- <div class="sorting">
+                <button (click)="toggleSortOrder('status')">Sort by Status</button>
+                <button (click)="toggleSortOrder('priority')">Sort by Priority</button>
+                <button (click)="toggleSortOrder('confidence_score')">Sort by Confidence Score</button>
+            </div> -->
+        </div>        
+        <div *ngIf="tickets.length === 0">
+            <p>No Jira tickets found.</p>
+          </div>
+
+        <table *ngIf="tickets.length > 0">
+            <thead>
+                <tr>
+                    <th>Issue Key</th>
+                    <th>Project</th>
+                    <th>Summary</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Predicted Agent</th>
+                    <th>Confidence Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ticket of tickets">
+                    <td>{{ ticket.issue_key }}</td>
+                    <td>{{ ticket.project }}</td>
+                    <td>{{ ticket.summary }}</td>
+                    <td>{{ ticket.status }}</td>
+                    <td>{{ ticket.priority }}</td>
+                    <td>{{ ticket.predicted_agent }}</td>
+                    <td>{{ ticket.confidence_score | number: '1.0-2' }}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

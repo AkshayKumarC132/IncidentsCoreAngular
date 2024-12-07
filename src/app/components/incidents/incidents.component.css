@@ -7,6 +7,9 @@
     margin-left: 200px;
     /* padding-left: 210px; */
   }
+  .neumorphic{
+    margin-top: 5px;
+  }
 
   /* Base styles for the drill-down table */
  table {
@@ -91,4 +94,8 @@
 
 .filters button:hover {
   background-color: var(--button-bg-hover, #0056b3);
+}
+
+label, input, span, h2 {
+  color: var(--table-text-color) !important
 }

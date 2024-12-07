@@ -10,6 +10,10 @@
   margin: 0 auto;
 }
 
+.integrations{
+  margin-top: 5px;
+}
+
 .integration-container h2 {
   color: var(--text-color);
   text-align: center;
@@ -112,4 +116,8 @@ button:focus {
   outline: none;
   border-radius: 12px;
   box-shadow: 0px 0px 8px var(--icon-shadow-color);
+}
+
+h1,h2, h3 ,p, label{
+  color: var(--table-text-color);
 }

@@ -11,6 +11,8 @@
       <button mat-button class="spaced-button" (click)="goToDashboard()">
         <fa-icon [icon]="faDashboard"></fa-icon> Dashboard</button>
         <button mat-button class="spaced-button" *ngIf="userRole === 'gl'" (click)="goToGlDashboard()"><fa-icon [icon]="faDashboard"></fa-icon> GL Dashboard</button>
+        <button mat-button class="spaced-button" (click)="goToJiraDashboard()">
+          <fa-icon [icon]="faDashboard"></fa-icon> Jira Dashboard</button>
       <button mat-button class="spaced-button" (click)="goToCustomer()"><fa-icon [icon]="faCustomers"></fa-icon> Customers</button>
       <button mat-button class="spaced-button" (click)="goToDevices()"><fa-icon [icon]="faDevices"></fa-icon> Devices</button>
       <button mat-button class="spaced-button" (click)="goToIncidents()"><fa-icon [icon]="faIncidents"></fa-icon> Incidents</button>
@@ -48,6 +50,12 @@
   <nav>
     <ng-container *ngIf="shouldDisplayNavItems() && isAdmin" >
       <button mat-button class="side-nav-button" (click)="goToDashboard()">
+        <fa-icon [icon]="faDashboard"></fa-icon> <br> <span>Dashboard</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToJiraDashboard()">
+        <fa-icon [icon]="faDashboard"></fa-icon> <br> <span>Jira Dashboard</span>
+      </button>
+      <button mat-button class="side-nav-button" *ngIf="userRole === 'gl'" (click)="goToGlDashboard()">
         <fa-icon [icon]="faDashboard"></fa-icon> <br> <span>Dashboard</span>
       </button>
       <button mat-button class="side-nav-button" (click)="goToCustomer()">

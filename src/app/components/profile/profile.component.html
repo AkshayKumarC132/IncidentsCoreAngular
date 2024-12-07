@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <!-- <div class="profile" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}"> -->
-<div class="profile">
+<div class="profile" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
   <h2>My Profile</h2>
   <form [formGroup]="profileForm" (ngSubmit)="savePreferences()">
     <!-- Theme Selection -->
@@ -16,7 +16,7 @@
     <div>
       <label for="notifications">Notifications:</label>
       <input type="checkbox" formControlName="notifications" id="notifications" />
-      Receive Notifications
+      <span>Receive Notifications</span>
     </div>
 
     <!-- Layout Selection -->
@@ -83,40 +83,38 @@
       <option value="square">Square</option>
       <option value="circle">Circle</option>
     </select>
-<!-- Logo Position -->
-<div>
-  <label for="logo-position">Logo Position:</label>
-  <select formControlName="logo_position" id="logo-position">
-    <option value="top-left">Top Left</option>
-    <option value="top-right">Top Right</option>
-    <option value="center">Center</option>
-  </select>
-</div>
+    <!-- Logo Position -->
+    <div>
+      <label for="logo-position">Logo Position:</label>
+      <select formControlName="logo_position" id="logo-position">
+        <option value="top-left">Top Left</option>
+        <option value="top-right">Top Right</option>
+        <option value="center">Center</option>
+      </select>
+    </div>
 
-<div class="button-group">
-  <button type="submit" class="btn save-btn">Save Preferences</button>
-  <button type="button" class="btn reset-btn" (click)="confirmReset()">Reset to Default</button>
-</div>
-</form>
-
-<!-- Live Preview Section -->
-<div class="preview-container">
-  <h3>Font Live Preview</h3>
-  <div class="preview-box" [style.font-family]="profileForm.get('font_style')?.value"
-    [style.font-size.px]="profileForm.get('font_size')?.value" [style.color]="profileForm.get('font_color')?.value"
-    [style.background-color]="profileForm.get('background_color')?.value" [style.box-shadow]="
+    <div class="button-group">
+      <button type="submit" class="btn save-btn">Save Preferences</button>
+      <button type="button" class="btn reset-btn" (click)="confirmReset()">Reset to Default</button>
+    </div>
+  </form>
+  <span class="flex-wrapper">
+    <!-- Live Preview Section -->
+    <div class="preview-container">
+      <h3>Font Live Preview</h3>
+      <div class="preview-box" [style.font-family]="profileForm.get('font_style')?.value"
+        [style.font-size.px]="profileForm.get('font_size')?.value" [style.color]="profileForm.get('font_color')?.value"
+        [style.background-color]="profileForm.get('background_color')?.value" [style.box-shadow]="
         '10px 10px 20px ' + profileForm.get('shadow_color')?.value + ',
         -10px -10px 20px ' + profileForm.get('background_color')?.value
       ">
-    Sample Text for Live Preview
-  </div>
-</div>
+        Sample Text for Live Preview
+      </div>
+    </div>
 
-<!-- Dashboard Preview -->
-<div class="dashboard-preview">
-  <div
-    class="logo-preview"
-    [ngStyle]="{
+    <!-- Dashboard Preview -->
+    <!-- <div class="dashboard-preview">
+      <div class="logo-preview" [ngStyle]="{
       'border-radius': profileForm.get('logo_shape')?.value === 'circle'
         ? '50%'
         : profileForm.get('logo_shape')?.value === 'square'
@@ -140,12 +138,12 @@
       'transform': profileForm.get('logo_position')?.value === 'center'
         ? 'translate(-50%, -50%)'
         : 'none'
-    }"
-  >
-    <img *ngIf="uploadedLogo" [src]="uploadedLogo" alt="Logo Preview" />
-  </div>
-  <div class="content-preview">
-    Logo Preview
-  </div>
-</div>
+    }">
+        <img *ngIf="uploadedLogo" [src]="uploadedLogo" alt="Logo Preview" />
+      </div>
+      <div class="content-preview">
+        Logo Preview
+      </div>
+    </div> -->
+  </span>
 </div>

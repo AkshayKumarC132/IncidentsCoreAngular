@@ -8,4 +8,80 @@
 .mat-mdc-paginator {
 background-color: var(--background-color) !important; 
 }
+.container{
+    margin-top: 5px;
+  }
 
+span {
+    color: var(--table-text-color);
+}
+
+h2 {
+    color: var(--table-text-color);
+  }
+ /* Base styles for the drill-down table */
+ table {
+  width: 100%;
+  border-collapse: collapse;
+  /* background-color: var(--table-bg); */
+  border: 1px solid var(--table-border-color);
+}
+
+ th {
+  padding: 8px 12px;
+  /* background-color: var(--table-header-bg); */
+  color: var(--table-text-color);
+  text-align: left;
+  border: 1px solid var(--table-border-color);
+}
+
+ td {
+  padding: 8px 12px;
+  /* background-color: var(--table-bg); */
+  color: var(--table-text-color);
+  border: 1px solid var(--table-border-color);
+}
+
+.mat-paginator {
+    color: var(--table-text-color);
+}
+
+.mat-mdc-paginator-page-size-label {
+    color: var(--table-text-color) !important
+}
+
+.mat-mdc-paginator-container {
+    color: var(--table-text-color) !important
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; /* Space above the paginator */
+  }
+  
+  .pagination button {
+    background-color: #3f51b5; /* Primary color (you can change this) */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px; /* Space between buttons */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination button:disabled {
+    background-color: #bdbdbd; /* Grey out disabled buttons */
+    cursor: not-allowed;
+  }
+  
+  .pagination button:hover:not(:disabled) {
+    background-color: #5c6bc0; /* Darker shade on hover */
+  }
+  
+  .pagination span {
+    margin: 0 15px; /* Space around the page info */
+    font-size: 16px;
+  }

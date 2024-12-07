@@ -24,7 +24,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     HttpClientModule,
     FormsModule,
-    MatPaginator,
     MatPaginatorModule,
     MatTableModule,
     MatInputModule,
@@ -47,8 +46,9 @@ export class GlDashboardComponent {
   ];
   dataSource = new MatTableDataSource<any>([]);
   searchForm: FormGroup;
-  totalItems = 0;
+  totalItems = 1;
   pageSize = 10;
+  currentPage = 1;
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   constructor(
@@ -76,7 +76,7 @@ export class GlDashboardComponent {
     this.backendService.fetchUsers(page, pageSize, searchQuery).subscribe(
       (response) => {
         this.dataSource.data = response.users.results;
-        this.totalItems = response.users.total_items;
+        this.totalItems = response.users.total_pages;
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -100,6 +100,20 @@ export class GlDashboardComponent {
         this.fetchUsers(this.paginator?.pageIndex || 1, this.pageSize);
       }
     });
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.fetchUsers(this.currentPage, this.pageSize);
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalItems) {
+      this.currentPage++;
+      this.fetchUsers(this.currentPage, this.pageSize);
+    }
   }
 
   onSearch(): void {

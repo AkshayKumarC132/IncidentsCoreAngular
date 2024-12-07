@@ -10,6 +10,10 @@ form {
     margin: auto; /* Center the form */
 }
 
+.neumorphic{
+    margin-top: 5px;
+}
+
 /* Form Elements */
 h2 {
     text-align: center; /* Center the heading */
@@ -46,16 +50,16 @@ div{
     margin-top: 10px;
 }
 
-/* .navbar-left{
+.navbar-left{
     margin-left: 200px;
-  } */
+  }
 
   .preview-container {
     margin-top: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
   }
   
   .preview-box {
@@ -63,6 +67,7 @@ div{
     text-align: center;
     border-radius: 10px;
     transition: all 0.3s ease;
+    background-color: var(--background-color);
   }
 
 .button-group {
@@ -119,3 +124,6 @@ div{
     object-fit: cover;
   }
   
+  label, input, span, h1,h2,h3,h4 {
+    color: var(--table-text-color) !important
+  }

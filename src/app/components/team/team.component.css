@@ -37,6 +37,7 @@ body {
   label {
     display: block;
     margin-bottom: 5px;
+    color: var(--table-text-color) !important
   }
   
   input,
@@ -132,4 +133,11 @@ body {
   .navbar-left{
     margin-left: 200px;
     /* padding-left: 210px; */
+  }
+  h2, 
+  h3, 
+  h4, 
+  h5, 
+  span {
+      color: var(--table-text-color) !important; /* Use !important judiciously */
   }

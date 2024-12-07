@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<div class="container" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
   <h2>GL Dashboard</h2>
 
   <!-- Search Bar -->
@@ -55,10 +55,16 @@
   </table>
 
   <!-- Pagination -->
-  <mat-paginator
+  <!-- <mat-paginator
     [length]="totalItems"
     [pageSize]="pageSize"
     (page)="pageChange($event)"
   >
-  </mat-paginator>
+  </mat-paginator> -->
+  <!-- Custom Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalItems }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalItems">Next</button>
+  </div>
 </div>

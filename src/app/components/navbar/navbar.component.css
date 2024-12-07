@@ -24,15 +24,38 @@ background-color: #1e1e1e !important;
   position: fixed;
   top: 0;
   left: 0;
-  /* background-color: #3f51b5;
-  color: white; */
   padding-top: 10px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+/* Hide scrollbar for Firefox */
+.navbar-left {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: transparent transparent; /* Scrollbar color for Firefox */
+}
+
+/* Hide scrollbar for WebKit browsers */
+.navbar-left::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  background: transparent; /* Background of the scrollbar */
+}
+
+.navbar-left::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); /* Color of the scrollbar 'thumb' */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+  opacity: 0; /* Initially hidden */
+}
+
+/* Show scrollbar thumb when scrolling */
+.navbar-left:hover::-webkit-scrollbar-thumb {
+  opacity: 1; /* Set opacity to 1 on hover */
 }
 
 .side-nav-button {
   width: 100%;
   text-align: center;
-  padding: 30px;
+  padding: 25px;
   margin-bottom: 15px;
 }
 
