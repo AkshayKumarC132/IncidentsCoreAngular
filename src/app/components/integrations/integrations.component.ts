@@ -13,6 +13,26 @@ import { BackendService } from '../../services/backend.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+
+interface ConnectedIntegration {
+  id: number;
+  integration_type: string;
+  status: string;
+  last_sync: string | null;
+  company_id: string;
+  instance_url: string;
+  created_at: string;
+  updated_at: string;
+  details?: {
+    client_count?: number;
+  };
+}
+
+interface AvailableIntegration {
+  id: number;
+  name: string;
+}
+
 @Component({
   standalone: true,
   selector: 'app-integrations',
@@ -34,8 +54,15 @@ import { Router } from '@angular/router';
   ],
 })
 export class IntegrationsComponent {
-  // Form states
-  integrationType: string = 'ConnectWise'; // Default to ConnectWise
+  connectedIntegrations: ConnectedIntegration[] = [];
+  availableIntegrations: AvailableIntegration[] = [];
+  showAddNewForm: boolean = false;
+  isDarkMode: boolean = false;
+  integrationType: string = '';
+  message: string = '';
+  success: boolean = false;
+  submitted: boolean = false;
+
   connectWiseForm = {
     company_id: '',
     public_key: '',
@@ -43,11 +70,13 @@ export class IntegrationsComponent {
     client_id: '',
     instance_url: '',
   };
+
   haloPSAForm = {
     instance_url: '',
     client_id: '',
     client_secret: '',
   };
+
   jiraForm = {
     api_base_url: '',
     user_email: '',
@@ -55,32 +84,87 @@ export class IntegrationsComponent {
     project_key: '',
     project_name: '',
   };
-
-  isDarkMode: boolean = false;
-
-  // Message and success state
-  message: string = '';
-  success: boolean = false;
-  submitted: boolean = false; // Track if the form has been submitted
+  isFormValid: any;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
   }
-  get isFormValid(): boolean {
-    if (this.integrationType === 'ConnectWise') {
-      return Object.values(this.connectWiseForm).every(
-        (field) => field.trim() !== ''
-      );
-    } else if (this.integrationType === 'HaloPSA') {
-      return Object.values(this.haloPSAForm).every(
-        (field) => field.trim() !== ''
-      );
-    } else if (this.integrationType === 'Jira') {
-      return Object.values(this.jiraForm).every((field) => field.trim() !== '');
+  ngOnInit(): void {
+    this.loadIntegrationStatus();
+  }
+
+  // get isFormValid(): boolean {
+  //   if (this.integrationType === 'ConnectWise') {
+  //     return Object.values(this.connectWiseForm).every(
+  //       (field) => field.trim() !== ''
+  //     );
+  //   } else if (this.integrationType === 'HaloPSA') {
+  //     return Object.values(this.haloPSAForm).every(
+  //       (field) => field.trim() !== ''
+  //     );
+  //   } else if (this.integrationType === 'Jira') {
+  //     return Object.values(this.jiraForm).every((field) => field.trim() !== '');
+  //   }
+  //   return false;
+
+  loadIntegrationStatus() {
+    this.backendService.getIntegrationStatus().subscribe(
+      (response: any) => {
+        this.connectedIntegrations = response.connected_integrations;
+        this.availableIntegrations = response.available_integrations;
+      },
+      (error) => {
+        console.error('Error loading integrations:', error);
+        Swal.fire({
+          icon: 'error',
+          text: 'Failed to load integrations',
+          width: '400px',
+        });
+      }
+    );
+  }
+
+  showAddIntegrationForm() {
+    this.showAddNewForm = true;
+  }
+
+  editIntegration(integration: ConnectedIntegration) {
+    this.showAddNewForm = true;
+    this.integrationType = integration.integration_type;
+
+    if (integration.integration_type === 'ConnectWise') {
+      this.connectWiseForm.company_id = integration.company_id;
+      this.connectWiseForm.instance_url = integration.instance_url;
+      // Set other fields as needed
+    } else if (integration.integration_type === 'HaloPSA') {
+      this.haloPSAForm.instance_url = integration.instance_url;
+      // Set other fields as needed
     }
-    return false;
+  }
+
+  deleteIntegration(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will permanently delete the integration.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.backendService.deleteIntegration(id).subscribe(
+          () => {
+            this.loadIntegrationStatus();
+            Swal.fire('Deleted!', 'Integration has been deleted.', 'success');
+          },
+          (error) => {
+            Swal.fire('Error!', 'Failed to delete integration.', 'error');
+          }
+        );
+      }
+    });
   }
 
   // Function to submit the form

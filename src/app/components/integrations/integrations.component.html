@@ -1,84 +1,112 @@
 <app-navbar></app-navbar>
-<div class="integrations" [ngClass]="{'integration-container': true, 'dark-mode': isDarkMode}">
-  <h2>Integration Setup</h2>
+<div class="integrations">
+  <div class="integration-container" [ngClass]="{'dark-mode': isDarkMode}">
+    <h2>Integrations</h2>
 
-  <!-- Select Integration Type -->
-  <div class="form-group">
-    <label for="integration-type">Select Integration Type</label>
-    <select [(ngModel)]="integrationType" class="form-control" id="integration-type" required>
-      <option value="ConnectWise">ConnectWise</option>
-      <option value="HaloPSA">HaloPSA</option>
-      <option value="Jira">Jira</option>
-    </select>
-  </div>
+    <!-- Connected Integrations -->
+    <div class="connected-integrations">
+      <h3>Connected Integrations</h3>
+      <div class="integration-cards">
+        <div *ngFor="let integration of connectedIntegrations" class="integration-card">
+          <h4>{{ integration.integration_type }}</h4>
+          <div class="status-badge" [ngClass]="{'status-active': integration.status === 'Active', 
+                                              'status-config': integration.status === 'Configuration Required'}">
+            {{ integration.status }}
+          </div>
+          <div class="integration-details">
+            <p><strong>Instance URL:</strong> {{ integration.instance_url }}</p>
+            <p *ngIf="integration.company_id"><strong>Company ID:</strong> {{ integration.company_id }}</p>
+            <p *ngIf="integration.details && integration.details.client_count"><strong>Clients:</strong> {{ integration.details.client_count }}</p>
+            <p><strong>Last Updated:</strong> {{ integration.updated_at | date:'medium' }}</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn-secondary" (click)="editIntegration(integration)">Edit</button>
+            <button class="btn-danger" (click)="deleteIntegration(integration.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Form Fields for ConnectWise -->
-  <div *ngIf="integrationType === 'ConnectWise'" class="form-group">
-    <label for="company_id">Company ID</label>
-    <input type="text" [(ngModel)]="connectWiseForm.company_id" class="form-control" id="company_id" required>
-    <div *ngIf="!connectWiseForm.company_id" class="text-danger">Company ID is required.</div>
+    <!-- Add New Integration Button -->
+    <div class="add-integration" *ngIf="!showAddNewForm">
+      <button class="btn-primary" (click)="showAddIntegrationForm()">
+        Add New Integration
+      </button>
+    </div>
 
-    <label for="public_key">Public Key</label>
-    <input type="text" [(ngModel)]="connectWiseForm.public_key" class="form-control" id="public_key" required>
-    <div *ngIf="!connectWiseForm.public_key" class="text-danger">Public Key is required.</div>
+    <!-- Integration Form -->
+    <div *ngIf="showAddNewForm" class="form-container">
+      <h3>{{ integrationType ? 'Edit' : 'Add New' }} Integration</h3>
+      
+      <div class="form-group">
+        <label for="integration-type">Select Integration Type</label>
+        <select [(ngModel)]="integrationType" class="form-control" id="integration-type" required>
+          <option value="">Select an integration</option>
+          <option *ngFor="let integration of availableIntegrations" [value]="integration.name">
+            {{ integration.name }}
+          </option>
+        </select>
+      </div>
 
-    <label for="private_key">Private Key</label>
-    <input type="text" [(ngModel)]="connectWiseForm.private_key" class="form-control" id="private_key" required>
-    <div *ngIf="!connectWiseForm.private_key" class="text-danger">Private Key is required.</div>
+      <!-- ConnectWise Form -->
+      <div *ngIf="integrationType === 'ConnectWise'" class="form-group">
+        <label for="company_id">Company ID</label>
+        <input type="text" [(ngModel)]="connectWiseForm.company_id" class="form-control" id="company_id" required>
+        
+        <label for="public_key">Public Key</label>
+        <input type="text" [(ngModel)]="connectWiseForm.public_key" class="form-control" id="public_key" required>
+        
+        <label for="private_key">Private Key</label>
+        <input type="text" [(ngModel)]="connectWiseForm.private_key" class="form-control" id="private_key" required>
+        
+        <label for="client_id">Client ID</label>
+        <input type="text" [(ngModel)]="connectWiseForm.client_id" class="form-control" id="client_id" required>
+        
+        <label for="instance_url">Site URL</label>
+        <input type="text" [(ngModel)]="connectWiseForm.instance_url" class="form-control" id="instance_url" required>
+      </div>
 
-    <label for="client_id">Client ID</label>
-    <input type="text" [(ngModel)]="connectWiseForm.client_id" class="form-control" id="client_id" required>
-    <div *ngIf="!connectWiseForm.client_id" class="text-danger">Client ID is required.</div>
+      <!-- HaloPSA Form -->
+      <div *ngIf="integrationType === 'HaloPSA'" class="form-group">
+        <label for="instance_url">Instance URL</label>
+        <input type="text" [(ngModel)]="haloPSAForm.instance_url" class="form-control" id="instance_url" required>
+        
+        <label for="client_id">Client ID</label>
+        <input type="text" [(ngModel)]="haloPSAForm.client_id" class="form-control" id="client_id" required>
+        
+        <label for="client_secret">Client Secret</label>
+        <input type="text" [(ngModel)]="haloPSAForm.client_secret" class="form-control" id="client_secret" required>
+      </div>
 
-    <label for="instance_url">Site URL</label>
-    <input type="text" [(ngModel)]="connectWiseForm.instance_url" class="form-control" id="instance_url" required>
-    <div *ngIf="!connectWiseForm.instance_url" class="text-danger">Site URL is required.</div>
-  </div>
+      <!-- Jira Form -->
+      <div *ngIf="integrationType === 'Jira'" class="form-group">
+        <label for="jira_api_base_url">API Base URL</label>
+        <input type="text" [(ngModel)]="jiraForm.api_base_url" class="form-control" id="jira_api_base_url" required>
+        
+        <label for="jira_user_email">User Email</label>
+        <input type="email" [(ngModel)]="jiraForm.user_email" class="form-control" id="jira_user_email" required>
+        
+        <label for="jira_api_token">API Token</label>
+        <input type="password" [(ngModel)]="jiraForm.api_token" class="form-control" id="jira_api_token" required>
+        
+        <label for="jira_project_key">Project Key</label>
+        <input type="text" [(ngModel)]="jiraForm.project_key" class="form-control" id="jira_project_key" required>
+        
+        <label for="jira_project_name">Project Name</label>
+        <input type="text" [(ngModel)]="jiraForm.project_name" class="form-control" id="jira_project_name">
+      </div>
 
-  <!-- Form Fields for HaloPSA -->
-  <div *ngIf="integrationType === 'HaloPSA'" class="form-group">
-    <label for="instance_url">Instance URL</label>
-    <input type="text" [(ngModel)]="haloPSAForm.instance_url" class="form-control" id="instance_url" required>
-    <div *ngIf="!haloPSAForm.instance_url" class="text-danger">Instance URL is required.</div>
+      <div class="form-actions">
+        <button class="btn-secondary" (click)="showAddNewForm = false">Cancel</button>
+        <button class="btn-primary" (click)="submitIntegrationForm()" [disabled]="!isFormValid">
+          Save Integration
+        </button>
+      </div>
+    </div>
 
-    <label for="client_id">Client ID</label>
-    <input type="text" [(ngModel)]="haloPSAForm.client_id" class="form-control" id="client_id" required>
-    <div *ngIf="!haloPSAForm.client_id" class="text-danger">Client ID is required.</div>
-
-    <label for="client_secret">Client Secret</label>
-    <input type="text" [(ngModel)]="haloPSAForm.client_secret" class="form-control" id="client_secret" required>
-    <div *ngIf="!haloPSAForm.client_secret" class="text-danger">Client Secret is required.</div>
-  </div>
-
-  <!-- Form Fields for Jira -->
-  <div *ngIf="integrationType === 'Jira'" class="form-group">
-    <label for="jira_api_base_url">API Base URL</label>
-    <input type="text" [(ngModel)]="jiraForm.api_base_url" class="form-control" id="jira_api_base_url" required>
-    <div *ngIf="!jiraForm.api_base_url" class="text-danger">API Base URL is required.</div>
-
-    <label for="jira_user_email">User Email</label>
-    <input type="email" [(ngModel)]="jiraForm.user_email" class="form-control" id="jira_user_email" required>
-    <div *ngIf="!jiraForm.user_email" class="text-danger">User Email is required.</div>
-
-    <label for="jira_api_token">API Token</label>
-    <input type="password" [(ngModel)]="jiraForm.api_token" class="form-control" id="jira_api_token" required>
-    <div *ngIf="!jiraForm.api_token" class="text-danger">API Token is required.</div>
-
-    <label for="jira_project_key">Project Key</label>
-    <input type="text" [(ngModel)]="jiraForm.project_key" class="form-control" id="jira_project_key" required>
-    <div *ngIf="!jiraForm.project_key" class="text-danger">Project Key is required.</div>
-
-    <label for="jira_project_name">Project Name</label>
-    <input type="text" [(ngModel)]="jiraForm.project_name" class="form-control" id="jira_project_name">
-  </div>
-
-  <!-- Submit Button -->
-  <button (click)="submitIntegrationForm()" [disabled]="!isFormValid && submitted === false" class="btn btn-primary">
-    Save Integration
-  </button>
-
-  <!-- Display Success or Error Messages -->
-  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': success, 'alert-danger': !success}">
-    {{ message }}
+    <!-- Messages -->
+    <div *ngIf="message" class="alert" [ngClass]="{'alert-success': success, 'alert-danger': !success}">
+      {{ message }}
+    </div>
   </div>
 </div>

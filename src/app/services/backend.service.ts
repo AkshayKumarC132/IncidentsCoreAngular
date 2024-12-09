@@ -12,9 +12,9 @@ import { Msp } from '../models/msp.model';
   providedIn: 'root',
 })
 export class BackendService {
-  private apiUrl = 'https://hask.app/api'; // Your backend API URL
+  // private apiUrl = 'https://hask.app/api'; // Your backend API URL
   // private apiUrl = 'http://54.219.41.135:80/api';  // Your backend API URL
-  // private apiUrl = 'http://127.0.0.1:5000/api';
+  private apiUrl = 'http://127.0.0.1:5000/api';
 
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   isAdmin$ = this.isAdminSubject.asObservable();
@@ -513,5 +513,16 @@ export class BackendService {
       `${this.apiUrl}` + '/fetch_jira_predictions/' + token,
       { params }
     );
+  }
+  // ... existing imports and service code ...
+
+  getIntegrationStatus(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/integrations/status/${token}`);
+  }
+
+  deleteIntegration(id: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.delete(`${this.apiUrl}/integrations/${id}/${token}`);
   }
 }
