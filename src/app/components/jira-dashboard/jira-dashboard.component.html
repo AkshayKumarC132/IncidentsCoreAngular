@@ -62,7 +62,7 @@
                     <td>{{ ticket.status }}</td>
                     <td>{{ ticket.priority }}</td>
                     <td>{{ ticket.predicted_agent }}</td>
-                    <td>{{ ticket.confidence_score | number: '1.0-2' }}%</td>
+                    <td>{{ ticket.confidence_score !== null ? (ticket.confidence_score | number: '1.0-2') : '0.00' }}%</td>
                 </tr>
             </tbody>
         </table>

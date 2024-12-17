@@ -84,7 +84,24 @@ export class IntegrationsComponent {
     project_key: '',
     project_name: '',
   };
-  isFormValid: any;
+
+  get isFormValid(): boolean {
+    if (this.integrationType === 'ConnectWise') {
+      return Object.values(this.connectWiseForm).every(
+        (field) => field.trim() !== ''
+      );
+    } else if (this.integrationType === 'HaloPSA') {
+      return Object.values(this.haloPSAForm).every(
+        (field) => field.trim() !== ''
+      );
+    } else if (this.integrationType === 'Jira') {
+      const { project_name, ...requiredFields } = this.jiraForm;
+      return Object.values(requiredFields).every(
+        (field) => field.trim() !== ''
+      );
+    }
+    return false;
+  }
 
   constructor(private backendService: BackendService, private router: Router) {}
 
@@ -94,20 +111,6 @@ export class IntegrationsComponent {
   ngOnInit(): void {
     this.loadIntegrationStatus();
   }
-
-  // get isFormValid(): boolean {
-  //   if (this.integrationType === 'ConnectWise') {
-  //     return Object.values(this.connectWiseForm).every(
-  //       (field) => field.trim() !== ''
-  //     );
-  //   } else if (this.integrationType === 'HaloPSA') {
-  //     return Object.values(this.haloPSAForm).every(
-  //       (field) => field.trim() !== ''
-  //     );
-  //   } else if (this.integrationType === 'Jira') {
-  //     return Object.values(this.jiraForm).every((field) => field.trim() !== '');
-  //   }
-  //   return false;
 
   loadIntegrationStatus() {
     this.backendService.getIntegrationStatus().subscribe(

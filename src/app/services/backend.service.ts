@@ -390,10 +390,14 @@ export class BackendService {
     return this.http.get<any>(`${this.apiUrl}/incident-log-details/` + token);
   }
 
-  getAssignedTickets(): Observable<any> {
-    // const headers = this.getAuthHeaders();
+  getAssignedTickets(params: {
+    sort_by: string;
+    order: string;
+  }): Observable<any> {
     const token = localStorage.getItem('authToken');
-    return this.http.get<any>(`${this.apiUrl}/get_assigned_tickets/` + token);
+    return this.http.get<any>(`${this.apiUrl}/get_assigned_tickets/` + token, {
+      params,
+    });
   }
 
   /**

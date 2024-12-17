@@ -4,12 +4,13 @@ import { error } from 'console';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlay, faEye, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faEye, faPause, faVideoCamera } from '@fortawesome/free-solid-svg-icons';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { NavbarService } from '../../services/navbar.service';
 import { tick } from '@angular/core/testing';
 import { response } from 'express';
 import { FormsModule } from '@angular/forms'; // Add this line
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-human-agent.component',
   standalone: true,
@@ -31,11 +32,16 @@ export class HumanAgentComponentComponent implements OnInit {
   tickets: any;
   faPlay = faPlay;
   faPause = faPause;
+  faVideoCamera = faVideoCamera;
   private mediaRecorder: MediaRecorder | null = null;
   private recordedChunks: Blob[] = [];
   private uploadInterval: any;
   private mediaStream: any;
   recordStatus = false;
+  // Add these new properties
+  activeRecordingTicketId: string | null = null;
+  finalizingTickets: Set<string> = new Set();
+  activeFinalizingTicketId: string | null = null; // Track active finalizing ticket
 
   classificationOptions: string[] = [
     'software',
@@ -49,6 +55,10 @@ export class HumanAgentComponentComponent implements OnInit {
   postResolutionDescription = '';
 
   // private readonly uploadUrl = 'http://127.0.0.1:5000/api/upload_recording_chunk/';
+  sortBy: string = 'id';  // Default sort field
+  sortOrder: string = 'asc';  // Default sort order
+  apiUrl: string;
+
   constructor(
     private backendService: BackendService,
     private http: HttpClient,
@@ -59,6 +69,7 @@ export class HumanAgentComponentComponent implements OnInit {
       this.menuOption = position;
       console.log('Dashbaord ', this.menuOption);
     });
+    this.apiUrl = this.backendService.getApiUrl();
   }
 
   ngOnInit(): void {
@@ -70,6 +81,7 @@ export class HumanAgentComponentComponent implements OnInit {
       navigator.mediaDevices
         .getDisplayMedia({ video: true, audio: true })
         .then((stream) => {
+          this.activeRecordingTicketId = ticketId; // Set active recording ticket
           this.mediaStream = stream;
           this.mediaRecorder = new MediaRecorder(stream, {
             mimeType: 'video/webm',
@@ -116,7 +128,8 @@ export class HumanAgentComponentComponent implements OnInit {
     });
   }
   stopRecording(id: any): void {
-    this.backendService.stopRecording(id);
+    this.activeRecordingTicketId = null; // Clear active recording ticket
+    // this.backendService.stopRecording(id);
     this.isRecording = false;
     if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
       this.mediaRecorder.stop();
@@ -130,14 +143,33 @@ export class HumanAgentComponentComponent implements OnInit {
     }
   }
 
-  fetchAssignedTickets(): void {
-    this.backendService.getAssignedTickets().subscribe({
+  fetchAssignedTickets(sortBy: string = this.sortBy, sortOrder: string = this.sortOrder): void {
+    const params = {
+      sort_by: sortBy,
+      order: sortOrder
+    };
+
+    this.backendService.getAssignedTickets(params).subscribe({
       next: (data) => {
         this.tickets = data;
+        this.sortBy = sortBy;      // Update current sort field
+        this.sortOrder = sortOrder; // Update current sort order
         console.log(this.tickets);
       },
       error: (error) => {
         console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to fetch tickets',
+          width: '400px',
+          customClass: {
+            popup: 'swal-custom-popup',
+            title: 'swal-custom-title',
+            htmlContainer: 'swal-custom-html',
+            confirmButton: 'swal-custom-button',
+          },
+        });
       },
     });
   }
@@ -180,21 +212,45 @@ export class HumanAgentComponentComponent implements OnInit {
   }
 
   finalizeRecording(ticketId: string): void {
+    this.activeFinalizingTicketId = ticketId; // Set active finalizing ticket
     const formData = new FormData();
     formData.append('ticket_id', ticketId);
+
+    // Find the ticket and update its state
+    const ticket = this.tickets.find((t: { id: string }) => t.id === ticketId);
+    if (ticket) {
+      ticket.isFinalizingInProgress = true;
+    }
 
     this.backendService.finalizeRecording(formData).subscribe({
       next: (response) => {
         console.log('Recording finalized:', response);
-        // alert('Recording finalized and converted to MP4!');
-        // this.extractTextFromFinalizedVideo(ticketId);
-        // alert(
-        //   'Recording finalized and converted to MP4! and Extracted Text fron Video'
-        // );
+        if (ticket) {
+          ticket.isFinalizingInProgress = false;
+        }
+        this.activeFinalizingTicketId = null;
+
+        // Display Swal popup on success
+        Swal.fire({
+          icon: 'success',
+          title: 'Recording Finalized',
+          text: 'The recording has been successfully finalized.',
+          width: '400px',
+          customClass: {
+            popup: 'swal-custom-popup',
+            title: 'swal-custom-title',
+            htmlContainer: 'swal-custom-html',
+            confirmButton: 'swal-custom-button',
+          },
+        });
       },
       error: (error) => {
         console.error('Error finalizing recording:', error.error.error);
         alert(error.error.error);
+        if (ticket) {
+          ticket.isFinalizingInProgress = false;
+        }
+        this.activeFinalizingTicketId = null;
       },
     });
   }
@@ -229,7 +285,19 @@ export class HumanAgentComponentComponent implements OnInit {
 
     this.backendService.updatePostResolution(incidentId, payload).subscribe({
       next: (response) => {
-        alert('Incident ${incidentId} updated successfully.');
+        // alert(`Incident ${incidentId} updated successfully.`);
+        Swal.fire({
+          icon: 'success',
+          text: response.message,
+          width: '400px',
+          customClass: {
+            popup: 'swal-custom-popup',
+            title: 'swal-custom-title',
+            htmlContainer: 'swal-custom-html', // Use htmlContainer instead of content
+            confirmButton: 'swal-custom-button',
+            cancelButton: 'swal-custom-button',
+          },
+        });
         this.fetchAssignedTickets(); // Refresh ticket list after update
       },
       error: (err) => {

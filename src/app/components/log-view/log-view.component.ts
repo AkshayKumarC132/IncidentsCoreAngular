@@ -39,6 +39,8 @@ export class LogViewComponent {
   severityLabels: string[] = [];
   menuOption: any = 'top';
   tickets: any;
+  // sortBy: string = 'id'; // Default sort field
+  // sortOrder: string = 'asc'; // Default sort order
 
   constructor(
     private backendService: BackendService,
@@ -73,19 +75,24 @@ export class LogViewComponent {
       PieController
     );
     this.loadLogs();
-    this.fetchAssignedTickets();
+    // this.fetchAssignedTickets();
   }
 
-  fetchAssignedTickets(): void {
-    this.backendService.getAssignedTickets().subscribe(
-      (data) => {
-        this.tickets = data;
-      },
-      (error) => {
-        console.error('Error fetching tickets:', error);
-      }
-    );
-  }
+  // fetchAssignedTickets(): void {
+  //   this.backendService
+  //     .getAssignedTickets({
+  //       sort_by: this.sortBy,
+  //       order: this.sortOrder,
+  //     })
+  //     .subscribe(
+  //       (data) => {
+  //         this.tickets = data;
+  //       },
+  //       (error) => {
+  //         console.error('Error fetching tickets:', error);
+  //       }
+  //     );
+  // }
 
   loadLogs() {
     this.backendService.getIncidentLogs().subscribe(

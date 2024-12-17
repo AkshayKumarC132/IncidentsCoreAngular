@@ -11,44 +11,109 @@
     <table>
       <thead>
         <tr>
-          <th>Id</th>
+          <th class="id" (click)="fetchAssignedTickets('id', sortOrder === 'asc' ? 'desc' : 'asc')">
+            Id 
+            <span class="sort-indicator">
+              {{ sortBy === 'id' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+            </span>
+          </th>
+          <!-- <th (click)="fetchAssignedTickets('title', sortOrder === 'asc' ? 'desc' : 'asc')">
+            Title
+            <span class="sort-indicator">
+              {{ sortBy === 'title' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+            </span>
+          </th>
+          <th (click)="fetchAssignedTickets('description', sortOrder === 'asc' ? 'desc' : 'asc')">
+            Description
+            <span class="sort-indicator">
+              {{ sortBy === 'description' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+            </span>
+          </th>
+          <th (click)="fetchAssignedTickets('severity', sortOrder === 'asc' ? 'desc' : 'asc')">
+            Severity
+            <span class="sort-indicator">
+              {{ sortBy === 'severity' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+            </span>
+          </th>
+          <th (click)="fetchAssignedTickets('assigned_at', sortOrder === 'asc' ? 'desc' : 'asc')">
+            Assigned At
+            <span class="sort-indicator">
+              {{ sortBy === 'assigned_at' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}
+            </span>
+          </th>
+          <th>Actions</th>
+          <th>Post-Resolution</th> -->
           <th>Title</th>
           <th>Description</th>
           <th>Severity</th>
           <th>Assigned At</th>
           <th>Actions</th>
+          <th>Video Recording</th>
           <th>Post-Resolution</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ticket of tickets">
           <td>{{ ticket.id }}</td>
-          <td>{{ ticket.title }}</td>
-          <td>{{ ticket.description }}</td>
+          <td class="title-cell" [title]="ticket.title">
+            {{ ticket.title }}
+          </td>
+          <td class="description-cell">
+            <div class="truncate-text" [title]="ticket.description">
+              {{ ticket.description }}
+            </div>
+          </td>
           <td>{{ ticket.severity }}</td>
           <td>{{ ticket.assigned_at | date: 'short' }}</td>
+          <!-- ... existing code ... -->
           <td>
             <!-- Recording Buttons -->
             <button
-              [disabled]="ticket.is_recording"
+              [disabled]="ticket.is_recording || (activeRecordingTicketId !== null && activeRecordingTicketId !== ticket.id) || activeFinalizingTicketId !== null"
               *ngIf="!ticket.is_recording"
               (click)="startRecording(ticket.id)"
             >
               <fa-icon [icon]="faPlay"></fa-icon>
             </button>
 
-            <button *ngIf="ticket.is_recording" (click)="stopRecording(ticket.id)">
+            <button 
+              *ngIf="ticket.is_recording" 
+              [disabled]="activeFinalizingTicketId !== null"
+              (click)="stopRecording(ticket.id)"
+              class="action-button"
+            >
               <fa-icon [icon]="faPause"></fa-icon>
             </button>
 
-            <button mat-button (click)="finalizeRecording(ticket.id)">
-              Finalize
+            <button 
+              mat-button 
+              [disabled]="activeFinalizingTicketId !== null"
+              (click)="finalizeRecording(ticket.id)"
+              class="action-button"
+              [ngClass]="{'finalizing': ticket.isFinalizingInProgress}"
+            >
+              <span *ngIf="!ticket.isFinalizingInProgress">Finalize</span>
+              <span *ngIf="ticket.isFinalizingInProgress">
+                Finalizing... <span class="loading-dots"></span>
+              </span>
             </button>
           </td>
           <td>
+            <button *ngIf="ticket.video_path" (click)="ticket.showVideo = !ticket.showVideo" class="action-button">
+              <fa-icon [icon]="faVideoCamera"></fa-icon>
+            </button>
+            <video *ngIf="ticket.video_path && ticket.showVideo" width="320" height="240" controls>
+              <source [src] = "apiUrl + ticket.video_path"  type="video/mp4">
+              <!-- <source [src]="backendService.getApiUrl() + '/' + ticket.video_path" type="video/mp4"> -->
+              Your browser does not support the video tag.
+            </video>
+          </td>
+<!-- ... rest of existing code ... -->
+          <!-- ... rest of existing code ... -->
+          <td style="text-align: right;">
             <!-- Post-resolution classification -->
             <select [(ngModel)]="ticket.classification" required>
-              <option value="" disabled selected>--Select Classification--</option>
+              <option value="" disabled selected>Select Classification</option>
               <option *ngFor="let option of classificationOptions" [value]="option">{{ option }}</option>
             </select>
             <textarea

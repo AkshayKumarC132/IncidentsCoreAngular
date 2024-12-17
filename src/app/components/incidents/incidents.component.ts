@@ -58,7 +58,7 @@ export class IncidentsComponent {
   faEye = faEye;
 
   pagentFilter: string = '';
-  sortBy: string = 'created_at';
+  sortBy: string = 'id';
   order: string = 'desc';
   jiraTicket: boolean | null = null; // Holds the boolean filter for jira_ticket (null for no filter)
   availableAgents: string[] = [

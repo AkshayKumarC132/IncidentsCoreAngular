@@ -76,3 +76,115 @@
     font-size: 14px;
   }
   
+  .action-button {
+    margin: 0 5px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .action-button.finalizing {
+    background-color: #f0f0f0;
+    color: #666;
+    position: relative;
+  }
+
+  /* Loading dots animation */
+  .loading-dots::after {
+    content: '...';
+    animation: loading 1.5s infinite;
+    display: inline-block;
+    width: 20px;
+    text-align: left;
+  }
+
+  @keyframes loading {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+    100% { content: '.'; }
+  }
+
+  /* Optional: Add hover effects */
+  .action-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .action-button:not(:disabled):active {
+    transform: translateY(0);
+  }
+  
+  .id {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 20px; /* Make room for the sort indicator */
+  }
+  
+  .id:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .sort-indicator {
+    position: absolute;
+    right: 5px;
+    color: #666;
+  }
+  
+  /* Exclude sorting from Actions and Post-Resolution columns */
+  th:nth-last-child(1), 
+  th:nth-last-child(2) {
+    cursor: default;
+  }
+  
+  th:nth-last-child(1):hover, 
+  th:nth-last-child(2):hover {
+    background-color: inherit;
+  }
+  .title-cell {
+    max-width: 250px; /* adjust this value as needed */
+    position: relative;
+  }
+  
+  .description-cell {
+    max-width: 550px; /* adjust this value as needed */
+    position: relative;
+  }
+  
+  .truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .title-cell:hover .truncate-text,
+  .description-cell:hover .truncate-text {
+    white-space: normal;
+    overflow: visible;
+  }
+  
+  /* Common tooltip styles for both title and description */
+  /* .title-cell [title]:hover::after,
+  .description-cell [title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: white;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    white-space: normal;
+    min-width: 200px;
+    max-width: 400px;
+  } */

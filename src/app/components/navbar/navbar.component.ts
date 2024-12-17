@@ -65,7 +65,7 @@ export class NavbarComponent implements OnInit {
   isAdmin = false;
   logoShape: string = 'rectangle'; // Default shape
   logoPosition: string = 'top-left'; // Default position
-  userRole: any;
+  userRole: string | undefined;
 
   constructor(
     private router: Router,
@@ -114,6 +114,7 @@ export class NavbarComponent implements OnInit {
     this.backendService.getUserPreferences().subscribe(
       (preferences) => {
         this.userRole = preferences.role;
+        console.log(this.userRole);
         if (preferences.logo_url) {
           console.log(this.logoUrl);
           this.logoUrl = `${this.backendService.getApiUrl()}${
