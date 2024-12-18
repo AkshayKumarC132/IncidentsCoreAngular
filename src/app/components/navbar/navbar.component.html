@@ -18,6 +18,7 @@
       <button mat-button class="spaced-button" (click)="goToIncidents()"><fa-icon [icon]="faIncidents"></fa-icon> Incidents</button>
       <button mat-button class="spaced-button" (click)="goToIntegrations()"><fa-icon [icon]="faIntegrations"></fa-icon> Integrations</button>
       <button mat-button class="spaced-button" (click)="goToProfile()"><fa-icon [icon]="faProfile"></fa-icon> My Profile</button>
+      <button mat-button class="spaced-button" (click)="goToModelManagement()"><fa-icon [icon]="faCogs"></fa-icon> Manage Model</button>
       <button mat-button class="spaced-button" (click)="goToTeam()"><fa-icon [icon]="faTeam"></fa-icon> Team</button>
       <button mat-button class="spaced-button" (click)="goToLogView()"><fa-icon [icon]="faLogs"></fa-icon> Logs</button>
       <!-- <button mat-button class="spaced-button" *ngIf="userRole ==='human_agent'" (click)="goToHumanAgentDashboard()"><fa-icon [icon]="faLogout"></fa-icon> Human Agent</button> -->
@@ -72,6 +73,9 @@
       </button>
       <button mat-button class="side-nav-button" (click)="goToProfile()">
         <fa-icon [icon]="faProfile"></fa-icon> <br> <span>My Profile</span>
+      </button>
+      <button mat-button class="side-nav-button" (click)="goToModelManagement()">
+        <fa-icon [icon]="faCogs"></fa-icon> <br> <span>Manage Model</span>
       </button>
       <button mat-button class="side-nav-button" (click)="goToTeam()">
         <fa-icon [icon]="faTeam"></fa-icon> <br> <span>Team</span>

@@ -529,4 +529,41 @@ export class BackendService {
     const token = localStorage.getItem('authToken');
     return this.http.delete(`${this.apiUrl}/integrations/${id}/${token}`);
   }
+
+  getUserRole(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/get_user_role/${token}`);
+  }
+
+  listModels(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.get(`${this.apiUrl}/models/list/${token}`);
+  }
+
+  uploadModel(formData: FormData): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/models/upload/${token}`, formData);
+  }
+
+  deleteModel(modelName: string): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const body = new FormData();
+    body.append('model_name', modelName);
+    return this.http.post(`${this.apiUrl}/models/delete/${token}`, body);
+  }
+
+  setActiveModel(modelName: string, modelType: string): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    return this.http.post(`${this.apiUrl}/models/set_active/${token}`, {
+      model_name: modelName,
+      model_type: modelType,
+    });
+  }
+
+  updateModel(modelName: string, updatedParams: any): Observable<any> {
+    const url = `${this.apiUrl}/models/edit/${modelName}/`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(url, updatedParams, { headers });
+  }
 }

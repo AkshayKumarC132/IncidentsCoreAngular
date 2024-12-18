@@ -24,6 +24,7 @@ import {
   faMoon,
   faSun,
   faClipboardList,
+  faCogs,
 } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 
@@ -62,6 +63,7 @@ export class NavbarComponent implements OnInit {
   faDarkMode = faMoon;
   faLightMode = faSun;
   faLogs = faClipboardList;
+  faCogs = faCogs;
   isAdmin = false;
   logoShape: string = 'rectangle'; // Default shape
   logoPosition: string = 'top-left'; // Default position
@@ -230,6 +232,10 @@ export class NavbarComponent implements OnInit {
   }
   goToJiraDashboard() {
     this.router.navigate(['/jira-dashboard']);
+  }
+
+  goToModelManagement() {
+    this.router.navigate(['/trained-models']);
   }
 
   shouldDisplayNavItems(): boolean {

@@ -1,0 +1,70 @@
+/* log-view.component.css */
+  
+  .neumorphic{
+    margin-top: 5px;
+  }
+
+  .navbar-left {
+    margin-left: 200px;
+    /* padding-left: 210px; */
+  }
+  
+  h2, h3 ,p{
+    color: var(--table-text-color);
+  }
+
+
+/* Input and Button Styles */
+input[type="file"] {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    /* background-color: #3085d6; */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #2678b2;
+  }
+
+  /* Add space between the model list items and delete buttons */
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically at the center */
+    margin-bottom: 10px; /* Space between the model list items */
+  }
+  
+  button.delete-button {
+    margin-left: 10px; /* Space between model name and delete button */
+    background-color: red;
+  }
+  /* Base styles for the drill-down table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  /* background-color: var(--table-bg); */
+  border: 1px solid var(--table-border-color);
+}
+
+th {
+  padding: 8px 12px;
+  /* background-color: var(--table-header-bg); */
+  color: var(--table-text-color);
+  text-align: left;
+  border: 1px solid var(--table-border-color);
+}
+
+td {
+  padding: 8px 12px;
+  /* background-color: var(--table-bg); */
+  color: var(--table-text-color);
+  border: 1px solid var(--table-border-color);
+}
