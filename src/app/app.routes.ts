@@ -14,6 +14,7 @@ import { HumanAgentComponentComponent } from './components/human-agent.component
 import { GlDashboardComponent } from './components/gl-dashboard/gl-dashboard.component';
 import { JiraDashboardComponent } from './components/jira-dashboard/jira-dashboard.component';
 import { ModelManagementComponent } from './components/model-management/model-management.component';
+// import { ModelWorkflowComponentComponent } from './components/model-workflow.component/model-workflow.component.component';
 
 export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -30,6 +31,7 @@ export const routes: Routes = [
   { path: 'gl-dashboard', component: GlDashboardComponent },
   { path: 'jira-dashboard', component: JiraDashboardComponent },
   { path: 'trained-models', component: ModelManagementComponent },
+  // { path: 'workflow', component: ModelWorkflowComponentComponent },
 
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Optional: redirect to register page on startup
   { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Catch-all route

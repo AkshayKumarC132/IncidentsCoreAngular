@@ -1,67 +1,53 @@
-<app-navbar></app-navbar>
-<div
-  class="neumorphic"
-  [ngClass]="{
-    'navbar-top': menuOption === 'top',
-    'navbar-left': menuOption === 'left'
-  }"
->
-<h2>Model Management</h2>
-<div *ngIf="hasAccess">
-    <div>
-        <h3>Upload or Update a Model</h3>
-        <input type="file" (change)="handleFileInput($event)" accept=".pkl,.h5,.model" />
-        <button [disabled]="!fileToUpload" (click)="uploadModel('jira')">Upload Jira Model</button>
-        <button [disabled]="!fileToUpload" (click)="uploadModel('incident')">Upload Incident Model</button>
-      
-        <div class="model-section">
-          <h3>Available Models</h3>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of modelList">
-                <td>{{ item.name }}</td>
-                <td>{{ item.size | number:'1.0-2' }} KB</td>
-                <td>
-                  <span [class]="item.isActive ? 'badge bg-success' : 'badge bg-secondary'">
-                    {{ item.isActive ? 'Active' : 'Inactive' }}
-                  </span>
-                </td>
-                <td>
-                  <button class="btn btn-warning" [disabled]="item.isActive" (click)="setActive(item.name, 'incident')">
-                    Set Active
-                  </button>
-                  <button (click)="editModel(item)">Edit</button>
-                  <button class="btn btn-danger" (click)="deleteModel(item.name)">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- Edit Model Modal -->
-        <div *ngIf="selectedModel" class="modal">
-          <div class="modal-content">
-            <h3>Edit Model: {{ selectedModel.name }}</h3>
-            <div *ngFor="let param of getModelParameters(selectedModel)">
-              <label>{{ param }}:</label>
-              <input [(ngModel)]="selectedModel.parameters[param]" type="text" />
-            </div>
-            <div class="modal-actions">
-              <button class="btn btn-primary" (click)="updateModel()">Save</button>
-              <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-            </div>
-          </div>
-        </div>
-        </div>
-        </div>
-    </div>      
-</div>
-<div *ngIf="!hasAccess">
-    <p>You do not have access to this module.</p>
+<div class="container">
+  <header class="header">
+    <h2>Model Management</h2>
+    <p>Manage your machine learning models with ease</p>
+  </header>
+
+  <!-- Upload Section -->
+  <section class="upload-section">
+    <div class="upload-card">
+      <input
+        id="file-upload"
+        type="file"
+        (change)="uploadModel($event)"
+        class="file-input"
+        accept=".pkl"  
+      />
+      <p>Select a Model File</p>
+      <button class="btn btn-primary" (click)="startUpload()">Upload Model</button>
+      <div class="progress-bar" *ngIf="uploadProgress > 0">
+        <div
+          class="progress"
+          [style.width.%]="uploadProgress"
+        ></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Models Grid -->
+  <section class="models-grid">
+    <div *ngFor="let model of models" class="model-card">
+      <div class="card-header">
+        <h3>{{ model.name }}</h3>
+        <span class="status {{ model.status }}">{{ model.status }}</span>
+      </div>
+      <div class="card-details">
+        <p><strong>Size:</strong> {{ model.size }} KB</p>
+      </div>
+      <div class="card-actions">
+        <button
+          class="btn btn-success"
+          [disabled]="model.status === 'active'"
+          (click)="setActive(model.id)"
+        >
+          Activate
+        </button>
+        <button class="btn btn-danger" (click)="deleteModel(model.id)">Delete</button>
+        <button class="btn btn-secondary" (click)="editModel(model.id, model.parameters)">
+          Edit
+        </button>
+      </div>
+    </div>
+  </section>
 </div>
