@@ -16,7 +16,7 @@ interface ModelItem {
 @Component({
   selector: 'app-model-management',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, NavbarComponent],
   templateUrl: './model-management.component.html',
   styleUrl: './model-management.component.css',
   providers: [BackendService],
@@ -26,8 +26,17 @@ export class ModelManagementComponent implements OnInit {
   newParameters: any = {};
   activeModelId: number | null = null;
   uploadProgress: number = 0; // Added property to track upload progress
+  menuOption: any = 'top';
 
-  constructor(private backendservice: BackendService) {}
+  constructor(
+    private backendservice: BackendService,
+    private navservice: NavbarService
+  ) {
+    this.navservice.navbarPosition$.subscribe((position) => {
+      this.menuOption = position;
+      console.log('Dashbaord ', this.menuOption);
+    });
+  }
 
   ngOnInit(): void {
     // Fetch the list of models on load
@@ -112,7 +121,6 @@ export class ModelManagementComponent implements OnInit {
 
   deleteModel(modelId: number): void {
     this.backendservice.deleteModel(modelId).subscribe(() => {
-      
       this.fetchModels();
     });
   }

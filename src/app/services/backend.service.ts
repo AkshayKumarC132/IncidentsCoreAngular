@@ -535,7 +535,6 @@ export class BackendService {
     return this.http.get(`${this.apiUrl}/get_user_role/${token}`);
   }
 
-
   uploadModel(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/upload-model/`, formData);
   }
