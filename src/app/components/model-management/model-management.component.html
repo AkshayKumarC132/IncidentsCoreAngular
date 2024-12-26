@@ -1,55 +1,88 @@
 <app-navbar></app-navbar>
 <div class="neumorphic" [ngClass]="{'navbar-top': menuOption === 'top', 'navbar-left': menuOption === 'left'}">
-<div class="container">
-  <header class="header">
-    <h2>Model Management</h2>
-    <p>Manage your machine learning models with ease</p>
-  </header>
+  <div class="container">
+    <header class="header">
+      <h2>Model Management</h2>
+      <p>Manage your machine learning models with ease</p>
+    </header>
 
-  <!-- Upload Section -->
-  <section class="upload-section">
-    <div class="upload-card">
-      <input
-        id="file-upload"
-        type="file"
-        (change)="uploadModel($event)"
-        class="file-input"
-        accept=".pkl"  
-      />
-      <p>Select a Model File</p>
-      <button class="btn btn-primary" (click)="startUpload()">Upload Model</button>
-      <div class="progress-bar" *ngIf="uploadProgress > 0">
-        <div
-          class="progress"
-          [style.width.%]="uploadProgress"
-        ></div>
+    <!-- Upload Section -->
+    <section class="upload-section">
+      <div class="upload-card">
+        <input
+          id="file-upload"
+          type="file"
+          (change)="uploadModel($event)"
+          class="file-input"
+          accept=".pkl"  
+        />
+        <p>Select a Model File</p>
+        <button class="btn btn-primary" (click)="startUpload()">Upload Model</button>
+        <div class="progress-bar" *ngIf="uploadProgress > 0">
+          <div
+            class="progress"
+            [style.width.%]="uploadProgress"
+          ></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Models Grid -->
-  <section class="models-grid">
-    <div *ngFor="let model of models" class="model-card">
-      <div class="card-header">
-        <h3>{{ model.name }}</h3>
-        <span class="status {{ model.status }}">{{ model.status }}</span>
+    <!-- Models Grid -->
+    <section class="models-grid">
+      <div *ngFor="let model of models" class="model-card">
+        <div class="card-header">
+          <h3>{{ model.name }}</h3>
+          <span class="status {{ model.status }}">{{ model.status }}</span>
+        </div>
+        <div class="card-details">
+          <p><strong>Size:</strong> {{ model.size }} KB</p>
+        </div>
+        <div class="card-actions">
+          <button
+            class="btn btn-success"
+            [disabled]="model.status === 'active'"
+            (click)="setActive(model.id)"
+          >
+            Activate
+          </button>
+          <button class="btn btn-danger" (click)="deleteModel(model.id)">Delete</button>
+          <button class="btn btn-secondary" (click)="startEditing(model)">
+            Edit
+          </button>
+        </div>
+
+        <!-- Editing Form -->
+        <div *ngIf="editingModel === model">
+          <form #editForm="ngForm" (ngSubmit)="editModel(model.name, editForm.value)">
+            <label for="n_estimators">n_estimators:</label>
+            <input
+              type="number"
+              name="n_estimators"
+              ngModel
+              placeholder="Enter value"
+            />
+
+            <label for="max_depth">max_depth:</label>
+            <input
+              type="number"
+              name="max_depth"
+              ngModel
+              placeholder="Enter value"
+            />
+
+            <label for="min_samples_split">min_samples_split:</label>
+            <input
+              type="number"
+              name="min_samples_split"
+              ngModel
+              placeholder="Enter value"
+            />
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelEditing()">Cancel</button>
+          </form>
+        </div>
       </div>
-      <div class="card-details">
-        <p><strong>Size:</strong> {{ model.size }} KB</p>
-      </div>
-      <div class="card-actions">
-        <button
-          class="btn btn-success"
-          [disabled]="model.status === 'active'"
-          (click)="setActive(model.id)"
-        >
-          Activate
-        </button>
-        <button class="btn btn-danger" (click)="deleteModel(model.id)">Delete</button>
-        <button class="btn btn-secondary" (click)="editModel(model.id, model.parameters)">
-          Edit
-        </button>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>

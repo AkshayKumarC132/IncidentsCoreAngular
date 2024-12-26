@@ -6,6 +6,7 @@ import { NavbarService } from '../../services/navbar.service';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+// import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface ModelItem {
   name: string;
@@ -27,11 +28,14 @@ export class ModelManagementComponent implements OnInit {
   activeModelId: number | null = null;
   uploadProgress: number = 0; // Added property to track upload progress
   menuOption: any = 'top';
+  editingModel: string | null = null;
+  editButtonLabel: any;
 
   constructor(
     private backendservice: BackendService,
     private navservice: NavbarService
-  ) {
+  ) // private snackBar: MatSnackBar
+  {
     this.navservice.navbarPosition$.subscribe((position) => {
       this.menuOption = position;
       console.log('Dashbaord ', this.menuOption);
@@ -125,9 +129,49 @@ export class ModelManagementComponent implements OnInit {
     });
   }
 
-  editModel(modelId: number, parameters: any): void {
-    this.backendservice.editModel(modelId, parameters).subscribe(() => {
-      this.fetchModels();
-    });
+  editModel(modelName: string, updatedParameters: any): void {
+    this.backendservice.editModel(modelName, updatedParameters).subscribe(
+      (response: any) => {
+        Swal.fire({
+          title: 'Success',
+          text: response.message,
+          icon: 'success',
+          customClass: {
+            popup: 'swal-custom-popup',
+            title: 'swal-custom-title',
+            htmlContainer: 'swal-custom-html',
+            confirmButton: 'swal-custom-button',
+          },
+        });
+        // this.snackBar.open(response.message, 'Close', { duration: 3000 });
+        this.fetchModels(); // Refresh the model list
+      },
+      (error) => {
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to update model: ' + error.error.error,
+          icon: 'error',
+          customClass: {
+            popup: 'swal-custom-popup',
+            title: 'swal-custom-title',
+            htmlContainer: 'swal-custom-html',
+            confirmButton: 'swal-custom-button',
+          },
+        });
+        // this.snackBar.open(
+        //   'Failed to update model: ' + error.error.error,
+        //   'Close',
+        //   { duration: 5000 }
+        // );
+      }
+    );
+  }
+
+  startEditing(modelName: string): void {
+    this.editingModel = modelName;
+  }
+
+  cancelEditing(): void {
+    this.editingModel = null;
   }
 }

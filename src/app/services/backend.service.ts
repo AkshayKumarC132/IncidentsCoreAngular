@@ -547,8 +547,9 @@ export class BackendService {
     return this.http.delete(`${this.apiUrl}/delete-model/${modelId}/`);
   }
 
-  editModel(modelId: number, parameters: any): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/edit-model/${modelId}/`, parameters);
+  editModel(modelName: string, parameters: any): Observable<any> {
+    const url = `${this.apiUrl}/models/${modelName}/edit/`;
+    return this.http.post(url, parameters);
   }
 
   fetchModels(): Observable<any> {
