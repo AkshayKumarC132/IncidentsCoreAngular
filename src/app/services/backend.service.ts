@@ -366,10 +366,10 @@ export class BackendService {
     );
   }
 
-  runOrchestratioLayer(id: any) {
+  runOrchestratioLayer(id: any,emailList: string[]) {
     // const headers = this.getAuthHeaders();
     const token = localStorage.getItem('authToken');
-    return this.http.post(`${this.apiUrl}/orchestration/${id}/` + token, {});
+    return this.http.post(`${this.apiUrl}/orchestration/${id}/` + token,  { emails: emailList });
   }
 
   getIncidentLogsByID(id: any) {

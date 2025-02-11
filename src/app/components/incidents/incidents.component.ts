@@ -32,7 +32,6 @@ import { faPlay, faEye } from '@fortawesome/free-solid-svg-icons'; // Import ico
     MatFormFieldModule,
     FormsModule,
     MatSelectModule,
-    CommonModule,
     HttpClientModule,
     NavbarComponent,
     FontAwesomeModule,
@@ -136,30 +135,59 @@ export class IncidentsComponent {
   }
 
   callOrchestrationLayer(id: any) {
-    this.backendService.runOrchestratioLayer(id).subscribe({
-      next: (responce: any) => {
-        console.log(responce);
-        if (responce) {
-          Swal.fire({
-            icon: 'success',
-            text: responce.message,
-            width: '400px',
-            customClass: {
-              popup: 'swal-custom-popup',
-              title: 'swal-custom-title',
-              htmlContainer: 'swal-custom-html', // Use htmlContainer instead of content
-              confirmButton: 'swal-custom-button',
-              cancelButton: 'swal-custom-button',
-            },
-          });
+    Swal.fire({
+      title: 'Enter Valid Email IDs',
+      input: 'textarea',
+      inputPlaceholder: 'Enter email IDs, separated by commas...',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Please enter at least one email ID!';
         }
-        // this.incidentsData = responce;
+        const emails = value.split(',').map(email => email.trim());
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const invalidEmails = emails.filter(email => !emailRegex.test(email));
+  
+        if (invalidEmails.length > 0) {
+          return `Invalid email(s): ${invalidEmails.join(', ')}`;
+        }
+        return null;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      showCancelButton: true,
+      confirmButtonText: 'Submit',
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        const emailList = result.value.split(',').map((email: string) => email.trim());
+  
+        this.backendService.runOrchestratioLayer(id, emailList).subscribe({
+          next: (response: any) => {
+            console.log(response);
+            if (response) {
+              Swal.fire({
+                icon: 'success',
+                text: response.message,
+                width: '400px',
+                customClass: {
+                  popup: 'swal-custom-popup',
+                  title: 'swal-custom-title',
+                  htmlContainer: 'swal-custom-html',
+                  confirmButton: 'swal-custom-button',
+                  cancelButton: 'swal-custom-button',
+                },
+              });
+            }
+          },
+          error: (error) => {
+            console.log(error);
+            Swal.fire({
+              icon: 'error',
+              text: 'Failed to process the request.',
+            });
+          },
+        });
+      }
     });
-  }
+  }  
+  
 
   viewLogDetails(id: any) {
     this.selectedIncidentId = id; // Set the selected incident ID
